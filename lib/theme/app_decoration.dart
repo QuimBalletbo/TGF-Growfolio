@@ -143,6 +143,22 @@ class AppDecoration {
           width: 3.h,
         ),
       );
+  static BoxDecoration get outlinePrimary10 => BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadiusStyle.roundedBorder8,
+        boxShadow: [
+          BoxShadow(
+            color: theme.colorScheme
+                .primary, // Change the shadow color to a darker shade
+            spreadRadius: 2.h,
+            blurRadius: 2.h,
+            offset: const Offset(
+              4,
+              4,
+            ),
+          ),
+        ],
+      );
 }
 
 class BorderRadiusStyle {

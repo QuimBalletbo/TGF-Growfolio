@@ -48,7 +48,11 @@ class ImageConstant {
 
   static String imgInterfaceFile = '$imagePath/img_interface_file.svg';
 
-  // Pàgina d'inici- alumne images
+  // Pàgina d'inici - alumne images Group 870
+  static String logIn = '$imagePath/Group 871.svg';
+
+  static String createanAccount = '$imagePath/Group 870.svg';
+
   static String imgRectangle14 = '$imagePath/img_rectangle_14.svg';
 
   static String imgSearch = '$imagePath/img_search.svg';

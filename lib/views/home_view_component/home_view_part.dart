@@ -30,7 +30,7 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 23.v),
+                      SizedBox(height: 16.v),
                       Padding(
                           padding: EdgeInsets.only(left: 34.h),
                           child: Text("My current Portfolios",
@@ -67,7 +67,7 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
   /// Section Widget
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return CustomAppBar(
-        height: 56.v,
+        height: 106.v,
         title:
             AppbarSubtitle(text: "Home", margin: EdgeInsets.only(left: 33.h)),
         actions: [
@@ -128,60 +128,69 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
             style: CustomTextStyles.headlineSmallInterWhiteA700));
   }
 
-  /// Section Widget
+  /// Section Widget ImageConstant.imgInterfaceremovecircledeleteaddcirclesubtractbuttonbuttonsremove
+  /// buttonStyle: CustomButtonStyles.outlinePrimaryTL19,
+  /// Delete Portfolio
+
   Widget _buildDeletePortfolio(BuildContext context) {
     return CustomElevatedButton(
-      text: "Delete Portfolio",
-      margin: EdgeInsets.only(left: 35.h, right: 58.h),
-      leftIcon: Container(
-        margin: EdgeInsets.only(right: 1.h), // Adjust the margin as needed
-        child: CustomImageView(
-          imagePath: ImageConstant
-              .imgInterfaceremovecircledeleteaddcirclesubtractbuttonbuttonsremove,
-          height: 20.v,
-          width: 20.h,
-        ),
-      ),
-      buttonStyle: CustomButtonStyles.outlinePrimaryTL19,
-      buttonTextStyle: theme.textTheme.labelLarge!,
-      onPressed: () {
-        onTapDeletePortfolio(context);
-      },
-      height: 48.v, // Pass the height parameter
-      width: double.maxFinite, // Pass the width parameter
-    );
-  }
-
-  /// Section Widget
-  Widget _buildEditAPortfolio(BuildContext context) {
-    return CustomElevatedButton(
         height: 45.v,
-        text: "Edit a  Portfolio",
+        text: "Delete Portfolio          ",
         margin: EdgeInsets.only(left: 35.h, right: 58.h),
         leftIcon: Container(
-            margin: EdgeInsets.only(right: 5.h),
+            margin: EdgeInsets.only(right: 30.h),
             child: CustomImageView(
-                imagePath: ImageConstant.imgPlus, height: 15.v, width: 15.h)),
+              imagePath: ImageConstant
+                  .imgInterfaceremovecircledeleteaddcirclesubtractbuttonbuttonsremove,
+              height: 30.v,
+              width: 32.h,
+              color: Colors.black,
+            )),
+        buttonStyle: CustomButtonStyles.outlinePrimaryTL19,
         buttonTextStyle: theme.textTheme.labelLarge!,
         onPressed: () {
           onTapEditAPortfolio(context);
         });
   }
 
-  /// Section Widget
-  Widget _buildCreateNewPortfolio(BuildContext context) {
+  /// Section Widget ImageConstant.imgPlus
+  Widget _buildEditAPortfolio(BuildContext context) {
     return CustomElevatedButton(
-        height: 60.v,
-        text: "Create new Portfolio",
-        margin: EdgeInsets.only(left: 8.h, right: 8.h),
+        height: 45.v,
+        text: "Edit a  Portfolio          ",
+        margin: EdgeInsets.only(left: 35.h, right: 58.h),
         leftIcon: Container(
-            padding: EdgeInsets.symmetric(vertical: 5.v, horizontal: 5.v),
-            margin: EdgeInsets.only(right: 5.h),
+            margin: EdgeInsets.only(right: 30.h),
             child: CustomImageView(
-                imagePath: ImageConstant.imgPlus, height: 15.v, width: 15.h)),
+              imagePath: ImageConstant
+                  .imgInterfaceeditwritecirclechangecircleeditmodifypencilwritewriting,
+              height: 30.v,
+              width: 32.h,
+              color: Colors.black,
+            )),
         buttonTextStyle: theme.textTheme.labelLarge!,
         onPressed: () {
-          onTapCreateNewPortfolio(context);
+          onTapEditAPortfolio(context);
+        });
+  }
+
+  /// Section Widget Create new Portfolio
+  Widget _buildCreateNewPortfolio(BuildContext context) {
+    return CustomElevatedButton(
+        height: 45.v,
+        text: "Create new Portfolio",
+        margin: EdgeInsets.only(left: 35.h, right: 58.h),
+        leftIcon: Container(
+            margin: EdgeInsets.only(right: 30.h),
+            child: CustomImageView(
+              imagePath: ImageConstant.imgPlus,
+              height: 30.v,
+              width: 32.h,
+              color: Colors.black,
+            )),
+        buttonTextStyle: theme.textTheme.labelLarge!,
+        onPressed: () {
+          onTapEditAPortfolio(context);
         });
   }
 
