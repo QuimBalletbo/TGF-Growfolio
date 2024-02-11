@@ -65,8 +65,7 @@ class ImageConstant {
 
   static String imgCheckmark = '$imagePath/img_checkmark.svg';
 
-  static String
-      imgInterfaceuserprofilefocusclosegeometrichumanpersonprofilefocususer =
+  static String modifyName =
       '$imagePath/img_interfaceuserprofilefocusclosegeometrichumanpersonprofilefocususer.svg';
 
   static String imgInterfaceLockPrimary =

@@ -4,6 +4,74 @@ import 'package:flutter_application_1/widgets/custom_text_form_field.dart';
 import 'package:flutter_application_1/views/components/log_out_dialog.dart';
 import 'package:flutter_application_1/views/components/delete_my_account_dialog.dart';
 
+class CustomCardButton extends StatelessWidget {
+  final String text;
+  final String imagePath;
+  final VoidCallback onTap;
+
+  const CustomCardButton({
+    Key? key,
+    required this.text,
+    required this.imagePath,
+    required this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      // Wrap the entire button with GestureDetector
+      onTap: onTap,
+      child: Container(
+        width: double.maxFinite,
+        decoration: AppDecoration.outlinePrimary10,
+        child: Card(
+          clipBehavior: Clip.antiAlias,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadiusStyle.roundedBorder8,
+          ),
+          child: SizedBox(
+            height: 46.v,
+            width: double.maxFinite,
+            child: Stack(
+              alignment: Alignment.centerLeft,
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 18.h),
+                    child: Row(
+                      children: [
+                        CustomImageView(
+                          imagePath: imagePath,
+                          height: 28.v,
+                          width: 30.h,
+                          color: Colors.black,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: 24.h,
+                            top: 2.v,
+                            bottom: 3.v,
+                          ),
+                          child: Text(
+                            text,
+                            style: theme.textTheme.labelLarge,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 // ignore_for_file: must_be_immutable
 class PGinaDIniciAlumneBottomsheet extends StatelessWidget {
   PGinaDIniciAlumneBottomsheet({Key? key}) : super(key: key);
@@ -14,256 +82,66 @@ class PGinaDIniciAlumneBottomsheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Container(
+            width: double.maxFinite,
             padding: EdgeInsets.symmetric(horizontal: 47.h, vertical: 19.v),
             child: Column(children: [
               SizedBox(width: 52.h, child: Divider(color: appTheme.gray600)),
               SizedBox(height: 48.v),
-              Container(
-                  decoration: AppDecoration.outlinePrimary10,
-                  child: Card(
-                      clipBehavior: Clip.antiAlias,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadiusStyle.roundedBorder8),
-                      child: SizedBox(
-                          height: 46.v,
-                          width: 306.h,
-                          child:
-                              Stack(alignment: Alignment.centerLeft, children: [
-                            Align(
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                    padding: EdgeInsets.only(left: 18.h),
-                                    child: Row(children: [
-                                      CustomImageView(
-                                          imagePath: ImageConstant.imgSearch,
-                                          height: 28.v,
-                                          width: 30.h,
-                                          color: Colors.black,
-                                          onTap: () {
-                                            onTapImgImage(context);
-                                          }),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 24.h,
-                                              top: 2.v,
-                                              bottom: 3.v),
-                                          child: Text("Settings",
-                                              style:
-                                                  theme.textTheme.labelLarge))
-                                    ])))
-                          ])))),
+              CustomCardButton(
+                text: "Settings",
+                imagePath: ImageConstant.imgSearch,
+                onTap: () {
+                  onTapImgImage(context);
+                },
+              ),
               SizedBox(height: 23.v),
-              Container(
-                  decoration: AppDecoration.outlinePrimary10,
-                  child: Card(
-                      clipBehavior: Clip.antiAlias,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadiusStyle.roundedBorder8),
-                      child: SizedBox(
-                          height: 46.v,
-                          width: 306.h,
-                          child:
-                              Stack(alignment: Alignment.centerLeft, children: [
-                            Align(
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                    padding: EdgeInsets.only(left: 18.h),
-                                    child: Row(children: [
-                                      CustomImageView(
-                                          imagePath:
-                                              ImageConstant.imgUserPrimary,
-                                          height: 28.v,
-                                          width: 30.h,
-                                          color: Colors.black,
-                                          onTap: () {
-                                            onTapImgImage1(context);
-                                          }),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 24.h,
-                                              top: 2.v,
-                                              bottom: 3.v),
-                                          child: Text("Log Out",
-                                              style:
-                                                  theme.textTheme.labelLarge))
-                                    ])))
-                          ])))),
+              CustomCardButton(
+                text: "Log Out",
+                imagePath: ImageConstant.imgUserPrimary,
+                onTap: () {
+                  onTapImgImage1(context);
+                },
+              ),
               SizedBox(height: 23.v),
-              Container(
-                  decoration: AppDecoration.outlinePrimary10,
-                  child: Card(
-                      clipBehavior: Clip.antiAlias,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadiusStyle.roundedBorder8),
-                      child: SizedBox(
-                          height: 46.v,
-                          width: 306.h,
-                          child:
-                              Stack(alignment: Alignment.centerLeft, children: [
-                            Align(
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                    padding: EdgeInsets.only(left: 18.h),
-                                    child: Row(children: [
-                                      CustomImageView(
-                                        imagePath: ImageConstant.logIn,
-                                        height: 28.v,
-                                        width: 30.h,
-                                        color: Colors.black,
-                                      ),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 24.h,
-                                              top: 2.v,
-                                              bottom: 3.v),
-                                          child: Text("Log In",
-                                              style:
-                                                  theme.textTheme.labelLarge))
-                                    ])))
-                          ])))),
+              CustomCardButton(
+                text: "Log In",
+                imagePath: ImageConstant.logIn,
+                onTap: () {
+                  onTapImgImage(context);
+                },
+              ),
               SizedBox(height: 23.v),
-              Container(
-                  // Log In  imgContrastPrimary
-                  decoration: AppDecoration.outlinePrimary10,
-                  child: Card(
-                      clipBehavior: Clip.antiAlias,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadiusStyle.roundedBorder8),
-                      child: SizedBox(
-                          height: 46.v,
-                          width: 306.h,
-                          child:
-                              Stack(alignment: Alignment.centerLeft, children: [
-                            Align(
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                    padding: EdgeInsets.only(left: 18.h),
-                                    child: Row(children: [
-                                      CustomImageView(
-                                        imagePath: ImageConstant
-                                            .imgInterfaceuserprofilefocusclosegeometrichumanpersonprofilefocususer,
-                                        height: 28.v,
-                                        width: 30.h,
-                                        color: Colors.black,
-                                      ),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 24.h,
-                                              top: 2.v,
-                                              bottom: 3.v),
-                                          child: Text("Modify Name",
-                                              style:
-                                                  theme.textTheme.labelLarge))
-                                    ])))
-                          ])))),
+              CustomCardButton(
+                text: "Modify Name",
+                imagePath: ImageConstant.modifyName,
+                onTap: () {
+                  onTapImgImage(context);
+                },
+              ),
               SizedBox(height: 23.v),
-              Container(
-                  decoration: AppDecoration.outlinePrimary10,
-                  child: Card(
-                      clipBehavior: Clip.antiAlias,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadiusStyle.roundedBorder8),
-                      child: SizedBox(
-                          height: 46.v,
-                          width: 306.h,
-                          child:
-                              Stack(alignment: Alignment.centerLeft, children: [
-                            Align(
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                    padding: EdgeInsets.only(left: 18.h),
-                                    child: Row(children: [
-                                      CustomImageView(
-                                        imagePath: ImageConstant
-                                            .imgInterfaceLockPrimary,
-                                        height: 28.v,
-                                        width: 30.h,
-                                        color: Colors.black,
-                                      ),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 24.h,
-                                              top: 2.v,
-                                              bottom: 3.v),
-                                          child: Text("Password & Security",
-                                              style:
-                                                  theme.textTheme.labelLarge))
-                                    ])))
-                          ])))),
+              CustomCardButton(
+                text: "Password & Security",
+                imagePath: ImageConstant.imgInterfaceLockPrimary,
+                onTap: () {
+                  onTapImgImage(context);
+                },
+              ),
               SizedBox(height: 23.v),
-              Container(
-                  decoration: AppDecoration.outlinePrimary10,
-                  child: Card(
-                      clipBehavior: Clip.antiAlias,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadiusStyle.roundedBorder8),
-                      child: SizedBox(
-                          height: 46.v,
-                          width: 306.h,
-                          child:
-                              Stack(alignment: Alignment.centerLeft, children: [
-                            Align(
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                    padding: EdgeInsets.only(left: 18.h),
-                                    child: Row(children: [
-                                      CustomImageView(
-                                        imagePath:
-                                            ImageConstant.createanAccount,
-                                        height: 28.v,
-                                        width: 30.h,
-                                        color: Colors.black,
-                                      ),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 24.h,
-                                              top: 2.v,
-                                              bottom: 3.v),
-                                          child: Text("Create an Account",
-                                              style:
-                                                  theme.textTheme.labelLarge))
-                                    ])))
-                          ])))),
+              CustomCardButton(
+                text: "Create an Account",
+                imagePath: ImageConstant.createanAccount,
+                onTap: () {
+                  onTapImgImage(context);
+                },
+              ),
               SizedBox(height: 23.v),
-              Container(
-                  decoration: AppDecoration.outlinePrimary10,
-                  child: Card(
-                      clipBehavior: Clip.antiAlias,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadiusStyle.roundedBorder8),
-                      child: SizedBox(
-                          height: 46.v,
-                          width: 306.h,
-                          child:
-                              Stack(alignment: Alignment.centerLeft, children: [
-                            Align(
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                    padding: EdgeInsets.only(left: 18.h),
-                                    child: Row(children: [
-                                      CustomImageView(
-                                        imagePath: ImageConstant.imgSettings,
-                                        height: 28.v,
-                                        width: 30.h,
-                                        color: Colors.black,
-                                      ),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 24.h,
-                                              top: 2.v,
-                                              bottom: 3.v),
-                                          child: Text("Delete My Account",
-                                              style:
-                                                  theme.textTheme.labelLarge))
-                                    ])))
-                          ])))),
+              CustomCardButton(
+                text: "Delete My Account",
+                imagePath: ImageConstant.imgSettings,
+                onTap: () {
+                  onTapImgImage(context);
+                },
+              ),
               SizedBox(height: 17.v)
             ])));
   }

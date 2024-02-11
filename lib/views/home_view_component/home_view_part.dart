@@ -28,7 +28,7 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 0.v),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       SizedBox(height: 16.v),
                       Padding(
@@ -43,7 +43,7 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
                           decoration: AppDecoration.outlinePrimary.copyWith(
                               borderRadius: BorderRadiusStyle.customBorderTL18),
                           child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 _buildPerfil(context),
@@ -65,9 +65,10 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
   }
 
   /// Section Widget
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
+  PreferredSizeWidget _buildAppBar(context) {
     return CustomAppBar(
         height: 106.v,
+        leadingWidth: double.maxFinite,
         title:
             AppbarSubtitle(text: "Home", margin: EdgeInsets.only(left: 33.h)),
         actions: [
