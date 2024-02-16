@@ -47,10 +47,7 @@ class LogOutDialog extends StatelessWidget {
   /// The sheet is displayed on top of the current view with scrolling enabled if
   /// content exceeds viewport height.
   onTapCancel(BuildContext context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (_) => PGinaDIniciAlumneBottomsheet(),
-        isScrollControlled: true);
+    Navigator.pushNamed(context, AppRoutes.pGinaDIniciAlumneOneContainerScreen);
   }
 
   /// Navigates to the iniciarSessiRegistrarSeScreen when the action is triggered.

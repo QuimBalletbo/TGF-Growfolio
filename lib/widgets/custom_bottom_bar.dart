@@ -15,14 +15,14 @@ class CustomBottomBarState extends State<CustomBottomBar> {
 
   List<BottomMenuModel> bottomMenuList = [
     BottomMenuModel(
-      icon: ImageConstant.imgNavHomeOnprimary,
+      icon: ImageConstant.imgHomeSmall,
       activeIcon: ImageConstant.imgNavHomeOnprimary,
       title: "Home",
       type: BottomBarEnum.Home,
     ),
     BottomMenuModel(
       icon: ImageConstant.imgNavProfile,
-      activeIcon: ImageConstant.imgNavProfile,
+      activeIcon: ImageConstant.imgProfBig,
       title: "Profile",
       type: BottomBarEnum.Profile,
     )
@@ -70,10 +70,11 @@ class CustomBottomBarState extends State<CustomBottomBar> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    // imagePath: bottomMenuList[index].icon,
                     CustomImageView(
                       imagePath: bottomMenuList[index].icon,
-                      height: 30.v,
-                      width: 32.h,
+                      height: 33.v,
+                      width: 34.h,
                       color: theme.colorScheme.onPrimary,
                     ),
                     Padding(
@@ -84,12 +85,6 @@ class CustomBottomBarState extends State<CustomBottomBar> {
                           color: theme.colorScheme.primary.withOpacity(1),
                         ),
                       ),
-                    ),
-                    CustomImageView(
-                      imagePath: ImageConstant.imgLine22,
-                      height: 3.v,
-                      width: 34.h,
-                      margin: EdgeInsets.only(top: 1.v),
                     ),
                   ],
                 ),
@@ -111,6 +106,12 @@ class CustomBottomBarState extends State<CustomBottomBar> {
                           color: theme.colorScheme.primary.withOpacity(1),
                         ),
                       ),
+                    ),
+                    CustomImageView(
+                      imagePath: ImageConstant.imgLine22,
+                      height: 3.v,
+                      width: 32.h,
+                      color: theme.colorScheme.onPrimary,
                     ),
                   ],
                 ),

@@ -7,6 +7,7 @@ import 'package:flutter_application_1/widgets/custom_elevated_button.dart';
 import 'package:flutter_application_1/widgets/custom_text_form_field.dart';
 import 'package:flutter_application_1/views/home_view_component/home_view_bottom_part.dart';
 import 'package:flutter_application_1/views/components/homeScreen_dialog.dart';
+import 'package:flutter_application_1/widgets/custom_StockCard.dart';
 
 // ignore_for_file: must_be_immutable
 class PGinaDIniciAlumneOnePage extends StatelessWidget {
@@ -46,13 +47,13 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                _buildPerfil(context),
+                                customStockCard("Plan 1"),
                                 SizedBox(height: 31.v),
-                                _buildAllStockPlan(context),
+                                customStockCard("All Stock Plan"),
                                 SizedBox(height: 33.v),
-                                _buildStockFifty(context),
+                                customStockCard("50 % Stock 50 % Bonds Plan"),
                                 SizedBox(height: 34.v),
-                                _buildPlanTwo(context),
+                                customStockCard("Plan 2"),
                                 SizedBox(height: 25.v),
                                 _buildDeletePortfolio(context),
                                 SizedBox(height: 13.v),
@@ -65,73 +66,24 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
   }
 
   /// Section Widget
-  PreferredSizeWidget _buildAppBar(context) {
+  PreferredSizeWidget _buildAppBar(BuildContext context) {
     return CustomAppBar(
-        height: 106.v,
-        leadingWidth: double.maxFinite,
-        title:
-            AppbarSubtitle(text: "Home", margin: EdgeInsets.only(left: 33.h)),
-        actions: [
-          AppbarTrailingImage(
-              imagePath: ImageConstant.imgMegaphone,
-              margin: EdgeInsets.fromLTRB(34.h, 14.v, 34.h, 26.v),
-              onTap: () {
-                onTapMegaphone(context);
-              })
-        ]);
+      height: 106.v,
+      leadingWidth: double.maxFinite,
+      title: AppbarSubtitle(text: "Home", margin: EdgeInsets.only(left: 33.h)),
+      actions: [
+        AppbarTrailingImage(
+          imagePath: ImageConstant.imgMegaphone,
+          margin: EdgeInsets.fromLTRB(34.h, 14.v, 34.h, 26.v),
+          onTap: () {
+            onTapMegaphone(context); // Pass the context directly
+          },
+        ),
+      ],
+    );
   }
 
-  /// Section Widget
-  Widget _buildPerfil(BuildContext context) {
-    return Container(
-        width: 367.h,
-        margin: EdgeInsets.symmetric(horizontal: 2.h),
-        padding: EdgeInsets.symmetric(horizontal: 15.h, vertical: 14.v),
-        decoration: AppDecoration.outlinePrimary3
-            .copyWith(borderRadius: BorderRadiusStyle.roundedBorder18),
-        child: Text("Plan 1",
-            style: CustomTextStyles.headlineSmallInterWhiteA700));
-  }
-
-  /// Section Widget
-  Widget _buildAllStockPlan(BuildContext context) {
-    return Container(
-        width: 367.h,
-        margin: EdgeInsets.symmetric(horizontal: 2.h),
-        padding: EdgeInsets.symmetric(horizontal: 15.h, vertical: 14.v),
-        decoration: AppDecoration.outlinePrimary3
-            .copyWith(borderRadius: BorderRadiusStyle.roundedBorder18),
-        child: Text("All Stock Plan",
-            style: CustomTextStyles.headlineSmallInterWhiteA700));
-  }
-
-  /// Section Widget
-  Widget _buildStockFifty(BuildContext context) {
-    return Container(
-        width: 367.h,
-        margin: EdgeInsets.symmetric(horizontal: 2.h),
-        padding: EdgeInsets.symmetric(horizontal: 15.h, vertical: 14.v),
-        decoration: AppDecoration.outlinePrimary3
-            .copyWith(borderRadius: BorderRadiusStyle.roundedBorder18),
-        child: Text("50 % Stock 50 % Bonds Plan",
-            style: CustomTextStyles.headlineSmallInterWhiteA700));
-  }
-
-  /// Section Widget
-  Widget _buildPlanTwo(BuildContext context) {
-    return Container(
-        width: 367.h,
-        margin: EdgeInsets.symmetric(horizontal: 2.h),
-        padding: EdgeInsets.symmetric(horizontal: 15.h, vertical: 14.v),
-        decoration: AppDecoration.outlinePrimary3
-            .copyWith(borderRadius: BorderRadiusStyle.roundedBorder18),
-        child: Text("Plan 2",
-            style: CustomTextStyles.headlineSmallInterWhiteA700));
-  }
-
-  /// Section Widget ImageConstant.imgInterfaceremovecircledeleteaddcirclesubtractbuttonbuttonsremove
-  /// buttonStyle: CustomButtonStyles.outlinePrimaryTL19,
-  /// Delete Portfolio
+  // Delete Portfolio
 
   Widget _buildDeletePortfolio(BuildContext context) {
     return CustomElevatedButton(

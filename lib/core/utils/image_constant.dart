@@ -48,7 +48,9 @@ class ImageConstant {
 
   static String imgInterfaceFile = '$imagePath/img_interface_file.svg';
 
-  // Pàgina d'inici - alumne images Group 870
+  // Pàgina d'inici
+  static String imgHomeSmall = '$imagePath/img_home_icon_small.svg';
+
   static String logIn = '$imagePath/Group 871.svg';
 
   static String createanAccount = '$imagePath/Group 870.svg';
@@ -81,6 +83,8 @@ class ImageConstant {
   static String imgSettings = '$imagePath/img_settings.svg';
 
   // profile One images
+  static String imgProfBig = '$imagePath/img_profile_Icon_Big.svg';
+
   static String imgImage19 = '$imagePath/img_image_19.png';
 
   static String imgNavHome = '$imagePath/img_nav_home.svg';

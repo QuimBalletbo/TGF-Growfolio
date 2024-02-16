@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/app_export.dart';
 import 'package:flutter_application_1/views/home_view_component/home_view_part.dart';
 import 'package:flutter_application_1/widgets/custom_bottom_bar.dart';
+import 'package:flutter_application_1/views/profile_view_component/profile_view_part.dart';
 
 // ignore_for_file: must_be_immutable
 class PGinaDIniciAlumneOneContainerScreen extends StatelessWidget {
@@ -34,9 +35,9 @@ class PGinaDIniciAlumneOneContainerScreen extends StatelessWidget {
   ///Handling route based on bottom click actions
   String getCurrentRoute(BottomBarEnum type) {
     switch (type) {
-      case BottomBarEnum.Home:
-        return "/";
       case BottomBarEnum.Profile:
+        return AppRoutes.profile;
+      case BottomBarEnum.Home:
         return AppRoutes.pGinaDIniciAlumneOnePage;
       default:
         return "/";
@@ -48,6 +49,8 @@ class PGinaDIniciAlumneOneContainerScreen extends StatelessWidget {
     switch (currentRoute) {
       case AppRoutes.pGinaDIniciAlumneOnePage:
         return PGinaDIniciAlumneOnePage();
+      case AppRoutes.profile:
+        return ProfileOneScreen();
       default:
         return const DefaultWidget();
     }

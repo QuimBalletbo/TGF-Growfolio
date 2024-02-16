@@ -25,8 +25,9 @@ class AppRoutes {
 
   static const String configuraciOneScreen = '/configuraci_one_screen';
 
-  static const String pGinaDIniciAlumneOnePage =
-      '/p_gina_d_inici_alumne_one_page';
+  static const String pGinaDIniciAlumneOnePage = '/home_view_part';
+
+  static const String profile = '/profile_view_part';
 
   static const String pGinaDIniciAlumneTwoScreen =
       '/p_gina_d_inici_alumne_two_screen';
