@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/app_export.dart';
 
 class CustomBottomBar extends StatefulWidget {
-  CustomBottomBar({Key? key, this.onChanged}) : super(key: key);
+  CustomBottomBar({Key? key, this.onChanged, required this.selectedIndex})
+      : super(key: key);
 
   Function(BottomBarEnum)? onChanged;
+  final int selectedIndex;
 
   @override
   CustomBottomBarState createState() => CustomBottomBarState();
 }
 
 class CustomBottomBarState extends State<CustomBottomBar> {
-  int selectedIndex = 0;
-
   List<BottomMenuModel> bottomMenuList = [
     BottomMenuModel(
       icon: ImageConstant.imgHomeSmall,
@@ -62,7 +62,7 @@ class CustomBottomBarState extends State<CustomBottomBar> {
             showUnselectedLabels: false,
             selectedFontSize: 0,
             elevation: 0,
-            currentIndex: selectedIndex,
+            currentIndex: widget.selectedIndex,
             type: BottomNavigationBarType.fixed,
             items: List.generate(bottomMenuList.length, (index) {
               return BottomNavigationBarItem(
@@ -70,7 +70,6 @@ class CustomBottomBarState extends State<CustomBottomBar> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // imagePath: bottomMenuList[index].icon,
                     CustomImageView(
                       imagePath: bottomMenuList[index].icon,
                       height: 33.v,
@@ -119,7 +118,6 @@ class CustomBottomBarState extends State<CustomBottomBar> {
               );
             }),
             onTap: (index) {
-              selectedIndex = index;
               widget.onChanged?.call(bottomMenuList[index].type);
               setState(() {});
             },

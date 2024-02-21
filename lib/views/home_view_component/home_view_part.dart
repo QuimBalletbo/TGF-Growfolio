@@ -6,7 +6,7 @@ import 'package:flutter_application_1/widgets/app_bar/custom_app_bar.dart';
 import 'package:flutter_application_1/widgets/custom_elevated_button.dart';
 import 'package:flutter_application_1/widgets/custom_text_form_field.dart';
 import 'package:flutter_application_1/views/home_view_component/home_view_bottom_part.dart';
-import 'package:flutter_application_1/views/components/homeScreen_dialog.dart';
+import 'package:flutter_application_1/views/components/max_portfolio_dialog.dart';
 import 'package:flutter_application_1/widgets/custom_StockCard.dart';
 
 // ignore_for_file: must_be_immutable

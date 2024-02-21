@@ -24,7 +24,7 @@ class DeleteMyAccountDialog extends StatelessWidget {
               Container(
                   width: 315.h,
                   margin: EdgeInsets.only(right: 14.h),
-                  child: Text("Are you sure you want to Delete youre Account?",
+                  child: Text("Are you sure you want to delete your account?",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: CustomTextStyles.titleLargeMontserrat)),
@@ -57,12 +57,9 @@ class DeleteMyAccountDialog extends StatelessWidget {
   /// Shows a modal bottom sheet with [PGinaDIniciAlumneBottomsheet]
   /// widget content.
   /// The sheet is displayed on top of the current view with scrolling enabled if
-  /// content exceeds viewport height.
+  /// content exceeds viewport height. pGinaDIniciAlumneOneContainerScreen
   onTapCancel(BuildContext context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (_) => PGinaDIniciAlumneBottomsheet(),
-        isScrollControlled: true);
+    Navigator.pushNamed(context, AppRoutes.pGinaDIniciAlumneOneContainerScreen);
   }
 
   /// Navigates to the iniciarSessiRegistrarSeScreen when the action is triggered.

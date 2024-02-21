@@ -3,74 +3,7 @@ import 'package:flutter_application_1/core/app_export.dart';
 import 'package:flutter_application_1/widgets/custom_text_form_field.dart';
 import 'package:flutter_application_1/views/components/log_out_dialog.dart';
 import 'package:flutter_application_1/views/components/delete_my_account_dialog.dart';
-
-class CustomCardButton extends StatelessWidget {
-  final String text;
-  final String imagePath;
-  final VoidCallback onTap;
-
-  const CustomCardButton({
-    Key? key,
-    required this.text,
-    required this.imagePath,
-    required this.onTap,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      // Wrap the entire button with GestureDetector
-      onTap: onTap,
-      child: Container(
-        width: double.maxFinite,
-        decoration: AppDecoration.outlinePrimary10,
-        child: Card(
-          clipBehavior: Clip.antiAlias,
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadiusStyle.roundedBorder8,
-          ),
-          child: SizedBox(
-            height: 46.v,
-            width: double.maxFinite,
-            child: Stack(
-              alignment: Alignment.centerLeft,
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 18.h),
-                    child: Row(
-                      children: [
-                        CustomImageView(
-                          imagePath: imagePath,
-                          height: 28.v,
-                          width: 30.h,
-                          color: Colors.black,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: 24.h,
-                            top: 2.v,
-                            bottom: 3.v,
-                          ),
-                          child: Text(
-                            text,
-                            style: theme.textTheme.labelLarge,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
+import 'package:flutter_application_1/widgets/custom_card_button.dart';
 
 // ignore_for_file: must_be_immutable
 class PGinaDIniciAlumneBottomsheet extends StatelessWidget {
@@ -139,7 +72,7 @@ class PGinaDIniciAlumneBottomsheet extends StatelessWidget {
                 text: "Delete My Account",
                 imagePath: ImageConstant.imgSettings,
                 onTap: () {
-                  onTapImgImage(context);
+                  onTapImgImage2(context);
                 },
               ),
               SizedBox(height: 17.v)
@@ -165,7 +98,7 @@ class PGinaDIniciAlumneBottomsheet extends StatelessWidget {
 
   /// Navigates to the logInScreen when the action is triggered.
   onTapImgImage2(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.logInScreen);
+    Navigator.pushNamed(context, AppRoutes.deleteAccountScreen);
   }
 
   /// Navigates to the passwordSecurityScreen when the action is triggered.

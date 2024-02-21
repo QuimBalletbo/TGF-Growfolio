@@ -24,6 +24,10 @@ class ImageConstant {
   static String imgInterfaceLockErrorcontainer260x239 =
       '$imagePath/img_interface_lock_errorcontainer_260x239.svg';
 
+  // Password & Security images
+  static String imgDeletemyAcountBackground =
+      '$imagePath/img_delete_my_acount_background.png';
+
   // Configuració One images
   static String imgEdit3 = '$imagePath/img_edit_3.svg';
 

@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/views/login_view.dart';
 import 'package:flutter_application_1/views/home_view.dart';
+import 'package:flutter_application_1/views/delete_account.dart';
+import 'package:flutter_application_1/views/profile_view.dart';
 
 class AppRoutes {
   static const String iniciarSessiRegistrarSeScreen =
       '/iniciar_sessi_registrar_se_screen';
 
   static const String pGinaDIniciAlumneOneContainerScreen = '/home_view';
+
+  static const String profileContainerScreen = '/profile_view';
+
+  static const String deleteAccountScreen = '/delete_account';
 
   static const String faqsOneScreen = '/faqs_one_screen';
 
@@ -108,5 +114,7 @@ class AppRoutes {
     iniciarSessiRegistrarSeScreen: (context) => IniciarSessiRegistrarSeScreen(),
     pGinaDIniciAlumneOneContainerScreen: (context) =>
         PGinaDIniciAlumneOneContainerScreen(),
+    profileContainerScreen: (context) => ProfileContainerScreen(),
+    deleteAccountScreen: (context) => DeleteAccountScreen(),
   };
 }
