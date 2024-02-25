@@ -32,7 +32,7 @@ class PGinaDIniciAlumneBottomsheet extends StatelessWidget {
                 text: "Log Out",
                 imagePath: ImageConstant.imgUserPrimary,
                 onTap: () {
-                  onTapImgImage1(context);
+                  onTapImgImage5(context);
                 },
               ),
               SizedBox(height: 23.v),
@@ -40,7 +40,7 @@ class PGinaDIniciAlumneBottomsheet extends StatelessWidget {
                 text: "Log In",
                 imagePath: ImageConstant.logIn,
                 onTap: () {
-                  onTapImgImage(context);
+                  onTapImgImage6(context);
                 },
               ),
               SizedBox(height: 23.v),
@@ -48,7 +48,7 @@ class PGinaDIniciAlumneBottomsheet extends StatelessWidget {
                 text: "Modify Name",
                 imagePath: ImageConstant.modifyName,
                 onTap: () {
-                  onTapImgImage(context);
+                  onTapImgImage4(context);
                 },
               ),
               SizedBox(height: 23.v),
@@ -56,7 +56,7 @@ class PGinaDIniciAlumneBottomsheet extends StatelessWidget {
                 text: "Password & Security",
                 imagePath: ImageConstant.imgInterfaceLockPrimary,
                 onTap: () {
-                  onTapImgImage(context);
+                  onTapImgImage7(context);
                 },
               ),
               SizedBox(height: 23.v),
@@ -64,7 +64,7 @@ class PGinaDIniciAlumneBottomsheet extends StatelessWidget {
                 text: "Create an Account",
                 imagePath: ImageConstant.createanAccount,
                 onTap: () {
-                  onTapImgImage(context);
+                  onTapImgImage3(context);
                 },
               ),
               SizedBox(height: 23.v),
@@ -103,23 +103,25 @@ class PGinaDIniciAlumneBottomsheet extends StatelessWidget {
 
   /// Navigates to the passwordSecurityScreen when the action is triggered.
   onTapImgImage3(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.passwordSecurityScreen);
+    Navigator.pushNamed(context, AppRoutes.createAccountScreen);
   }
 
   /// Navigates to the createAnAccountScreen when the action is triggered.
   onTapImgImage4(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.createAnAccountScreen);
+    Navigator.pushNamed(context, AppRoutes.modifyNameScreen);
   }
 
   /// Displays a dialog with the [DeleteMyAccountDialog] content.
   onTapImgImage5(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-              content: DeleteMyAccountDialog(),
-              backgroundColor: Colors.transparent,
-              contentPadding: EdgeInsets.zero,
-              insetPadding: const EdgeInsets.only(left: 0),
-            ));
+    Navigator.pushNamed(context, AppRoutes.logOutScreen);
+  }
+
+  /// Displays a dialog with the [DeleteMyAccountDialog] content.
+  onTapImgImage6(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.logInScreen);
+  }
+
+  onTapImgImage7(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.passwordSecurityScreen);
   }
 }

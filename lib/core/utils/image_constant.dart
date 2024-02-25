@@ -11,6 +11,8 @@ class ImageConstant {
 
   static String imgGroup84 = '$imagePath/img_group_84.png';
 
+  static String imgPasswordSecurity = '$imagePath/img_Password_Security.png';
+
   // user manual images
   static String imgRectangle210 = '$imagePath/img_rectangle_210.png';
 

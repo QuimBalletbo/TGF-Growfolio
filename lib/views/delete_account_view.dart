@@ -50,10 +50,7 @@ class DeleteAccountScreen extends StatelessWidget {
                     child: Text(
                       "Delete My Account",
                       textAlign: TextAlign.center,
-                      style: theme.textTheme.displayMedium != null
-                          ? theme.textTheme.displayMedium!
-                              .copyWith(color: Colors.black)
-                          : const TextStyle(color: Colors.black),
+                      style: CustomTextStyles.displayMediumLight,
                     ),
                   ),
                 ),
@@ -64,11 +61,20 @@ class DeleteAccountScreen extends StatelessWidget {
           ),
           // AlertDialog
           Center(
-            child: AlertDialog(
-              content: DeleteMyAccountDialog(),
-              backgroundColor: Colors.transparent,
-              contentPadding: EdgeInsets.zero,
-              insetPadding: const EdgeInsets.only(left: 0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(width: 15),
+                Expanded(
+                  child: AlertDialog(
+                    content: DeleteMyAccountDialog(),
+                    backgroundColor: Colors.transparent,
+                    contentPadding: EdgeInsets.zero,
+                    insetPadding: const EdgeInsets.only(left: 0),
+                  ),
+                ),
+                const SizedBox(width: 15),
+              ],
             ),
           ),
         ],

@@ -5,8 +5,8 @@ import 'package:flutter_application_1/widgets/custom_text_form_field.dart';
 import 'package:flutter_application_1/views/home_view_component/home_view_bottom_part.dart';
 
 // ignore_for_file: must_be_immutable
-class DeleteMyAccountDialog extends StatelessWidget {
-  DeleteMyAccountDialog({Key? key}) : super(key: key);
+class ModifyNameDialog extends StatelessWidget {
+  ModifyNameDialog({Key? key}) : super(key: key);
 
   TextEditingController passwordController = TextEditingController();
 
@@ -23,14 +23,29 @@ class DeleteMyAccountDialog extends StatelessWidget {
             children: [
               Container(
                   margin: EdgeInsets.only(right: 14.h),
-                  child: Text("Are you sure you want to delete your account?",
+                  child: Text("Name",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: CustomTextStyles.titleLargeMontserrat)),
               SizedBox(height: 26.v),
               CustomTextFormField(
                   controller: passwordController,
-                  hintText: "Enter password",
+                  hintText: "enter name",
+                  hintStyle: theme.textTheme.bodyMedium!,
+                  textInputAction: TextInputAction.done,
+                  textInputType: TextInputType.visiblePassword,
+                  obscureText: true),
+              SizedBox(height: 22.v),
+              Container(
+                  margin: EdgeInsets.only(right: 14.h),
+                  child: Text("Password",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: CustomTextStyles.titleLargeMontserrat)),
+              SizedBox(height: 26.v),
+              CustomTextFormField(
+                  controller: passwordController,
+                  hintText: "enter password",
                   hintStyle: theme.textTheme.bodyMedium!,
                   textInputAction: TextInputAction.done,
                   textInputType: TextInputType.visiblePassword,
@@ -44,7 +59,7 @@ class DeleteMyAccountDialog extends StatelessWidget {
                   }),
               SizedBox(height: 20.v),
               CustomElevatedButton(
-                  text: "Delete My Account",
+                  text: "Modify Name",
                   buttonStyle: CustomButtonStyles.fillDeepOrange,
                   onPressed: () {
                     onTapDeleteMyAccount(context);
@@ -63,6 +78,6 @@ class DeleteMyAccountDialog extends StatelessWidget {
 
   /// Navigates to the iniciarSessiRegistrarSeScreen when the action is triggered.
   onTapDeleteMyAccount(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.iniciarSessiRegistrarSeScreen);
+    Navigator.pushNamed(context, AppRoutes.profileContainerScreen);
   }
 }

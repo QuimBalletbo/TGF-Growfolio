@@ -4,65 +4,112 @@ import 'package:flutter_application_1/widgets/app_bar/appbar_subtitle.dart';
 import 'package:flutter_application_1/widgets/app_bar/appbar_trailing_image.dart';
 import 'package:flutter_application_1/widgets/app_bar/custom_app_bar.dart';
 import 'package:flutter_application_1/widgets/custom_elevated_button.dart';
-import 'package:flutter_application_1/widgets/custom_text_form_field.dart';
 import 'package:flutter_application_1/views/home_view_component/home_view_bottom_part.dart';
 import 'package:flutter_application_1/views/components/max_portfolio_dialog.dart';
 import 'package:flutter_application_1/widgets/custom_StockCard.dart';
+import 'package:flutter_application_1/core/data/portfolio.dart';
+import 'package:realm/realm.dart';
 
-// ignore_for_file: must_be_immutable
+class ListBloc {
+  final RealmResults<Portfolio> portfolios;
+  final Realm _realm;
+
+  ListBloc({required this.portfolios, required Realm realm}) : _realm = realm;
+
+  void addNewItems() {
+    _realm.write(
+        () => _realm.add(Portfolio(1 + (portfolios.lastOrNull?.id ?? 0))));
+  }
+}
+
 class PGinaDIniciAlumneOnePage extends StatelessWidget {
-  PGinaDIniciAlumneOnePage({Key? key}) : super(key: key);
-
+  PGinaDIniciAlumneOnePage({Key? key, required this.bloc}) : super(key: key);
   TextEditingController perfilController = TextEditingController();
 
   TextEditingController allStockPlanController = TextEditingController();
-
+  final ListBloc bloc;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-            backgroundColor: appTheme.gray100,
-            resizeToAvoidBottomInset: false,
-            appBar: _buildAppBar(context),
-            body: Container(
-                width: double.maxFinite,
-                padding: EdgeInsets.symmetric(vertical: 0.v),
+      child: Scaffold(
+        backgroundColor: appTheme.gray100,
+        resizeToAvoidBottomInset: false,
+        appBar: _buildAppBar(context),
+        body: Container(
+          width: double.maxFinite,
+          padding: EdgeInsets.symmetric(vertical: 0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(height: 16),
+              Padding(
+                padding: EdgeInsets.only(left: 34),
+                child: Text(
+                  "My current Portfolios",
+                  style: CustomTextStyles.headlineSmallMontserratLight,
+                ),
+              ),
+              SizedBox(height: 23),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 21, vertical: 24),
+                decoration: AppDecoration.outlinePrimary.copyWith(
+                  borderRadius: BorderRadiusStyle.customBorderTL18,
+                ),
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      SizedBox(height: 16.v),
-                      Padding(
-                          padding: EdgeInsets.only(left: 34.h),
-                          child: Text("My current Portfolios",
-                              style: CustomTextStyles
-                                  .headlineSmallMontserratLight)),
-                      SizedBox(height: 23.v),
-                      Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 21.h, vertical: 24.v),
-                          decoration: AppDecoration.outlinePrimary.copyWith(
-                              borderRadius: BorderRadiusStyle.customBorderTL18),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: bloc.portfolios.isEmpty
+                      ? [
+                          // Display message when there are no portfolios
+                          Container(
+                              margin: EdgeInsets.only(right: 42.h),
+                              alignment: Alignment.centerRight,
+                              child: Text("There are currently no portfolios",
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style:
+                                      CustomTextStyles.titleLargeMontserrat)),
+                          SizedBox(height: 22.v),
+                          _buildDeletePortfolio(context),
+                          SizedBox(height: 15.v),
+                          _buildEditAPortfolio(context),
+                          SizedBox(height: 15.v),
+                          _buildCreateNewPortfolio(context),
+                          SizedBox(height: 15.v),
+                          FloatingActionButton(
+                              onPressed: bloc.addNewItems,
+                              child: const Icon(Icons.add)),
+                          SizedBox(height: 22.v),
+                        ]
+                      : [
+                          // Render portfolios if available
+                          ...bloc.portfolios.map(
+                            (portfolio) => Column(
                               children: [
-                                customStockCard("Plan 1"),
-                                SizedBox(height: 31.v),
-                                customStockCard("All Stock Plan"),
-                                SizedBox(height: 33.v),
-                                customStockCard("50 % Stock 50 % Bonds Plan"),
-                                SizedBox(height: 34.v),
-                                customStockCard("Plan 2"),
-                                SizedBox(height: 25.v),
-                                _buildDeletePortfolio(context),
-                                SizedBox(height: 13.v),
-                                _buildEditAPortfolio(context),
-                                SizedBox(height: 15.v),
-                                _buildCreateNewPortfolio(context),
-                                SizedBox(height: 22.v)
-                              ]))
-                    ]))));
+                                customStockCard("Portfolio ${portfolio.id}"),
+                                const SizedBox(height: 31),
+                              ],
+                            ),
+                          ),
+                          _buildDeletePortfolio(context),
+                          SizedBox(height: 15.v),
+                          _buildEditAPortfolio(context),
+                          SizedBox(height: 15.v),
+                          _buildCreateNewPortfolio(context),
+                          SizedBox(height: 15.v),
+                          FloatingActionButton(
+                              onPressed: bloc.addNewItems,
+                              child: const Icon(Icons.add)),
+                          SizedBox(height: 22.v),
+                        ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   /// Section Widget
@@ -88,8 +135,9 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
   Widget _buildDeletePortfolio(BuildContext context) {
     return CustomElevatedButton(
         height: 45.v,
-        text: "Delete Portfolio          ",
+        text: "Delete Portfolio         ",
         margin: EdgeInsets.only(left: 35.h, right: 58.h),
+        alignment: Alignment.bottomLeft,
         leftIcon: Container(
             margin: EdgeInsets.only(right: 30.h),
             child: CustomImageView(
@@ -110,7 +158,8 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
   Widget _buildEditAPortfolio(BuildContext context) {
     return CustomElevatedButton(
         height: 45.v,
-        text: "Edit a  Portfolio          ",
+        text: "Edit a  Portfolio         ",
+        alignment: Alignment.bottomLeft,
         margin: EdgeInsets.only(left: 35.h, right: 58.h),
         leftIcon: Container(
             margin: EdgeInsets.only(right: 30.h),
@@ -132,6 +181,7 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
     return CustomElevatedButton(
         height: 45.v,
         text: "Create new Portfolio",
+        alignment: Alignment.bottomLeft,
         margin: EdgeInsets.only(left: 35.h, right: 58.h),
         leftIcon: Container(
             margin: EdgeInsets.only(right: 30.h),
