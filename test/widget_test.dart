@@ -12,8 +12,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_application_1/main.dart';
 import 'package:realm/realm.dart';
 
-void main() {
-  final realm = Realm(Configuration.local([Portfolio.schema]));
+var globalMessengerKey = GlobalKey<ScaffoldMessengerState>();
+Future<void> main() async {
+  final app = App(AppConfiguration('growfolio-jnlhw'));
+  final user = app.currentUser ??
+      await app.logIn(Credentials.emailPassword(
+          "joaquim.balletbo@students.salle.url.edu", "qwert1234"));
+  final realm = Realm(Configuration.flexibleSync(user, [Portfolio.schema]));
   final allPortfolios = realm.all<Portfolio>();
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.

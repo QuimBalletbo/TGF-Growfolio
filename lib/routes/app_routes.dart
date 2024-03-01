@@ -23,8 +23,6 @@ class AppRoutes {
 
   static const String createAccountScreen = '/create_account';
 
-  static const String createAnAccountScreen = '/create_an_account_screen';
-
   static const String passwordSecurityScreen = '/password_security_screen';
 
   static const String configuraciOneScreen = '/configuraci_one_screen';
@@ -49,7 +47,8 @@ class AppRoutes {
           PGinaDIniciAlumneOneContainerScreen(
             portfolios: portfolios,
           ),
-      profileContainerScreen: (context) => ProfileContainerScreen(),
+      profileContainerScreen: (context) =>
+          ProfileContainerScreen(portfolios: portfolios),
       deleteAccountScreen: (context) => DeleteAccountScreen(),
       createAccountScreen: (context) => CreateAnAccountScreen(),
       modifyNameScreen: (context) => ModifyNameScreen(),

@@ -6,28 +6,21 @@ import 'package:flutter_application_1/widgets/app_bar/custom_app_bar.dart';
 import 'package:flutter_application_1/widgets/custom_elevated_button.dart';
 import 'package:flutter_application_1/views/home_view_component/home_view_bottom_part.dart';
 import 'package:flutter_application_1/views/components/max_portfolio_dialog.dart';
+import 'package:flutter_application_1/views/components/listBloc.dart';
 import 'package:flutter_application_1/widgets/custom_StockCard.dart';
 import 'package:flutter_application_1/core/data/portfolio.dart';
 import 'package:realm/realm.dart';
-
-class ListBloc {
-  final RealmResults<Portfolio> portfolios;
-  final Realm _realm;
-
-  ListBloc({required this.portfolios, required Realm realm}) : _realm = realm;
-
-  void addNewItems() {
-    _realm.write(
-        () => _realm.add(Portfolio(1 + (portfolios.lastOrNull?.id ?? 0))));
-  }
-}
+import 'package:flutter_application_1/views/components/itemBloc.dart';
 
 class PGinaDIniciAlumneOnePage extends StatelessWidget {
-  PGinaDIniciAlumneOnePage({Key? key, required this.bloc}) : super(key: key);
+  PGinaDIniciAlumneOnePage(
+      {Key? key, required this.bloc, required this.singlebloc})
+      : super(key: key);
   TextEditingController perfilController = TextEditingController();
 
   TextEditingController allStockPlanController = TextEditingController();
   final ListBloc bloc;
+  final ItemBloc singlebloc;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -35,77 +28,80 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
         backgroundColor: appTheme.gray100,
         resizeToAvoidBottomInset: false,
         appBar: _buildAppBar(context),
-        body: Container(
-          width: double.maxFinite,
-          padding: EdgeInsets.symmetric(vertical: 0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(height: 16),
-              Padding(
-                padding: EdgeInsets.only(left: 34),
-                child: Text(
-                  "My current Portfolios",
-                  style: CustomTextStyles.headlineSmallMontserratLight,
+        body: SingleChildScrollView(
+          // Wrap with SingleChildScrollView
+          child: Container(
+            width: double.maxFinite,
+            padding: EdgeInsets.symmetric(vertical: 0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(height: 16),
+                Padding(
+                  padding: EdgeInsets.only(left: 34),
+                  child: Text(
+                    "My current Portfolios",
+                    style: CustomTextStyles.headlineSmallMontserratLight,
+                  ),
                 ),
-              ),
-              SizedBox(height: 23),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 21, vertical: 24),
-                decoration: AppDecoration.outlinePrimary.copyWith(
-                  borderRadius: BorderRadiusStyle.customBorderTL18,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: bloc.portfolios.isEmpty
-                      ? [
-                          // Display message when there are no portfolios
-                          Container(
-                              margin: EdgeInsets.only(right: 42.h),
-                              alignment: Alignment.centerRight,
-                              child: Text("There are currently no portfolios",
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style:
-                                      CustomTextStyles.titleLargeMontserrat)),
-                          SizedBox(height: 22.v),
-                          _buildDeletePortfolio(context),
-                          SizedBox(height: 15.v),
-                          _buildEditAPortfolio(context),
-                          SizedBox(height: 15.v),
-                          _buildCreateNewPortfolio(context),
-                          SizedBox(height: 15.v),
-                          FloatingActionButton(
-                              onPressed: bloc.addNewItems,
-                              child: const Icon(Icons.add)),
-                          SizedBox(height: 22.v),
-                        ]
-                      : [
-                          // Render portfolios if available
-                          ...bloc.portfolios.map(
-                            (portfolio) => Column(
-                              children: [
-                                customStockCard("Portfolio ${portfolio.id}"),
-                                const SizedBox(height: 31),
-                              ],
+                SizedBox(height: 23),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 21, vertical: 24),
+                  decoration: AppDecoration.outlinePrimary.copyWith(
+                    borderRadius: BorderRadiusStyle.customBorderTL18,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: bloc.portfolios.isEmpty
+                        ? [
+                            // Display message when there are no portfolios
+                            Container(
+                                margin: EdgeInsets.only(right: 42.h),
+                                alignment: Alignment.centerRight,
+                                child: Text("There are currently no portfolios",
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style:
+                                        CustomTextStyles.titleLargeMontserrat)),
+                            SizedBox(height: 22.v),
+                            _buildDeletePortfolio(context),
+                            SizedBox(height: 15.v),
+                            _buildEditAPortfolio(context),
+                            SizedBox(height: 15.v),
+                            _buildCreateNewPortfolio(context),
+                            SizedBox(height: 15.v),
+                            FloatingActionButton(
+                                onPressed: bloc.addNewItems,
+                                child: const Icon(Icons.add)),
+                            SizedBox(height: 22.v),
+                          ]
+                        : [
+                            // Render portfolios if available
+                            ...bloc.portfolios.map(
+                              (portfolio) => Column(
+                                children: [
+                                  customStockCard(portfolio, singlebloc),
+                                  const SizedBox(height: 31),
+                                ],
+                              ),
                             ),
-                          ),
-                          _buildDeletePortfolio(context),
-                          SizedBox(height: 15.v),
-                          _buildEditAPortfolio(context),
-                          SizedBox(height: 15.v),
-                          _buildCreateNewPortfolio(context),
-                          SizedBox(height: 15.v),
-                          FloatingActionButton(
-                              onPressed: bloc.addNewItems,
-                              child: const Icon(Icons.add)),
-                          SizedBox(height: 22.v),
-                        ],
+                            _buildDeletePortfolio(context),
+                            SizedBox(height: 15.v),
+                            _buildEditAPortfolio(context),
+                            SizedBox(height: 15.v),
+                            _buildCreateNewPortfolio(context),
+                            SizedBox(height: 15.v),
+                            FloatingActionButton(
+                                onPressed: bloc.addNewItems,
+                                child: const Icon(Icons.add)),
+                            SizedBox(height: 22.v),
+                          ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -3,6 +3,8 @@ import 'package:flutter_application_1/core/app_export.dart';
 import 'package:flutter_application_1/widgets/custom_elevated_button.dart';
 import 'package:flutter_application_1/widgets/custom_text_form_field.dart';
 import 'package:flutter_application_1/views/home_view_component/home_view_bottom_part.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter_application_1/core/utils/auth_service.dart';
 
 class CreateAccountDialog extends StatefulWidget {
   @override
@@ -15,6 +17,10 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmpasswordController = TextEditingController();
   bool value = false;
+  String email = '';
+  String name = '';
+  String password = '';
+  String confirmPassword = '';
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +38,22 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
             hintText: "Enter email ",
             hintStyle: theme.textTheme.bodyMedium!,
             textInputType: TextInputType.emailAddress,
+            onEditingComplete: () {
+              setState(() {
+                email = emailController.text;
+              });
+            },
           ),
           SizedBox(height: 20.v),
           CustomTextFormField(
             controller: nameController,
             hintText: "Enter name",
             hintStyle: theme.textTheme.bodyMedium!,
+            onEditingComplete: () {
+              setState(() {
+                name = nameController.text;
+              });
+            },
           ),
           SizedBox(height: 20.v),
           CustomTextFormField(
@@ -45,7 +61,11 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
             hintText: "Enter password",
             hintStyle: theme.textTheme.bodyMedium!,
             textInputType: TextInputType.visiblePassword,
-            obscureText: true,
+            onEditingComplete: () {
+              setState(() {
+                password = passwordController.text;
+              });
+            },
           ),
           SizedBox(height: 20.v),
           CustomTextFormField(
@@ -54,7 +74,11 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
             hintStyle: theme.textTheme.bodyMedium!,
             textInputAction: TextInputAction.done,
             textInputType: TextInputType.visiblePassword,
-            obscureText: true,
+            onEditingComplete: () {
+              setState(() {
+                confirmPassword = confirmpasswordController.text;
+              });
+            },
           ),
           SizedBox(height: 19.v),
           Container(
@@ -102,18 +126,10 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
           ),
           SizedBox(height: 25.v),
           CustomElevatedButton(
-            text: "Cancel",
-            buttonStyle: CustomButtonStyles.fillGray,
-            onPressed: () {
-              onTapCancel(context);
-            },
-          ),
-          SizedBox(height: 25.v),
-          CustomElevatedButton(
             text: "Create Account",
             buttonStyle: CustomButtonStyles.fillDeepOrange,
             onPressed: () {
-              onTapLogin(context);
+              // onTapLogin(context);
             },
           ),
           SizedBox(height: 5.v),
@@ -125,8 +141,22 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
   onTapCancel(BuildContext context) {
     Navigator.pushNamed(context, AppRoutes.pGinaDIniciAlumneOneContainerScreen);
   }
+/*
+  onTapLogin(BuildContext context) async {
+    try {
+      // Register the user
+      await AuthService.registerUser(email, password);
 
-  onTapLogin(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.profileContainerScreen);
+      // Confirm the user
+      await AuthService.confirmUser(token, tokenId);
+
+      // If registration and confirmation are successful, navigate to the profile container screen
+      Navigator.pushNamed(context, AppRoutes.profileContainerScreen);
+    } catch (e) {
+      // Handle any errors that occur during registration or confirmation
+      print("Error registering or confirming user: $e");
+      // You can show an error message to the user if needed
+    }
   }
+  */
 }

@@ -3,5 +3,8 @@ part 'portfolio.g.dart';
 
 @RealmModel()
 class _Portfolio {
-  late int id;
+  @PrimaryKey()
+  @MapTo('_id')
+  late ObjectId id;
+  late int no;
 }

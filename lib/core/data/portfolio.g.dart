@@ -10,17 +10,24 @@ part of 'portfolio.dart';
 class Portfolio extends _Portfolio
     with RealmEntity, RealmObjectBase, RealmObject {
   Portfolio(
-    int id,
+    ObjectId id,
+    int no,
   ) {
-    RealmObjectBase.set(this, 'id', id);
+    RealmObjectBase.set(this, '_id', id);
+    RealmObjectBase.set(this, 'no', no);
   }
 
   Portfolio._();
 
   @override
-  int get id => RealmObjectBase.get<int>(this, 'id') as int;
+  ObjectId get id => RealmObjectBase.get<ObjectId>(this, '_id') as ObjectId;
   @override
-  set id(int value) => RealmObjectBase.set(this, 'id', value);
+  set id(ObjectId value) => RealmObjectBase.set(this, '_id', value);
+
+  @override
+  int get no => RealmObjectBase.get<int>(this, 'no') as int;
+  @override
+  set no(int value) => RealmObjectBase.set(this, 'no', value);
 
   @override
   Stream<RealmObjectChanges<Portfolio>> get changes =>
@@ -34,7 +41,9 @@ class Portfolio extends _Portfolio
   static SchemaObject _initSchema() {
     RealmObjectBase.registerFactory(Portfolio._);
     return const SchemaObject(ObjectType.realmObject, Portfolio, 'Portfolio', [
-      SchemaProperty('id', RealmPropertyType.int),
+      SchemaProperty('id', RealmPropertyType.objectid,
+          mapTo: '_id', primaryKey: true),
+      SchemaProperty('no', RealmPropertyType.int),
     ]);
   }
 }

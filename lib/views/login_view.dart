@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/app_export.dart';
 import 'package:flutter_application_1/views/components/log_in_dialog.dart';
+import 'package:flutter/gestures.dart';
 
 // ignore_for_file: must_be_immutable
 
@@ -63,23 +64,39 @@ class IniciarSessiRegistrarSeScreen extends StatelessWidget {
                                             LogInDialog(),
                                             SizedBox(height: 67.v),
                                             RichText(
-                                                text: TextSpan(children: [
-                                                  TextSpan(
+                                                text: TextSpan(
+                                                  children: [
+                                                    TextSpan(
                                                       text:
                                                           "Don’t have an account? ",
                                                       style: CustomTextStyles
-                                                          .bodyMediumInterff1e1e1e),
-                                                  TextSpan(
+                                                          .bodyMediumInterff1e1e1e,
+                                                    ),
+                                                    TextSpan(
                                                       text: "Create Account",
                                                       style: CustomTextStyles
                                                           .bodyMediumInterff00000014
                                                           .copyWith(
-                                                              decoration:
-                                                                  TextDecoration
-                                                                      .underline))
-                                                ]),
+                                                        decoration:
+                                                            TextDecoration
+                                                                .underline,
+                                                      ),
+                                                      recognizer:
+                                                          TapGestureRecognizer()
+                                                            ..onTap = () {
+                                                              onTapRegister(
+                                                                  context);
+                                                            },
+                                                    ),
+                                                  ],
+                                                ),
                                                 textAlign: TextAlign.left)
                                           ])))
                             ])))))));
+  }
+
+  /// Navigates to the pGinaDIniciAlumneOneContainerScreen when the action is triggered.
+  onTapRegister(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.createAccountScreen);
   }
 }

@@ -5,18 +5,20 @@ import 'package:flutter_application_1/widgets/app_bar/custom_app_bar.dart';
 import 'package:flutter_application_1/widgets/custom_StockCard.dart';
 import 'package:flutter_application_1/widgets/app_bar/appbar_subtitle.dart';
 import 'package:flutter_application_1/views/home_view_component/home_view_bottom_part.dart';
+import 'package:flutter_application_1/views/components/listBloc.dart';
+import 'package:flutter_application_1/views/components/itemBloc.dart';
 
 class ProfileOneScreen extends StatelessWidget {
-  ProfileOneScreen({Key? key})
-      : super(
-          key: key,
-        );
+  ProfileOneScreen({Key? key, required this.bloc, required this.singlebloc})
+      : super(key: key);
 
   TextEditingController returnvalueController = TextEditingController();
 
   TextEditingController namevalueController = TextEditingController();
 
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+  final ListBloc bloc;
+  final ItemBloc singlebloc;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,7 @@ class ProfileOneScreen extends StatelessWidget {
                       children: [
                         _buildPerfilColumn(context),
                         SizedBox(height: 15.v),
-                        _buildReturnvalueColumn(context),
+                        _buildReturnvalueColumn(context, bloc),
                         SizedBox(height: 15.v),
                         _buildPortfolioReviewColumn(context),
                       ],
@@ -243,7 +245,7 @@ class ProfileOneScreen extends StatelessWidget {
   }
 
   /// Section Widget
-  Widget _buildReturnvalueColumn(BuildContext context) {
+  Widget _buildReturnvalueColumn(BuildContext context, ListBloc bloc) {
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: 15.h,
@@ -276,15 +278,39 @@ class ProfileOneScreen extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 12.v),
-          customStockCard("Plan 1"),
-          SizedBox(height: 30.v),
-          customStockCard("All Stock Plan"),
-          SizedBox(height: 32.v),
-          customStockCard("50 % Stock 50 % Bonds Plan"),
-          SizedBox(height: 33.v),
-          customStockCard("Plan 2"),
-          SizedBox(height: 2.v),
+          SizedBox(height: 23),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 21, vertical: 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: bloc.portfolios.isEmpty
+                  ? [
+                      // Display message when there are no portfolios
+                      Container(
+                          margin: EdgeInsets.only(right: 42.h),
+                          alignment: Alignment.centerRight,
+                          child: Text("There are currently no portfolios",
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: CustomTextStyles.titleLargeMontserrat)),
+
+                      SizedBox(height: 22.v),
+                    ]
+                  : [
+                      // Render portfolios if available
+                      ...bloc.portfolios.map(
+                        (portfolio) => Column(
+                          children: [
+                            customStockCard(portfolio, singlebloc),
+                            const SizedBox(height: 31),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 22.v),
+                    ],
+            ),
+          ),
         ],
       ),
     );
