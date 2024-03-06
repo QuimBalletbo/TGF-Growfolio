@@ -3,14 +3,42 @@ import 'package:flutter_application_1/core/app_export.dart';
 import 'package:flutter_application_1/widgets/custom_elevated_button.dart';
 import 'package:flutter_application_1/widgets/custom_text_form_field.dart';
 
-class LogInDialog extends StatelessWidget {
-  LogInDialog({Key? key}) : super(key: key);
+import 'package:realm/realm.dart';
 
+import 'package:flutter_application_1/core/utils/auth_service.dart';
+
+class LogInDialog extends StatefulWidget {
+  final App app;
+
+  LogInDialog({Key? key, required this.app}) : super(key: key);
+
+  @override
+  _LogInDialogState createState() => _LogInDialogState();
+}
+
+class _LogInDialogState extends State<LogInDialog> {
   TextEditingController emailController = TextEditingController();
-
   TextEditingController passwordController = TextEditingController();
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String email = '';
+  String password = '';
+  bool error = false;
+  Future<void> initializeUserAndRealm(BuildContext context) async {
+    try {
+      error = false;
+      final user =
+          await widget.app.logIn(Credentials.emailPassword(email, password));
+      AuthService().initialize(user);
+      print(
+          "Successful logging in: User id: ${user.id} User id: ${user.profile}");
+      Navigator.pushNamed(
+          context, AppRoutes.pGinaDIniciAlumneOneContainerScreen);
+    } catch (e) {
+      setState(() {
+        error = true;
+      });
+      print("Error $error Error logging in: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,20 +48,44 @@ class LogInDialog extends StatelessWidget {
         decoration: AppDecoration.outlinePrimary
             .copyWith(borderRadius: BorderRadiusStyle.roundedBorder30),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
-          SizedBox(height: 12.v),
+          SizedBox(height: 12.v), //"Enter email "
           CustomTextFormField(
-              controller: emailController,
-              hintText: "Enter email id",
-              hintStyle: theme.textTheme.bodyMedium!,
-              textInputType: TextInputType.emailAddress),
+            controller: emailController,
+            hintText: "Enter email ",
+            hintStyle: theme.textTheme.bodyMedium!,
+            textInputType: TextInputType.emailAddress,
+            onEditingComplete: () {
+              setState(() {
+                email = emailController.text;
+              });
+            },
+          ),
           SizedBox(height: 11.v),
           CustomTextFormField(
-              controller: passwordController,
-              hintText: "Enter password",
-              hintStyle: theme.textTheme.bodyMedium!,
-              textInputAction: TextInputAction.done,
-              textInputType: TextInputType.visiblePassword,
-              obscureText: true),
+            controller: passwordController,
+            hintText: "Enter password",
+            hintStyle: theme.textTheme.bodyMedium!,
+            textInputType: TextInputType.visiblePassword,
+            onEditingComplete: () {
+              setState(() {
+                password = passwordController.text;
+              });
+            },
+          ),
+          SizedBox(height: 5.v),
+          Align(
+            alignment: Alignment.center,
+            child: Visibility(
+              visible: error,
+              child: Text(
+                "The user or the password is wrong.",
+                style: error
+                    ? CustomTextStyles.bodyMediumPrimary
+                        .copyWith(color: Colors.red)
+                    : CustomTextStyles.bodyMediumPrimary,
+              ),
+            ),
+          ),
           SizedBox(height: 5.v),
           Align(
               alignment: Alignment.centerRight,
@@ -48,7 +100,7 @@ class LogInDialog extends StatelessWidget {
               // Add other properties as needed
             ),
             onPressed: () {
-              onTapLogin(context);
+              initializeUserAndRealm(context);
             },
           ),
           SizedBox(height: 35.v),

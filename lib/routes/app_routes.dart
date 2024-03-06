@@ -39,21 +39,18 @@ class AppRoutes {
 
   static const String logInScreen = '/logInScreen';
 
-  static Map<String, WidgetBuilder> routes(RealmResults<Portfolio> portfolios) {
+  static Map<String, WidgetBuilder> routes(App app) {
     return {
       iniciarSessiRegistrarSeScreen: (context) =>
-          IniciarSessiRegistrarSeScreen(),
+          IniciarSessiRegistrarSeScreen(app: app),
       pGinaDIniciAlumneOneContainerScreen: (context) =>
-          PGinaDIniciAlumneOneContainerScreen(
-            portfolios: portfolios,
-          ),
-      profileContainerScreen: (context) =>
-          ProfileContainerScreen(portfolios: portfolios),
+          PGinaDIniciAlumneOneContainerScreen(),
+      profileContainerScreen: (context) => ProfileContainerScreen(),
       deleteAccountScreen: (context) => DeleteAccountScreen(),
       createAccountScreen: (context) => CreateAnAccountScreen(),
       modifyNameScreen: (context) => ModifyNameScreen(),
       logOutScreen: (context) => LogOutScreen(),
-      logInScreen: (context) => LogInScreen(),
+      logInScreen: (context) => LogInScreen(app: app),
       passwordSecurityScreen: (context) => PasswordScreen(),
     };
   }

@@ -7,17 +7,16 @@ import 'package:realm/realm.dart';
 import 'package:flutter_application_1/views/components/listBloc.dart';
 import 'package:flutter_application_1/core/data/portfolio.dart';
 import 'package:flutter_application_1/views/components/itemBloc.dart';
+import 'package:flutter_application_1/core/utils/auth_service.dart';
 
 class ProfileContainerScreen extends StatelessWidget {
-  //ProfileOneScreen(),
-
-  final RealmResults<Portfolio> portfolios;
-  ProfileContainerScreen({Key? key, required this.portfolios})
-      : super(key: key);
+  ProfileContainerScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final portfolios = AuthService().getPortfolios();
+    final user = AuthService().getUser();
     final Realm _realm = portfolios.realm; // Get the realm from portfolios
-    final bloc = ListBloc(portfolios: portfolios, realm: _realm);
+    final bloc = ListBloc(portfolios: portfolios, realm: _realm, user: user);
     final singlebloc = ItemBloc(realm: _realm);
     return Scaffold(
       backgroundColor: appTheme.gray100,

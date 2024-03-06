@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/app_export.dart';
 import 'package:flutter_application_1/views/components/log_in_dialog.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter_application_1/core/data/portfolio.dart';
+import 'package:realm/realm.dart';
+import 'package:provider/provider.dart';
 
 // ignore_for_file: must_be_immutable
 
 class IniciarSessiRegistrarSeScreen extends StatelessWidget {
-  IniciarSessiRegistrarSeScreen({Key? key}) : super(key: key);
-
-  TextEditingController emailController = TextEditingController();
-
-  TextEditingController passwordController = TextEditingController();
+  IniciarSessiRegistrarSeScreen({Key? key, required this.app})
+      : super(key: key);
+  final App app;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -61,7 +62,9 @@ class IniciarSessiRegistrarSeScreen extends StatelessWidget {
                                                         style: CustomTextStyles
                                                             .bodyMediumInterWhiteA700))),
                                             const Spacer(),
-                                            LogInDialog(),
+                                            LogInDialog(
+                                              app: app,
+                                            ),
                                             SizedBox(height: 67.v),
                                             RichText(
                                                 text: TextSpan(

@@ -12,9 +12,11 @@ class Portfolio extends _Portfolio
   Portfolio(
     ObjectId id,
     int no,
+    String userId,
   ) {
     RealmObjectBase.set(this, '_id', id);
     RealmObjectBase.set(this, 'no', no);
+    RealmObjectBase.set(this, 'userId', userId);
   }
 
   Portfolio._();
@@ -28,6 +30,11 @@ class Portfolio extends _Portfolio
   int get no => RealmObjectBase.get<int>(this, 'no') as int;
   @override
   set no(int value) => RealmObjectBase.set(this, 'no', value);
+
+  @override
+  String get userId => RealmObjectBase.get<String>(this, 'userId') as String;
+  @override
+  set userId(String value) => RealmObjectBase.set(this, 'userId', value);
 
   @override
   Stream<RealmObjectChanges<Portfolio>> get changes =>
@@ -44,6 +51,7 @@ class Portfolio extends _Portfolio
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
       SchemaProperty('no', RealmPropertyType.int),
+      SchemaProperty('userId', RealmPropertyType.string),
     ]);
   }
 }

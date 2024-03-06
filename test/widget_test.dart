@@ -22,7 +22,7 @@ Future<void> main() async {
   final allPortfolios = realm.all<Portfolio>();
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp(portfolios: allPortfolios));
+    await tester.pumpWidget(MyApp(app: app));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

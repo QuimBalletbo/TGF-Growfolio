@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/app_export.dart';
 import 'package:flutter_application_1/views/components/log_in_dialog.dart';
+import 'package:realm/realm.dart';
 
 // ignore_for_file: must_be_immutable
 class LogInScreen extends StatelessWidget {
-  LogInScreen({Key? key}) : super(key: key);
+  LogInScreen({Key? key, required this.app}) : super(key: key);
+  final App app;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -64,7 +66,9 @@ class LogInScreen extends StatelessWidget {
                 const SizedBox(width: 15),
                 Expanded(
                   child: AlertDialog(
-                    content: LogInDialog(),
+                    content: LogInDialog(
+                      app: app,
+                    ),
                     backgroundColor: Colors.transparent,
                     contentPadding: EdgeInsets.zero,
                     insetPadding: const EdgeInsets.only(left: 0),
