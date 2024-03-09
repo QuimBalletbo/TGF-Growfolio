@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/app_export.dart';
-import 'package:flutter_application_1/views/components/create_account_dialog.dart';
-import 'package:realm/realm.dart';
+import 'package:flutter_application_1/views/components/conditions_use_dialog.dart';
 
 // ignore_for_file: must_be_immutable
-class CreateAnAccountScreen extends StatelessWidget {
-  CreateAnAccountScreen({Key? key, required this.app}) : super(key: key);
-  final App app;
+class ConditionsUseScreen extends StatelessWidget {
+  ConditionsUseScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +15,7 @@ class CreateAnAccountScreen extends StatelessWidget {
         children: [
           // Background Image
           Image.asset(
-            ImageConstant.imgDeletemyAcountBackground,
+            ImageConstant.imgconfigurationBackground,
             fit: BoxFit.fill, // Ensure the image fills the entire screen
           ),
           // Dark overlay
@@ -43,11 +41,13 @@ class CreateAnAccountScreen extends StatelessWidget {
                   child: Container(
                     width: double
                         .infinity, // Ensure the container takes up the full width
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Text(
-                      "Create an Account",
+                      "Conditions of use and privacy policies",
                       textAlign: TextAlign.center,
-                      style: CustomTextStyles.displayMediumLight,
+                      style: CustomTextStyles.displayMediumLight.copyWith(
+                        fontSize: 36.0, // Change the font size as needed
+                      ),
                     ),
                   ),
                 ),
@@ -60,15 +60,18 @@ class CreateAnAccountScreen extends StatelessWidget {
           Positioned(
             left: 15,
             right: 15,
-            bottom: 18,
+            bottom: 28,
             child: Center(
-              child: AlertDialog(
-                content: CreateAccountDialog(
-                  app: app,
+              child: Container(
+                constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height *
+                        0.7), // Set maximum height as needed
+                child: AlertDialog(
+                  content: ConditionsUseDialog(),
+                  backgroundColor: Colors.transparent,
+                  contentPadding: EdgeInsets.zero,
+                  insetPadding: const EdgeInsets.only(left: 0),
                 ),
-                backgroundColor: Colors.transparent,
-                contentPadding: EdgeInsets.zero,
-                insetPadding: const EdgeInsets.only(left: 0),
               ),
             ),
           ),

@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/app_export.dart';
 import 'package:flutter_application_1/widgets/custom_elevated_button.dart';
 import 'package:flutter_application_1/widgets/custom_text_form_field.dart';
-import 'package:flutter_application_1/views/home_view_component/home_view_bottom_part.dart';
-import 'package:flutter/gestures.dart';
+import 'package:realm/realm.dart';
 import 'package:flutter_application_1/core/utils/auth_service.dart';
+import 'package:flutter_application_1/core/data/profile.dart';
 
 class CreateAccountDialog extends StatefulWidget {
+  CreateAccountDialog({Key? key, required this.app}) : super(key: key);
+  final App app;
   @override
   _CreateAccountDialogState createState() => _CreateAccountDialogState();
 }
@@ -21,6 +23,12 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
   String name = '';
   String password = '';
   String confirmPassword = '';
+  bool errorCheckBox = false;
+  bool emailError = false;
+  bool nameError = false;
+  bool passwordError = false;
+  bool secondPasswordError = false;
+  bool errorCratinggAccount = false;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +52,19 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
               });
             },
           ),
+          Align(
+            alignment: Alignment.center,
+            child: Visibility(
+              visible: emailError,
+              child: Text(
+                "The email format is incorrect or too long.",
+                style: emailError
+                    ? CustomTextStyles.bodyMediumPrimary
+                        .copyWith(color: Colors.red)
+                    : CustomTextStyles.bodyMediumPrimary,
+              ),
+            ),
+          ),
           SizedBox(height: 20.v),
           CustomTextFormField(
             controller: nameController,
@@ -54,6 +75,19 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
                 name = nameController.text;
               });
             },
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Visibility(
+              visible: nameError,
+              child: Text(
+                "The name is too lengthy or contains unavailable characters.",
+                style: nameError
+                    ? CustomTextStyles.bodyMediumPrimary
+                        .copyWith(color: Colors.red)
+                    : CustomTextStyles.bodyMediumPrimary,
+              ),
+            ),
           ),
           SizedBox(height: 20.v),
           CustomTextFormField(
@@ -66,6 +100,19 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
                 password = passwordController.text;
               });
             },
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Visibility(
+              visible: passwordError,
+              child: Text(
+                "The password format is incorrect or exceeds the maximum length.",
+                style: passwordError
+                    ? CustomTextStyles.bodyMediumPrimary
+                        .copyWith(color: Colors.red)
+                    : CustomTextStyles.bodyMediumPrimary,
+              ),
+            ),
           ),
           SizedBox(height: 20.v),
           CustomTextFormField(
@@ -80,16 +127,36 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
               });
             },
           ),
+          Align(
+            alignment: Alignment.center,
+            child: Visibility(
+              visible: secondPasswordError,
+              child: Text(
+                "The password and the confirmation password do not match",
+                style: secondPasswordError
+                    ? CustomTextStyles.bodyMediumPrimary
+                        .copyWith(color: Colors.red)
+                    : CustomTextStyles.bodyMediumPrimary,
+              ),
+            ),
+          ),
           SizedBox(height: 19.v),
-          Container(
-            width: 304.h,
-            margin: EdgeInsets.only(left: 8.h, right: 15.h),
-            child: Text(
-              "Click here to view the Conditions of Use and Privacy Policy",
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: CustomTextStyles.bodyMediumMontserratBlue800.copyWith(
-                decoration: TextDecoration.underline,
+          GestureDetector(
+            onTap: () {
+              // Call the lollypop function here
+              onTapConditions(context);
+            },
+            child: Container(
+              width: 304.h,
+              margin: EdgeInsets.only(left: 8.h, right: 15.h),
+              child: Text(
+                "Click here to view the Conditions of Use and Privacy Policy",
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: CustomTextStyles.bodyMediumMontserratBlue800.copyWith(
+                  decoration: TextDecoration.underline,
+                  decorationColor: appTheme.blue800,
+                ),
               ),
             ),
           ),
@@ -124,13 +191,39 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
               ),
             ),
           ),
+          Align(
+            alignment: Alignment.center,
+            child: Visibility(
+              visible: errorCheckBox,
+              child: Text(
+                "To create an Account you must agree to the terms of service.",
+                style: errorCheckBox
+                    ? CustomTextStyles.bodyMediumPrimary
+                        .copyWith(color: Colors.red)
+                    : CustomTextStyles.bodyMediumPrimary,
+              ),
+            ),
+          ),
           SizedBox(height: 25.v),
           CustomElevatedButton(
             text: "Create Account",
             buttonStyle: CustomButtonStyles.fillDeepOrange,
             onPressed: () {
-              // onTapLogin(context);
+              createAccount(context);
             },
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Visibility(
+              visible: errorCratinggAccount,
+              child: Text(
+                "An error occurred while creating the account.",
+                style: errorCratinggAccount
+                    ? CustomTextStyles.bodyMediumPrimary
+                        .copyWith(color: Colors.red)
+                    : CustomTextStyles.bodyMediumPrimary,
+              ),
+            ),
           ),
           SizedBox(height: 5.v),
         ],
@@ -138,25 +231,74 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
     );
   }
 
-  onTapCancel(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.pGinaDIniciAlumneOneContainerScreen);
+  onTapConditions(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.conditionsUseScreen);
   }
-/*
-  onTapLogin(BuildContext context) async {
+
+  Future<void> createAccount(BuildContext context) async {
+    late User user;
+    errorCheckBox = false;
+    emailError = false;
+    nameError = false;
+    passwordError = false;
+    secondPasswordError = false;
+    errorCratinggAccount = false;
+    late Realm realm;
+    if (email.isEmpty || !email.contains('@') || email.length > 50) {
+      setState(() {
+        emailError = true;
+      });
+      print("emailError: $emailError");
+      return;
+    }
+    if (name.isEmpty || name.length > 20) {
+      setState(() {
+        nameError = true;
+      });
+      print("nameError: $nameError");
+      return;
+    }
+    if (password.isEmpty || password.length > 20) {
+      setState(() {
+        passwordError = true;
+      });
+      print("passwordError: $passwordError");
+      return;
+    }
+    if (password != confirmPassword || confirmPassword.length > 20) {
+      setState(() {
+        secondPasswordError = true;
+      });
+      print("secondPasswordError: $secondPasswordError");
+      return;
+    }
+    if (value == false) {
+      setState(() {
+        errorCheckBox = true;
+      });
+      print("errorCheckBox: $errorCheckBox");
+      return;
+    }
+
     try {
-      // Register the user
-      await AuthService.registerUser(email, password);
+      EmailPasswordAuthProvider authProvider =
+          EmailPasswordAuthProvider(widget.app);
+      await authProvider.registerUser(email, password);
 
-      // Confirm the user
-      await AuthService.confirmUser(token, tokenId);
+      // Registration successful, proceed with login and initialization
+      user = await widget.app.logIn(Credentials.emailPassword(email, password));
+      AuthService().initializefirstTime(user, name);
 
-      // If registration and confirmation are successful, navigate to the profile container screen
-      Navigator.pushNamed(context, AppRoutes.profileContainerScreen);
+      print(
+          "Successful logging in: User id: ${user.id} User id: ${user.profile}");
+      Navigator.pushNamed(
+          context, AppRoutes.pGinaDIniciAlumneOneContainerScreen);
     } catch (e) {
-      // Handle any errors that occur during registration or confirmation
-      print("Error registering or confirming user: $e");
-      // You can show an error message to the user if needed
+      // Registration failed
+      setState(() {
+        errorCratinggAccount = true;
+      });
+      print("Error $errorCheckBox Error logging in: $e");
     }
   }
-  */
 }

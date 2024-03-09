@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/core/data/portfolio.dart';
 import 'package:flutter_application_1/views/login_view.dart';
 import 'package:flutter_application_1/views/home_view.dart';
 import 'package:flutter_application_1/views/delete_account_view.dart';
@@ -9,6 +8,7 @@ import 'package:flutter_application_1/views/modify_name_view.dart';
 import 'package:flutter_application_1/views/log_out_view.dart';
 import 'package:flutter_application_1/views/change_log_in_view.dart';
 import 'package:flutter_application_1/views/password_security_view.dart';
+import 'package:flutter_application_1/views/conditions_use_view.dart';
 import 'package:realm/realm.dart';
 
 class AppRoutes {
@@ -39,6 +39,8 @@ class AppRoutes {
 
   static const String logInScreen = '/logInScreen';
 
+  static const String conditionsUseScreen = '/conditionsUseScreen';
+
   static Map<String, WidgetBuilder> routes(App app) {
     return {
       iniciarSessiRegistrarSeScreen: (context) =>
@@ -47,11 +49,12 @@ class AppRoutes {
           PGinaDIniciAlumneOneContainerScreen(),
       profileContainerScreen: (context) => ProfileContainerScreen(),
       deleteAccountScreen: (context) => DeleteAccountScreen(),
-      createAccountScreen: (context) => CreateAnAccountScreen(),
+      createAccountScreen: (context) => CreateAnAccountScreen(app: app),
       modifyNameScreen: (context) => ModifyNameScreen(),
       logOutScreen: (context) => LogOutScreen(),
       logInScreen: (context) => LogInScreen(app: app),
       passwordSecurityScreen: (context) => PasswordScreen(),
+      conditionsUseScreen: (context) => ConditionsUseScreen(),
     };
   }
 }

@@ -7,6 +7,8 @@ import 'package:flutter_application_1/widgets/app_bar/appbar_subtitle.dart';
 import 'package:flutter_application_1/views/home_view_component/home_view_bottom_part.dart';
 import 'package:flutter_application_1/views/components/listBloc.dart';
 import 'package:flutter_application_1/views/components/itemBloc.dart';
+import 'package:flutter_application_1/core/utils/auth_service.dart';
+import 'package:flutter_application_1/core/data/profile.dart';
 
 class ProfileOneScreen extends StatelessWidget {
   ProfileOneScreen({Key? key, required this.bloc, required this.singlebloc})
@@ -22,6 +24,7 @@ class ProfileOneScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Profile? profile = AuthService().getProfile();
     return SafeArea(
       child: Scaffold(
         backgroundColor: appTheme.gray100,
@@ -45,11 +48,11 @@ class ProfileOneScreen extends StatelessWidget {
                           .start, // Align children to the start (top) of the column
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        _buildPerfilColumn(context),
+                        _buildPerfilColumn(context, profile),
                         SizedBox(height: 15.v),
                         _buildReturnvalueColumn(context, bloc),
                         SizedBox(height: 15.v),
-                        _buildPortfolioReviewColumn(context),
+                        _buildPortfolioReviewColumn(context, profile),
                       ],
                     ),
                   ),
@@ -82,7 +85,7 @@ class ProfileOneScreen extends StatelessWidget {
   }
 
   /// Section Widget
-  Widget _buildPerfilColumn(BuildContext context) {
+  Widget _buildPerfilColumn(BuildContext context, Profile? profile) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 15.h),
       decoration: AppDecoration.fillGray100,
@@ -115,16 +118,25 @@ class ProfileOneScreen extends StatelessWidget {
                     bottom: 12.v,
                   ),
                   child: Text(
-                    "Asterix Obelix",
+                    profile?.userName ?? "null",
                     style: theme.textTheme.bodyLarge,
                   ),
                 ),
               ],
             ),
             SizedBox(height: 27.v),
-            Text(
-              "Number of portfolios:                     4",
-              style: theme.textTheme.bodyLarge,
+            Row(
+              children: [
+                Text(
+                  "Number of portfolios:",
+                  style: theme.textTheme.bodyLarge,
+                ),
+                SizedBox(width: 10.v), // Adjust as needed for spacing
+                Text(
+                  "${profile?.portfolionum ?? "null"}",
+                  style: theme.textTheme.bodyLarge,
+                ),
+              ],
             ),
           ],
         ),
@@ -133,7 +145,7 @@ class ProfileOneScreen extends StatelessWidget {
   }
 
   /// Section Widget
-  Widget _buildPortfolioReviewColumn(BuildContext context) {
+  Widget _buildPortfolioReviewColumn(BuildContext context, Profile? profile) {
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: 34.h,
@@ -174,7 +186,7 @@ class ProfileOneScreen extends StatelessWidget {
                   bottom: 22.v,
                 ),
                 child: Text(
-                  "ETF",
+                  profile?.preferedAssetclass ?? "null",
                   style: theme.textTheme.titleLarge,
                 ),
               ),
@@ -186,7 +198,7 @@ class ProfileOneScreen extends StatelessWidget {
             child: _buildRiskiestPortfolioRow(
               context,
               riskiestPortfolioText: "Best performing portfolio:",
-              allStockPlanText: "All Stock Plan",
+              allStockPlanText: profile?.bestPerformingPortfolio ?? "null",
             ),
           ),
           SizedBox(height: 15.v),
@@ -195,7 +207,7 @@ class ProfileOneScreen extends StatelessWidget {
             child: _buildRiskiestPortfolioRow(
               context,
               riskiestPortfolioText: "Riskiest  portfolio:",
-              allStockPlanText: "All Stock Plan",
+              allStockPlanText: profile?.riskiestPortfolio ?? "null",
             ),
           ),
           SizedBox(height: 19.v),
@@ -227,7 +239,7 @@ class ProfileOneScreen extends StatelessWidget {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: "50 % Stock 50 % Bonds Plan",
+                          text: profile?.bestPortfolio ?? "null",
                           style: CustomTextStyles.titleLargeff000000,
                         ),
                       ],

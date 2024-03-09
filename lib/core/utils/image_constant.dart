@@ -15,6 +15,7 @@ class ImageConstant {
 
   // user manual images
   static String imgRectangle210 = '$imagePath/img_rectangle_210.png';
+  static String imgconfigurationBackground = '$imagePath/img_configuration.png';
 
   // Password & Security Four images
   static String imgInterfaceLock = '$imagePath/img_interface_lock.svg';

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/app_export.dart';
 import 'package:flutter_application_1/widgets/custom_elevated_button.dart';
 import 'package:flutter_application_1/views/home_view_component/home_view_bottom_part.dart';
+import 'package:flutter_application_1/core/utils/auth_service.dart';
 
 class LogOutDialog extends StatelessWidget {
   const LogOutDialog({Key? key}) : super(key: key);
@@ -51,7 +52,13 @@ class LogOutDialog extends StatelessWidget {
   }
 
   /// Navigates to the iniciarSessiRegistrarSeScreen when the action is triggered.
-  onTapLogOut(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.iniciarSessiRegistrarSeScreen);
+  onTapLogOut(BuildContext context) async {
+    final user = AuthService().getUser();
+    try {
+      await user.logOut();
+      Navigator.pushNamed(context, AppRoutes.iniciarSessiRegistrarSeScreen);
+    } catch (e) {
+      print("Logout failed: $e");
+    }
   }
 }

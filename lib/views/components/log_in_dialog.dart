@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/app_export.dart';
 import 'package:flutter_application_1/widgets/custom_elevated_button.dart';
 import 'package:flutter_application_1/widgets/custom_text_form_field.dart';
-
 import 'package:realm/realm.dart';
-
 import 'package:flutter_application_1/core/utils/auth_service.dart';
 
 class LogInDialog extends StatefulWidget {
@@ -22,11 +20,11 @@ class _LogInDialogState extends State<LogInDialog> {
   String email = '';
   String password = '';
   bool error = false;
+  late User user;
   Future<void> initializeUserAndRealm(BuildContext context) async {
     try {
       error = false;
-      final user =
-          await widget.app.logIn(Credentials.emailPassword(email, password));
+      user = await widget.app.logIn(Credentials.emailPassword(email, password));
       AuthService().initialize(user);
       print(
           "Successful logging in: User id: ${user.id} User id: ${user.profile}");

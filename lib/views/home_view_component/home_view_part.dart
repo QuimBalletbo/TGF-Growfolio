@@ -8,8 +8,6 @@ import 'package:flutter_application_1/views/home_view_component/home_view_bottom
 import 'package:flutter_application_1/views/components/max_portfolio_dialog.dart';
 import 'package:flutter_application_1/views/components/listBloc.dart';
 import 'package:flutter_application_1/widgets/custom_StockCard.dart';
-import 'package:flutter_application_1/core/data/portfolio.dart';
-import 'package:realm/realm.dart';
 import 'package:flutter_application_1/views/components/itemBloc.dart';
 
 class PGinaDIniciAlumneOnePage extends StatelessWidget {
