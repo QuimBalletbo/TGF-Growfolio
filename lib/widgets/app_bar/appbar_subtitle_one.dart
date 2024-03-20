@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/app_export.dart';
 
 // ignore: must_be_immutable
-class AppbarSubtitle extends StatelessWidget {
-  AppbarSubtitle({
+class AppbarSubtitleOne extends StatelessWidget {
+  AppbarSubtitleOne({
     Key? key,
     required this.text,
     this.margin,
@@ -22,15 +22,13 @@ class AppbarSubtitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(
-            context, AppRoutes.pGinaDIniciAlumneOneContainerScreen);
+        onTap!.call();
       },
       child: Padding(
         padding: margin ?? EdgeInsets.zero,
         child: Text(
           text,
-          textAlign: TextAlign.center,
-          style: CustomTextStyles.headlineSmallMontserratLight.copyWith(
+          style: theme.textTheme.bodySmall!.copyWith(
             color: theme.colorScheme.primary.withOpacity(1),
           ),
         ),

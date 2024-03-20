@@ -39,7 +39,7 @@ class PasswordSecurityOneDialog extends StatelessWidget {
                             style: CustomTextStyles.bodySmallRegular11)),
                     CustomSwitch(
                         margin: EdgeInsets.only(left: 31.h),
-                        value: isSelectedSwitch,
+                        initialValue: isSelectedSwitch,
                         onChange: (value) {
                           isSelectedSwitch = value;
                         })

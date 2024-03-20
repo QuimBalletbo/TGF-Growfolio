@@ -50,7 +50,7 @@ class PasswordSecurityThreeDialog extends StatelessWidget {
                                 textAlign: TextAlign.left)),
                         CustomSwitch(
                             margin: EdgeInsets.only(left: 39.h),
-                            value: isSelectedSwitch,
+                            initialValue: isSelectedSwitch,
                             onChange: (value) {
                               isSelectedSwitch = value;
                             })

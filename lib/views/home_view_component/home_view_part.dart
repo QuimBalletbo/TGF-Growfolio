@@ -187,7 +187,7 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
             )),
         buttonTextStyle: theme.textTheme.labelLarge!,
         onPressed: () {
-          onTapEditAPortfolio(context);
+          onTapCreateNewPortfolio(context);
         });
   }
 
@@ -221,6 +221,6 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
 
   /// Navigates to the brokerFeesConfigurationOneScreen when the action is triggered.
   onTapCreateNewPortfolio(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.brokerFeesConfigurationOneScreen);
+    Navigator.pushNamed(context, AppRoutes.brokerFeesScreen);
   }
 }

@@ -4,7 +4,6 @@ import 'package:flutter_application_1/widgets/custom_elevated_button.dart';
 import 'package:flutter_application_1/widgets/custom_text_form_field.dart';
 import 'package:realm/realm.dart';
 import 'package:flutter_application_1/core/utils/auth_service.dart';
-import 'package:flutter_application_1/core/data/profile.dart';
 
 class CreateAccountDialog extends StatefulWidget {
   CreateAccountDialog({Key? key, required this.app}) : super(key: key);

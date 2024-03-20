@@ -9,6 +9,7 @@ import 'package:flutter_application_1/views/log_out_view.dart';
 import 'package:flutter_application_1/views/change_log_in_view.dart';
 import 'package:flutter_application_1/views/password_security_view.dart';
 import 'package:flutter_application_1/views/conditions_use_view.dart';
+import 'package:flutter_application_1/views/broker_fees_view.dart';
 import 'package:realm/realm.dart';
 
 class AppRoutes {
@@ -40,6 +41,7 @@ class AppRoutes {
   static const String logInScreen = '/logInScreen';
 
   static const String conditionsUseScreen = '/conditionsUseScreen';
+  static const String brokerFeesScreen = '/brokerFeesScreen';
 
   static Map<String, WidgetBuilder> routes(App app) {
     return {
@@ -55,6 +57,7 @@ class AppRoutes {
       logInScreen: (context) => LogInScreen(app: app),
       passwordSecurityScreen: (context) => PasswordScreen(),
       conditionsUseScreen: (context) => ConditionsUseScreen(),
+      brokerFeesScreen: (context) => BrokerFeesConfigurationOneScreen(),
     };
   }
 }
