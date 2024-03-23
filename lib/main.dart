@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/core/app_export.dart';
-import 'package:flutter_application_1/core/data/portfolio.dart';
+import 'package:flutter_application_1/Model/app_export.dart';
+import 'package:flutter_application_1/Model/data/portfolio.dart';
 import 'package:realm/realm.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_application_1/core/utils/auth_service.dart';
+import 'package:flutter_application_1/Model/utils/auth_service.dart';
 
 var globalMessengerKey = GlobalKey<ScaffoldMessengerState>();
 Future<void> main() async {
