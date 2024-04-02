@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/app_export.dart';
-import 'package:flutter_application_1/View/Screens/dialogs/broker_fees_dialog.dart';
+import 'package:flutter_application_1/View/Screens/dialogs/stock_conf_dialog.dart';
 import 'package:flutter_application_1/View/widgets/custom_space_button.dart';
 import 'package:flutter_application_1/View/widgets/ArrowBackIosColumn.dart';
+import 'package:flutter_application_1/View/widgets/custom_image_button.dart';
 
 // ignore_for_file: must_be_immutable
-class brokerFeesConfiguration extends StatelessWidget {
-  const brokerFeesConfiguration({Key? key}) : super(key: key);
+class StockConfiguration extends StatelessWidget {
+  const StockConfiguration({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,23 +24,37 @@ class brokerFeesConfiguration extends StatelessWidget {
               children: [
                 // AppBar
                 const ArrowBackIosColumn(
-                  text: "Broker Fees configuration",
+                  text: "Stock configuration",
                 ), // Placing the app bar here
 
                 SizedBox(height: 22.v),
                 Container(
                   constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height * 0.53),
-                  child: const BrokerFeesConfigurationDialog(),
+                      maxHeight: MediaQuery.of(context).size.height * 0.40),
+                  child: const StockConfigurationDialog(),
                 ),
 
                 SizedBox(height: 22.v),
+                CustomImageButton(
+                  text: "Add a Stock",
+                  imageConstant: ImageConstant.imgPlus,
+                  onTap: () => onTapContinue(context),
+                ),
+                SizedBox(height: 22.v),
                 CustomSpaceButton(
-                  text: "Continue",
+                  text: "Next step",
                   onTap: () {
                     onTapContinue(context);
                   },
                 ),
+                SizedBox(height: 16.v),
+                CustomSpaceButton(
+                  text: "Finish Portfolio Configuration",
+                  onTap: () {
+                    onTapContinue(context);
+                  },
+                ),
+
                 SizedBox(height: 16.v),
                 CustomSpaceButton(
                   text: "Go Back",
@@ -63,9 +78,7 @@ class brokerFeesConfiguration extends StatelessWidget {
     Navigator.pushNamed(context, AppRoutes.pGinaDIniciAlumneOneContainerScreen);
   }
 
-  onTapContinue(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.stockConfigurationScreen);
-  }
+  onTapContinue(BuildContext context) {}
 
   onTapGoBack(BuildContext context) {
     Navigator.pop(context);

@@ -3,7 +3,7 @@ import 'package:flutter_application_1/Model/app_export.dart';
 import 'package:flutter_application_1/View/widgets/app_bar/appbar_subtitle.dart';
 import 'package:flutter_application_1/View/widgets/app_bar/appbar_trailing_image.dart';
 import 'package:flutter_application_1/View/widgets/app_bar/custom_app_bar.dart';
-import 'package:flutter_application_1/View/widgets/custom_elevated_button.dart';
+import 'package:flutter_application_1/View/widgets/custom_image_button.dart';
 import 'package:flutter_application_1/View/Screens/home_view_component/home_view_bottom_part.dart';
 import 'package:flutter_application_1/View/Screens/dialogs/max_portfolio_dialog.dart';
 import 'package:flutter_application_1/Model/listBloc.dart';
@@ -64,11 +64,28 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
                                     style:
                                         CustomTextStyles.titleLargeMontserrat)),
                             SizedBox(height: 22.v),
-                            _buildDeletePortfolio(context),
+                            CustomImageButton(
+                              text: "Delete Portfolio         ",
+                              imageConstant: ImageConstant
+                                  .imgInterfaceremovecircledeleteaddcirclesubtractbuttonbuttonsremove,
+                              buttonStyle:
+                                  CustomButtonStyles.outlinePrimaryTL19,
+                              onTap: () => onTapEditAPortfolio(context),
+                            ),
+
                             SizedBox(height: 15.v),
-                            _buildEditAPortfolio(context),
+                            CustomImageButton(
+                              text: "Edit a  Portfolio         ",
+                              imageConstant: ImageConstant
+                                  .imgInterfaceeditwritecirclechangecircleeditmodifypencilwritewriting,
+                              onTap: () => onTapEditAPortfolio(context),
+                            ),
                             SizedBox(height: 15.v),
-                            _buildCreateNewPortfolio(context),
+                            CustomImageButton(
+                              text: "Create new Portfolio",
+                              imageConstant: ImageConstant.imgPlus,
+                              onTap: () => onTapCreateNewPortfolio(context),
+                            ),
                             SizedBox(height: 15.v),
                             FloatingActionButton(
                                 onPressed: bloc.addNewItems,
@@ -85,11 +102,35 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            _buildDeletePortfolio(context),
+                            CustomImageButton(
+                              text: "Delete Portfolio         ",
+                              imageConstant: ImageConstant
+                                  .imgInterfaceremovecircledeleteaddcirclesubtractbuttonbuttonsremove,
+                              buttonStyle:
+                                  CustomButtonStyles.outlinePrimaryTL19,
+                              onTap: () {
+                                onTapEditAPortfolio(context);
+                              },
+                            ),
                             SizedBox(height: 15.v),
-                            _buildEditAPortfolio(context),
+                            CustomImageButton(
+                              text: "Edit a  Portfolio         ",
+                              imageConstant: ImageConstant
+                                  .imgInterfaceeditwritecirclechangecircleeditmodifypencilwritewriting,
+                              onTap: () {
+                                onTapEditAPortfolio(context);
+                              },
+                            ),
+
                             SizedBox(height: 15.v),
-                            _buildCreateNewPortfolio(context),
+                            CustomImageButton(
+                              text: "Create new Portfolio",
+                              imageConstant: ImageConstant.imgPlus,
+                              onTap: () {
+                                onTapCreateNewPortfolio(context);
+                              },
+                            ),
+
                             SizedBox(height: 15.v),
                             FloatingActionButton(
                                 onPressed: bloc.addNewItems,
@@ -122,73 +163,6 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  // Delete Portfolio
-
-  Widget _buildDeletePortfolio(BuildContext context) {
-    return CustomElevatedButton(
-        height: 45.v,
-        text: "Delete Portfolio         ",
-        margin: EdgeInsets.only(left: 35.h, right: 58.h),
-        alignment: Alignment.bottomLeft,
-        leftIcon: Container(
-            margin: EdgeInsets.only(right: 30.h),
-            child: CustomImageView(
-              imagePath: ImageConstant
-                  .imgInterfaceremovecircledeleteaddcirclesubtractbuttonbuttonsremove,
-              height: 30.v,
-              width: 32.h,
-              color: Colors.black,
-            )),
-        buttonStyle: CustomButtonStyles.outlinePrimaryTL19,
-        buttonTextStyle: theme.textTheme.labelLarge!,
-        onPressed: () {
-          onTapEditAPortfolio(context);
-        });
-  }
-
-  /// Section Widget ImageConstant.imgPlus
-  Widget _buildEditAPortfolio(BuildContext context) {
-    return CustomElevatedButton(
-        height: 45.v,
-        text: "Edit a  Portfolio         ",
-        alignment: Alignment.bottomLeft,
-        margin: EdgeInsets.only(left: 35.h, right: 58.h),
-        leftIcon: Container(
-            margin: EdgeInsets.only(right: 30.h),
-            child: CustomImageView(
-              imagePath: ImageConstant
-                  .imgInterfaceeditwritecirclechangecircleeditmodifypencilwritewriting,
-              height: 30.v,
-              width: 32.h,
-              color: Colors.black,
-            )),
-        buttonTextStyle: theme.textTheme.labelLarge!,
-        onPressed: () {
-          onTapEditAPortfolio(context);
-        });
-  }
-
-  /// Section Widget Create new Portfolio
-  Widget _buildCreateNewPortfolio(BuildContext context) {
-    return CustomElevatedButton(
-        height: 45.v,
-        text: "Create new Portfolio",
-        alignment: Alignment.bottomLeft,
-        margin: EdgeInsets.only(left: 35.h, right: 58.h),
-        leftIcon: Container(
-            margin: EdgeInsets.only(right: 30.h),
-            child: CustomImageView(
-              imagePath: ImageConstant.imgPlus,
-              height: 30.v,
-              width: 32.h,
-              color: Colors.black,
-            )),
-        buttonTextStyle: theme.textTheme.labelLarge!,
-        onPressed: () {
-          onTapCreateNewPortfolio(context);
-        });
   }
 
   /// Shows a modal bottom sheet with [PGinaDIniciAlumneBottomsheet]

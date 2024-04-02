@@ -3,6 +3,7 @@ import 'package:flutter_application_1/Model/app_export.dart';
 import 'package:flutter_application_1/View/Screens/dialogs/taxation_conf_dialog.dart';
 import 'package:flutter_application_1/View/widgets/custom_space_button.dart';
 import 'package:flutter_application_1/View/widgets/ArrowBackIosColumn.dart';
+import 'package:flutter_application_1/View/Screens/dialogs/create_Portfolio_dialog.dart';
 
 // ignore_for_file: must_be_immutable
 class TaxationConfigurationOneScreen extends StatelessWidget {
@@ -27,7 +28,13 @@ class TaxationConfigurationOneScreen extends StatelessWidget {
                 ), // Placing the app bar here
 
                 SizedBox(height: 22.v),
-                TaxationConfigurationDialog(),
+
+                Container(
+                  constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height * 0.53),
+                  child: const TaxationConfigurationDialog(),
+                ),
+
                 SizedBox(height: 22.v),
                 CustomSpaceButton(
                   text: "Continue",

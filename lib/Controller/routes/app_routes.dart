@@ -12,6 +12,7 @@ import 'package:flutter_application_1/View/Screens/conditions_use_view.dart';
 import 'package:flutter_application_1/View/Screens/createPortfolio_view.dart';
 import 'package:flutter_application_1/View/Screens/taxation_conf_view.dart';
 import 'package:flutter_application_1/View/Screens/broker_fees_view.dart';
+import 'package:flutter_application_1/View/Screens/stock_conf_view.dart';
 import 'package:realm/realm.dart';
 
 class AppRoutes {
@@ -46,6 +47,7 @@ class AppRoutes {
   static const String cretatePortfolioScreen = '/CretatePortfolioScreen';
   static const String taxationScreen = '/taxationScreen';
   static const String brokerFeesScreen = '/brokerFeesScreen';
+  static const String stockConfigurationScreen = '/stockConfigurationScreen';
 
   static Map<String, WidgetBuilder> routes(App app) {
     return {
@@ -65,6 +67,7 @@ class AppRoutes {
           const BrokerFeesConfigurationOneScreen(),
       taxationScreen: (context) => const TaxationConfigurationOneScreen(),
       brokerFeesScreen: (context) => const brokerFeesConfiguration(),
+      stockConfigurationScreen: (context) => const StockConfiguration(),
     };
   }
 }

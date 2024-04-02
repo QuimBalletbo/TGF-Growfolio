@@ -21,13 +21,17 @@ class BrokerFeesConfigurationOneScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // AppBar
                 const ArrowBackIosColumn(
                   text: "Portfolio initial configuration",
-                ), // Placing the app bar here
+                ),
 
                 SizedBox(height: 22.v),
-                PortfolioConfigurationDialog(),
+                Container(
+                  constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height * 0.53),
+                  child: const PortfolioConfigurationDialog(),
+                ),
+
                 SizedBox(height: 22.v),
                 CustomSpaceButton(
                   text: "Continue",
