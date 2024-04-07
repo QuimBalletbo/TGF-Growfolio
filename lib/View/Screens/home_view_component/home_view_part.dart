@@ -183,14 +183,17 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
 
   /// Displays a dialog with the [PGinaDIniciAlumneThreeDialog] content.
   onTapEditAPortfolio(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (_) => const AlertDialog(
-              content: PGinaDIniciAlumneThreeDialog(),
-              backgroundColor: Colors.transparent,
-              contentPadding: EdgeInsets.zero,
-              insetPadding: EdgeInsets.only(left: 0),
-            ));
+    bool isStackReset = !Navigator.canPop(context);
+    if (isStackReset == true) {
+      showDialog(
+          context: context,
+          builder: (_) => const AlertDialog(
+                content: PGinaDIniciAlumneThreeDialog(),
+                backgroundColor: Colors.transparent,
+                contentPadding: EdgeInsets.zero,
+                insetPadding: EdgeInsets.only(left: 0),
+              ));
+    }
   }
 
   /// Navigates to the brokerFeesConfigurationOneScreen when the action is triggered.

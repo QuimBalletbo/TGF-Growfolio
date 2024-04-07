@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/app_export.dart';
-import 'package:flutter_application_1/View/Screens/dialogs/taxation_conf_dialog.dart';
+import 'package:flutter_application_1/View/Screens/dialogs/create_stock_dialog.dart';
 import 'package:flutter_application_1/View/widgets/custom_space_button.dart';
 import 'package:flutter_application_1/View/widgets/ArrowBackIosColumn.dart';
-import 'package:flutter_application_1/View/Screens/dialogs/create_Portfolio_dialog.dart';
 
 // ignore_for_file: must_be_immutable
-class TaxationConfigurationOneScreen extends StatelessWidget {
-  const TaxationConfigurationOneScreen({Key? key}) : super(key: key);
+class CreateStock extends StatelessWidget {
+  const CreateStock({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,20 +23,18 @@ class TaxationConfigurationOneScreen extends StatelessWidget {
               children: [
                 // AppBar
                 const ArrowBackIosColumn(
-                  text: "Taxation configuration",
+                  text: "New Stock",
                 ), // Placing the app bar here
 
                 SizedBox(height: 22.v),
-
                 Container(
                   constraints: BoxConstraints(
                       maxHeight: MediaQuery.of(context).size.height * 0.53),
-                  child: const TaxationConfigurationDialog(),
+                  child: const CreateStockDialog(),
                 ),
-
                 SizedBox(height: 22.v),
                 CustomSpaceButton(
-                  text: "Continue",
+                  text: "Save Stock",
                   onTap: () {
                     onTapContinue(context);
                   },
@@ -61,9 +58,7 @@ class TaxationConfigurationOneScreen extends StatelessWidget {
     );
   }
 
-  onTapContinue(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.brokerFeesScreen);
-  }
+  onTapContinue(BuildContext context) {}
 
   onTapGoBack(BuildContext context) {
     Navigator.pop(context);

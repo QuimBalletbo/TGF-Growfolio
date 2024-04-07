@@ -84,6 +84,10 @@ class DeleteAccountScreen extends StatelessWidget {
 
   /// Navigates to the pGinaDIniciAlumneOneContainerScreen when the action is triggered.
   onTapLogin(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.pGinaDIniciAlumneOneContainerScreen);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      AppRoutes.homeScreen,
+      (route) => false,
+    );
   }
 }

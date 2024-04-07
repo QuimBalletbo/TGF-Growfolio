@@ -39,6 +39,10 @@ class PGinaDIniciAlumneThreeDialog extends StatelessWidget {
 
   /// Navigates to the pGinaDIniciAlumneOneContainerScreen when the action is triggered.
   onTapPortfolioLimit(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.pGinaDIniciAlumneOneContainerScreen);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      AppRoutes.homeScreen,
+      (route) => false,
+    );
   }
 }

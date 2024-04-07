@@ -22,7 +22,7 @@ class PortfolioConfigurationDialog extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            NameTitleText(title: "Portfolio’s Name", name: "Plan 2"),
+            // NameTitleText(title: "Portfolio’s Name", name: "Plan 2"),
             SizedBox(height: 13.0),
             Divider(
               color: appTheme.deepOrange200,
@@ -64,11 +64,11 @@ class PortfolioConfigurationDialog extends StatelessWidget {
             SizedBox(height: 10.0),
             Divider(indent: 8.0),
             SizedBox(height: 12.0),
-            ToggleButton(text: "Taxation"),
+            //   ToggleButton(text: "Taxation"),
             SizedBox(height: 11.0),
-            ToggleButton(text: "Broker Fees"),
+            //    ToggleButton(text: "Broker Fees"),
             SizedBox(height: 11.0),
-            ToggleButton(text: "Portfolio rebalancing"),
+            // ToggleButton(text: "Portfolio rebalancing"),
           ],
         ),
       ),

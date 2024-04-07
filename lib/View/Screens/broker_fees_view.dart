@@ -59,10 +59,6 @@ class brokerFeesConfiguration extends StatelessWidget {
     );
   }
 
-  onTapHome(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.pGinaDIniciAlumneOneContainerScreen);
-  }
-
   onTapContinue(BuildContext context) {
     Navigator.pushNamed(context, AppRoutes.stockConfigurationScreen);
   }

@@ -22,8 +22,11 @@ class AppbarSubtitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(
-            context, AppRoutes.pGinaDIniciAlumneOneContainerScreen);
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          AppRoutes.homeScreen,
+          (route) => false,
+        );
       },
       child: Padding(
         padding: margin ?? EdgeInsets.zero,

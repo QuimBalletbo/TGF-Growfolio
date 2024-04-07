@@ -10,8 +10,8 @@ import 'package:flutter_application_1/Model/itemBloc.dart';
 import 'package:flutter_application_1/Model/utils/auth_service.dart';
 
 // ignore_for_file: must_be_immutable
-class PGinaDIniciAlumneOneContainerScreen extends StatelessWidget {
-  PGinaDIniciAlumneOneContainerScreen({Key? key}) : super(key: key);
+class HomeScreen extends StatelessWidget {
+  HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

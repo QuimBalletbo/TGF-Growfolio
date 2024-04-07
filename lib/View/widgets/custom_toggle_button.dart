@@ -5,15 +5,16 @@ import 'package:flutter_application_1/View/widgets/custom_switch.dart';
 class ToggleButton extends StatelessWidget {
   final String text;
 
-  const ToggleButton({
+  final Function(bool) onToggleChanged;
+
+  ToggleButton({
     Key? key,
     required this.text,
+    required this.onToggleChanged,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    bool isToggleSelected = false;
-
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 4.h),
       child: Row(
@@ -35,9 +36,9 @@ class ToggleButton extends StatelessWidget {
           ),
           Expanded(
             child: CustomSwitch(
-              initialValue: isToggleSelected,
+              initialValue: false,
               onChange: (value) {
-                // No state change needed here as it's stateless
+                onToggleChanged(value);
               },
             ),
           ),

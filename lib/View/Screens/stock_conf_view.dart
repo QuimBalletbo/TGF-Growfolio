@@ -74,11 +74,9 @@ class StockConfiguration extends StatelessWidget {
     );
   }
 
-  onTapHome(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.pGinaDIniciAlumneOneContainerScreen);
+  onTapContinue(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.createStockScreen);
   }
-
-  onTapContinue(BuildContext context) {}
 
   onTapGoBack(BuildContext context) {
     Navigator.pop(context);

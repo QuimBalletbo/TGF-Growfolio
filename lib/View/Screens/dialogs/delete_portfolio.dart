@@ -86,11 +86,19 @@ class PGinaDIniciAlumneFourDialog extends StatelessWidget {
 
   /// Navigates to the pGinaDIniciAlumneOneContainerScreen when the action is triggered.
   onTapTxtNo(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.pGinaDIniciAlumneOneContainerScreen);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      AppRoutes.homeScreen,
+      (route) => false,
+    );
   }
 
   /// Navigates to the pGinaDIniciAlumneOneContainerScreen when the action is triggered.
   onTapTxtYes(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.pGinaDIniciAlumneOneContainerScreen);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      AppRoutes.homeScreen,
+      (route) => false,
+    );
   }
 }

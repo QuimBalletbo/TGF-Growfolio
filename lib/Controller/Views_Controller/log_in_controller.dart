@@ -20,8 +20,11 @@ class LoginController {
       AuthService().initialize(user);
       print(
           "Successful logging in: User id: ${user.id} User id: ${user.profile}");
-      Navigator.pushNamed(
-          context, AppRoutes.pGinaDIniciAlumneOneContainerScreen);
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        AppRoutes.homeScreen,
+        (route) => false,
+      );
     } catch (e) {
       error = true;
       print("Error $error Error logging in: $e");
@@ -31,6 +34,10 @@ class LoginController {
   }
 
   void onTapLogin(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.pGinaDIniciAlumneOneContainerScreen);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      AppRoutes.homeScreen,
+      (route) => false,
+    );
   }
 }

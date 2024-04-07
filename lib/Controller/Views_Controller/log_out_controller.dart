@@ -6,7 +6,11 @@ class LogoutController {
   final AuthService _authService = AuthService();
 
   Future<void> onTapCancel(BuildContext context) async {
-    Navigator.pushNamed(context, AppRoutes.pGinaDIniciAlumneOneContainerScreen);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      AppRoutes.homeScreen,
+      (route) => false,
+    );
   }
 
   Future<void> onTapLogOut(BuildContext context) async {

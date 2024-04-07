@@ -73,7 +73,11 @@ class ModifyNameDialog extends StatelessWidget {
   /// The sheet is displayed on top of the current view with scrolling enabled if
   /// content exceeds viewport height. pGinaDIniciAlumneOneContainerScreen
   onTapCancel(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.pGinaDIniciAlumneOneContainerScreen);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      AppRoutes.homeScreen,
+      (route) => false,
+    );
   }
 
   /// Navigates to the iniciarSessiRegistrarSeScreen when the action is triggered.

@@ -12,6 +12,7 @@ class CreateAccountController {
   bool secondPasswordError = false;
   bool errorCreatingAccount = false;
   bool errorCheckBox = false;
+
   CreateAccountController(this._app);
 
   bool validateEmail(String email) {
@@ -73,8 +74,11 @@ class CreateAccountController {
 
       print(
           "Successful logging in: User id: ${user.id} User id: ${user.profile}");
-      Navigator.pushNamed(
-          context, AppRoutes.pGinaDIniciAlumneOneContainerScreen);
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        AppRoutes.homeScreen,
+        (route) => false,
+      );
     } catch (e) {
       // Registration failed
       errorCreatingAccount = true;
@@ -82,6 +86,11 @@ class CreateAccountController {
       print("Error $errorCheckBox Error logging in: $e");
     }
   }
+}
 
-  // Other methods like onTapConditions and createAccount here
+class AccountController {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmpasswordController = TextEditingController();
 }

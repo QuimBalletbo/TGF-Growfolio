@@ -29,8 +29,11 @@ class ProfileContainerScreen extends StatelessWidget {
       bottomNavigationBar: CustomBottomBar(
         selectedIndex: 1, // Set the index of the Profile tab
         onChanged: (type) {
-          Navigator.pushNamed(
-              context, AppRoutes.pGinaDIniciAlumneOneContainerScreen);
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            AppRoutes.homeScreen,
+            (route) => false,
+          );
         },
       ),
     );

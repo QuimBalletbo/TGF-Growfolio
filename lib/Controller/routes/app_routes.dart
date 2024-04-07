@@ -13,13 +13,14 @@ import 'package:flutter_application_1/View/Screens/createPortfolio_view.dart';
 import 'package:flutter_application_1/View/Screens/taxation_conf_view.dart';
 import 'package:flutter_application_1/View/Screens/broker_fees_view.dart';
 import 'package:flutter_application_1/View/Screens/stock_conf_view.dart';
+import 'package:flutter_application_1/View/Screens/create_stock_view.dart';
 import 'package:realm/realm.dart';
 
 class AppRoutes {
   static const String iniciarSessiRegistrarSeScreen =
       '/iniciar_sessi_registrar_se_screen';
 
-  static const String pGinaDIniciAlumneOneContainerScreen = '/home_view';
+  static const String homeScreen = '/home_view';
 
   static const String profileContainerScreen = '/profile_view';
 
@@ -48,13 +49,13 @@ class AppRoutes {
   static const String taxationScreen = '/taxationScreen';
   static const String brokerFeesScreen = '/brokerFeesScreen';
   static const String stockConfigurationScreen = '/stockConfigurationScreen';
+  static const String createStockScreen = '/createStockScreen';
 
   static Map<String, WidgetBuilder> routes(App app) {
     return {
       iniciarSessiRegistrarSeScreen: (context) =>
           IniciarSessiRegistrarSeScreen(app: app),
-      pGinaDIniciAlumneOneContainerScreen: (context) =>
-          PGinaDIniciAlumneOneContainerScreen(),
+      homeScreen: (context) => HomeScreen(),
       profileContainerScreen: (context) => ProfileContainerScreen(),
       deleteAccountScreen: (context) => DeleteAccountScreen(),
       createAccountScreen: (context) => CreateAnAccountScreen(app: app),
@@ -68,6 +69,7 @@ class AppRoutes {
       taxationScreen: (context) => const TaxationConfigurationOneScreen(),
       brokerFeesScreen: (context) => const brokerFeesConfiguration(),
       stockConfigurationScreen: (context) => const StockConfiguration(),
+      createStockScreen: (context) => const CreateStock(),
     };
   }
 }

@@ -59,7 +59,11 @@ class BrokerFeesConfigurationOneScreen extends StatelessWidget {
   }
 
   onTapHome(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.pGinaDIniciAlumneOneContainerScreen);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      AppRoutes.homeScreen,
+      (route) => false,
+    );
   }
 
   onTapContinue(BuildContext context) {

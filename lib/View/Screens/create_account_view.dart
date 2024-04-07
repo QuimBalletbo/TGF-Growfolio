@@ -56,19 +56,16 @@ class CreateAnAccountScreen extends StatelessWidget {
               ],
             ),
           ),
-          // AlertDialog
+
           Positioned(
             left: 15,
             right: 15,
             bottom: 18,
-            child: Center(
-              child: AlertDialog(
-                content: CreateAccountDialog(
-                  app: app,
-                ),
-                backgroundColor: Colors.transparent,
-                contentPadding: EdgeInsets.zero,
-                insetPadding: const EdgeInsets.only(left: 0),
+            child: Container(
+              constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * 0.63),
+              child: CreateAccountDialog(
+                app: app,
               ),
             ),
           ),
