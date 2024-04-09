@@ -65,10 +65,10 @@ class AppRoutes {
       passwordSecurityScreen: (context) => PasswordScreen(),
       conditionsUseScreen: (context) => ConditionsUseScreen(),
       cretatePortfolioScreen: (context) =>
-          const BrokerFeesConfigurationOneScreen(),
-      taxationScreen: (context) => const TaxationConfigurationOneScreen(),
-      brokerFeesScreen: (context) => const brokerFeesConfiguration(),
-      stockConfigurationScreen: (context) => const StockConfiguration(),
+          CreateBrokerFeesConfigurationOneScreen(),
+      taxationScreen: (context) => TaxationConfigurationOneScreen(),
+      brokerFeesScreen: (context) => brokerFeesConfiguration(),
+      stockConfigurationScreen: (context) => StockConfiguration(),
       createStockScreen: (context) => const CreateStock(),
     };
   }

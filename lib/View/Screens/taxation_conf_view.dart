@@ -4,11 +4,27 @@ import 'package:flutter_application_1/View/Screens/dialogs/taxation_conf_dialog.
 import 'package:flutter_application_1/View/widgets/custom_space_button.dart';
 import 'package:flutter_application_1/View/widgets/ArrowBackIosColumn.dart';
 import 'package:flutter_application_1/View/Screens/dialogs/create_Portfolio_dialog.dart';
+import 'package:flutter_application_1/Controller/Views_Controller/taxation_conf_controller.dart';
 
 // ignore_for_file: must_be_immutable
-class TaxationConfigurationOneScreen extends StatelessWidget {
-  const TaxationConfigurationOneScreen({Key? key}) : super(key: key);
+class TaxationConfigurationOneScreen extends StatefulWidget {
+  TaxationConfigurationOneScreen({Key? key}) : super(key: key);
+  CreateTaxationConfigurationViewController viewController =
+      CreateTaxationConfigurationViewController();
 
+  @override
+  _TaxationConfigurationOneScreenState createState() =>
+      _TaxationConfigurationOneScreenState();
+}
+
+class _TaxationConfigurationOneScreenState
+    extends State<TaxationConfigurationOneScreen> {
+  String taxation = '';
+  double taxaRateShortTerm = 0;
+  double taxaRateLongtTerm = 0;
+  int shortToLongTransition = 0;
+  double dividendTax = 0;
+  double fwt = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +48,20 @@ class TaxationConfigurationOneScreen extends StatelessWidget {
                 Container(
                   constraints: BoxConstraints(
                       maxHeight: MediaQuery.of(context).size.height * 0.53),
-                  child: const TaxationConfigurationDialog(),
+                  child: CreateTaxationConfigurationDialog(
+                      viewController: widget.viewController),
+                ),
+                Container(
+                  color: Colors.white, // Set the background color to white
+                  child: Text(
+                    "The taxation: $taxation , taxaRateShortTerm: $taxaRateShortTerm, taxaRateLongtTerm: $taxaRateLongtTerm, shortToLongTransition: $shortToLongTransition , dividendTax: $dividendTax, fwt: $fwt",
+                    maxLines: 6,
+                    overflow: TextOverflow.ellipsis,
+                    style: CustomTextStyles.bodyMediumInterff1e1e1e.copyWith(
+                      decoration: TextDecoration.underline,
+                      decorationColor: const Color(0XFF1E1E1E),
+                    ),
+                  ),
                 ),
 
                 SizedBox(height: 22.v),
@@ -47,7 +76,7 @@ class TaxationConfigurationOneScreen extends StatelessWidget {
                   text: "Go Back",
                   buttonStyle: CustomButtonStyles.outlinePrimaryTL19,
                   onTap: () {
-                    onTapGoBack(context);
+                    onTapReload(context);
                   },
                 ),
 
@@ -59,6 +88,17 @@ class TaxationConfigurationOneScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  onTapReload(BuildContext context) {
+    setState(() {
+      taxation = widget.viewController.taxation;
+      taxaRateShortTerm = widget.viewController.taxaRateShortTerm;
+      taxaRateLongtTerm = widget.viewController.taxaRateLongtTerm;
+      shortToLongTransition = widget.viewController.shortToLongTransition;
+      dividendTax = widget.viewController.dividendTax;
+      fwt = widget.viewController.fwt;
+    });
   }
 
   onTapContinue(BuildContext context) {

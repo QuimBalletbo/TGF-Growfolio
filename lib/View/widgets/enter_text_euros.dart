@@ -2,24 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/app_export.dart';
 import 'package:flutter_application_1/View/widgets/custom_text_form_field.dart';
 
-class EnterTextEuros extends StatefulWidget {
+class EnterTextEuros extends StatelessWidget {
   final String text;
   final String defaultText;
+  final TextEditingController controller;
+  final Function(String) onTextChanged;
 
   EnterTextEuros({
     Key? key,
     required this.text,
     required this.defaultText,
+    required this.controller,
+    required this.onTextChanged,
   }) : super(key: key);
-
-  @override
-  _EnterTextEurosState createState() => _EnterTextEurosState();
-}
-
-class _EnterTextEurosState extends State<EnterTextEuros> {
-  final TextEditingController monetaryObjectiveController =
-      TextEditingController();
-  int monetaryObjective = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +31,7 @@ class _EnterTextEurosState extends State<EnterTextEuros> {
               width: 178.h,
               margin: EdgeInsets.only(left: 8.h, right: 15.h),
               child: Text(
-                widget.text,
+                text,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: theme.textTheme.bodyLarge,
@@ -58,15 +53,13 @@ class _EnterTextEurosState extends State<EnterTextEuros> {
                       left: 8.h,
                     ),
                     child: CustomTextFormField(
-                      controller: monetaryObjectiveController,
-                      hintText: widget.defaultText,
+                      controller: controller,
+                      hintText: defaultText,
                       hintStyle: theme.textTheme.bodyMedium!,
                       textInputType: TextInputType.emailAddress,
                       onEditingComplete: () {
-                        setState(() {
-                          monetaryObjective =
-                              int.parse(monetaryObjectiveController.text);
-                        });
+                        onTextChanged(
+                            controller.text); // Call the callback function
                       },
                     ),
                   ),

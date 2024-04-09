@@ -6,6 +6,7 @@ class TaxationSectionExtended extends StatefulWidget {
   final String text_2;
   final String text_3;
   final String text_4;
+  final Function(String) onSelectionChanged;
 
   TaxationSectionExtended({
     Key? key,
@@ -13,6 +14,7 @@ class TaxationSectionExtended extends StatefulWidget {
     required this.text_2,
     required this.text_3,
     required this.text_4,
+    required this.onSelectionChanged,
   }) : super(key: key);
 
   @override
@@ -43,6 +45,7 @@ class _TaxationSectionExtendedState extends State<TaxationSectionExtended> {
             onChange: (value) {
               setState(() {
                 frequencyInvesting = value!;
+                widget.onSelectionChanged(radioList[0]);
               });
             },
             isRightCheck: frequencyInvesting == radioList[0],
@@ -55,6 +58,7 @@ class _TaxationSectionExtendedState extends State<TaxationSectionExtended> {
             onChange: (value) {
               setState(() {
                 frequencyInvesting = value!;
+                widget.onSelectionChanged(radioList[1]);
               });
             },
             isRightCheck: frequencyInvesting == radioList[1],
@@ -67,6 +71,7 @@ class _TaxationSectionExtendedState extends State<TaxationSectionExtended> {
             onChange: (value) {
               setState(() {
                 frequencyInvesting = value!;
+                widget.onSelectionChanged(radioList[2]);
               });
             },
             isRightCheck: frequencyInvesting == radioList[2],
@@ -79,6 +84,7 @@ class _TaxationSectionExtendedState extends State<TaxationSectionExtended> {
             onChange: (value) {
               setState(() {
                 frequencyInvesting = value!;
+                widget.onSelectionChanged(radioList[3]);
               });
             },
             isRightCheck: frequencyInvesting == radioList[3],

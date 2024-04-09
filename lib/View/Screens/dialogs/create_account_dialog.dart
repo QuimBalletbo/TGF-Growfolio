@@ -4,7 +4,7 @@ import 'package:flutter_application_1/View/widgets/custom_elevated_button.dart';
 import 'package:flutter_application_1/View/widgets/custom_text_form_field.dart';
 import 'package:realm/realm.dart';
 import 'package:flutter_application_1/Model/utils/auth_service.dart';
-import 'package:flutter_application_1/Controller/Views_Controller/Dialog_Controller/create_account_controller.dart';
+import 'package:flutter_application_1/Controller/Views_Controller/Dialog_Controller/create_account_dialog_controller.dart';
 
 class CreateAccountDialog extends StatefulWidget {
   final App app;

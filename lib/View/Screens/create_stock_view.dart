@@ -30,16 +30,10 @@ class CreateStock extends StatelessWidget {
                 Container(
                   constraints: BoxConstraints(
                       maxHeight: MediaQuery.of(context).size.height * 0.53),
-                  child: const CreateStockDialog(),
+                  child: CreateStockDialog(),
                 ),
                 SizedBox(height: 22.v),
-                CustomSpaceButton(
-                  text: "Save Stock",
-                  onTap: () {
-                    onTapContinue(context);
-                  },
-                ),
-                SizedBox(height: 16.v),
+
                 CustomSpaceButton(
                   text: "Go Back",
                   buttonStyle: CustomButtonStyles.outlinePrimaryTL19,

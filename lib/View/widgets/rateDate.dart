@@ -5,6 +5,7 @@ import 'package:flutter_application_1/View/widgets/custom_drop_down.dart';
 class RateDate extends StatelessWidget {
   final String text;
   final String defaultText;
+  final Function(String) onNumberChanged;
   List<String> dropdownItemList = [
     " 1",
     " 2",
@@ -22,12 +23,12 @@ class RateDate extends StatelessWidget {
     " 30",
     " 50"
   ];
-  int taxRate = 0;
 
   RateDate({
     Key? key,
     required this.text,
     required this.defaultText,
+    required this.onNumberChanged,
   }) : super(key: key);
 
   @override
@@ -57,7 +58,7 @@ class RateDate extends StatelessWidget {
               hintText: defaultText,
               items: dropdownItemList,
               onChanged: (value) {
-                taxRate = int.parse(value);
+                onNumberChanged(value);
               },
             ),
           ),

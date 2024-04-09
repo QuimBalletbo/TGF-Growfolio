@@ -3,10 +3,12 @@ import 'package:flutter_application_1/Model/app_export.dart';
 import 'package:flutter_application_1/View/widgets/enter_text_%.dart';
 import 'package:flutter_application_1/View/widgets/custom_toggle_button.dart';
 import 'package:flutter_application_1/View/widgets/name_title_text.dart';
-import 'package:flutter_application_1/Controller/Views_Controller/Dialog_Controller/create_stock_controller.dart';
+import 'package:flutter_application_1/Controller/Views_Controller/Dialog_Controller/create_stock_dialog_controller.dart';
+import 'package:flutter_application_1/View/widgets/custom_space_button.dart';
 
 class CreateStockDialog extends StatefulWidget {
-  const CreateStockDialog({Key? key}) : super(key: key);
+  CreateStockDialog({Key? key}) : super(key: key);
+  CreateStockController controller = CreateStockController();
 
   @override
   _CreateStockDialogState createState() => _CreateStockDialogState();
@@ -67,8 +69,9 @@ class _CreateStockDialogState extends State<CreateStockDialog> {
             controller: controller.stockNameController,
             onPortfolioNameChanged: (value) {
               setState(() {
-                errorStockName = validateStockName(value);
-                stockName = getStockNameValue(value, errorStockName);
+                errorStockName = widget.controller.validateStockName(value);
+                stockName =
+                    widget.controller.getStockNameValue(value, errorStockName);
               });
             },
           ),
@@ -77,7 +80,7 @@ class _CreateStockDialogState extends State<CreateStockDialog> {
             child: Visibility(
               visible: errorStockName,
               child: Text(
-                "Invalid format. Please enter a valid stock name (3-50 characters, no special characters).",
+                "Invalid format. Please enter a valid stock name (3-20 characters, no special characters).",
                 style: errorStockName
                     ? CustomTextStyles.bodyMediumPrimary
                         .copyWith(color: Colors.red)
@@ -115,8 +118,10 @@ class _CreateStockDialogState extends State<CreateStockDialog> {
             controller: controller.enterTextController,
             onTextChanged: (value) {
               setState(() {
-                errorStockAllocation = checkIntegerValidity(value);
-                stockAllocation = getIntegerValue(value, errorStockAllocation);
+                errorStockAllocation =
+                    widget.controller.checkIntegerValidity(value);
+                stockAllocation = widget.controller
+                    .getIntegerValue(value, errorStockAllocation);
               });
             },
           ),
@@ -135,13 +140,18 @@ class _CreateStockDialogState extends State<CreateStockDialog> {
           ),
           const SizedBox(height: 6.0),
           Text(
-            "stockAllocation: $stockAllocation",
+            "stockAllocation: $stockAllocation stockName: $stockName includeFWT: $includeFWT",
             maxLines: 6,
             overflow: TextOverflow.ellipsis,
             style: CustomTextStyles.bodyMediumInterff1e1e1e.copyWith(
               decoration: TextDecoration.underline,
               decorationColor: const Color(0XFF1E1E1E),
             ),
+          ),
+          const SizedBox(height: 6.0),
+          CustomSpaceButton(
+            text: "Save Stock",
+            onTap: () {},
           ),
         ],
       ),

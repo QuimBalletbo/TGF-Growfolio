@@ -3,10 +3,28 @@ import 'package:flutter_application_1/Model/app_export.dart';
 import 'package:flutter_application_1/View/Screens/dialogs/create_Portfolio_dialog.dart';
 import 'package:flutter_application_1/View/widgets/custom_space_button.dart';
 import 'package:flutter_application_1/View/widgets/ArrowBackIosColumn.dart';
+import 'package:flutter_application_1/Controller/Views_Controller/create_portfolio_controller.dart';
 
-// ignore_for_file: must_be_immutable
-class BrokerFeesConfigurationOneScreen extends StatelessWidget {
-  const BrokerFeesConfigurationOneScreen({Key? key}) : super(key: key);
+class CreateBrokerFeesConfigurationOneScreen extends StatefulWidget {
+  CreateBrokerFeesConfigurationOneScreen({Key? key}) : super(key: key);
+  CreatePortfolioViewController viewController =
+      CreatePortfolioViewController();
+
+  @override
+  _CreateBrokerFeesConfigurationOneScreenState createState() =>
+      _CreateBrokerFeesConfigurationOneScreenState();
+}
+
+class _CreateBrokerFeesConfigurationOneScreenState
+    extends State<CreateBrokerFeesConfigurationOneScreen> {
+  String portfolioName = '';
+  double monetaryAmount = 0;
+  int duration = 0;
+  String frequencyInvesting = '';
+
+  bool taxation = false;
+  bool brokerFees = false;
+  bool rebalancing = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +47,8 @@ class BrokerFeesConfigurationOneScreen extends StatelessWidget {
                 Container(
                   constraints: BoxConstraints(
                       maxHeight: MediaQuery.of(context).size.height * 0.53),
-                  child: const PortfolioConfigurationDialog(),
+                  child: CreatePortfolioConfigurationDialog(
+                      viewController: widget.viewController),
                 ),
 
                 SizedBox(height: 22.v),
@@ -44,7 +63,7 @@ class BrokerFeesConfigurationOneScreen extends StatelessWidget {
                   text: "Cancel",
                   buttonStyle: CustomButtonStyles.outlinePrimaryTL19,
                   onTap: () {
-                    onTapHome(context);
+                    onTapReload(context);
                   },
                 ),
 
@@ -64,6 +83,19 @@ class BrokerFeesConfigurationOneScreen extends StatelessWidget {
       AppRoutes.homeScreen,
       (route) => false,
     );
+  }
+
+  onTapReload(BuildContext context) {
+    setState(() {
+      portfolioName = widget.viewController.portfolioName;
+      monetaryAmount = widget.viewController.monetaryAmount;
+      duration = widget.viewController.duration;
+      frequencyInvesting = widget.viewController.frequencyInvesting;
+
+      taxation = widget.viewController.taxation;
+      brokerFees = widget.viewController.brokerFees;
+      rebalancing = widget.viewController.rebalancing;
+    });
   }
 
   onTapContinue(BuildContext context) {

@@ -2,10 +2,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/app_export.dart';
 import 'package:flutter_application_1/View/widgets/enter_text_euros.dart';
 import 'package:flutter_application_1/View/widgets/TaxationSection.dart';
+import 'package:flutter_application_1/Controller/Views_Controller/Dialog_Controller/stock_conf_dialog_controller.dart';
+import 'package:flutter_application_1/Controller/Views_Controller/stock_conf_controller.dart';
 
-class StockConfigurationDialog extends StatelessWidget {
-  const StockConfigurationDialog({Key? key}) : super(key: key);
+class StockConfigurationDialog extends StatefulWidget {
+  final CreateStockConfController viewController;
+  StockConfigurationDialog({
+    Key? key,
+    required this.viewController,
+  }) : super(key: key);
 
+  @override
+  _CreateStockConfigurationDialogState createState() =>
+      _CreateStockConfigurationDialogState();
+}
+
+class _CreateStockConfigurationDialogState
+    extends State<StockConfigurationDialog> {
+  late CreateStockConfConfiguration controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = CreateStockConfConfiguration(
+      viewController: widget.viewController,
+    );
+  }
+
+  CreateStockConfigurationController dialogController =
+      CreateStockConfigurationController();
+  bool includeStocks = false;
+  bool equallyWeightedStocks = false;
+  double stockAllocation = 0;
+
+  bool errorStockAllocation = false;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -27,8 +57,13 @@ class StockConfigurationDialog extends StatelessWidget {
             ),
           ),
           TaxationSection(
-            text_1: "Exclude individual stocks from your portfolio",
-            text_2: "Include individual stocks in your portfolio.",
+            text_1: "Exclude stocks from your portfolio",
+            text_2: "Include stocks in your portfolio.",
+            onSelectionChanged: (value) {
+              setState(() {
+                includeStocks = controller.getIncludeStocks(value);
+              });
+            },
           ),
           Container(
             width: 304.h,
@@ -54,13 +89,40 @@ class StockConfigurationDialog extends StatelessWidget {
             ),
           ),
           TaxationSection(
-            text_1: "All stocks will be equally weighted",
+            text_1: "All stocks will be equally weighted.",
             text_2: "The stocks will not be equally weighted",
+            onSelectionChanged: (value) {
+              setState(() {
+                equallyWeightedStocks =
+                    controller.getEquallyWeightedStocks(value);
+              });
+            },
           ),
-          // segurament ho hare de canviar pk les comprvacions han de fer que sugui un numero del 0 al 100 i aquest widget ha de permetre numeros més alts
           EnterTextEuros(
-              text: "Stock Allocation (%)  of total portfolio",
-              defaultText: "%"),
+            text: "Stock Allocation (%)  of total portfolio",
+            defaultText: "%",
+            controller: dialogController.stockAllocation,
+            onTextChanged: (value) {
+              setState(() {
+                errorStockAllocation = controller.checkDoubleValidity(value);
+                stockAllocation =
+                    controller.getStockAllocation(value, errorStockAllocation);
+              });
+            },
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Visibility(
+              visible: errorStockAllocation,
+              child: Text(
+                "Invalid format. Please enter a valid number between 0 and 100.",
+                style: errorStockAllocation
+                    ? CustomTextStyles.bodyMediumPrimary
+                        .copyWith(color: Colors.red)
+                    : CustomTextStyles.bodyMediumPrimary,
+              ),
+            ),
+          ),
           const SizedBox(height: 6.0),
           const Divider(indent: 4.0, endIndent: 4.0),
           const SizedBox(height: 6.0),
@@ -69,6 +131,15 @@ class StockConfigurationDialog extends StatelessWidget {
             child: Text(
               "Your Stock Selections",
               style: theme.textTheme.bodyLarge,
+            ),
+          ),
+          Text(
+            "The includeStocks: $includeStocks , equallyWeightedStocks: $equallyWeightedStocks, stockAllocation: $stockAllocation",
+            maxLines: 6,
+            overflow: TextOverflow.ellipsis,
+            style: CustomTextStyles.bodyMediumInterff1e1e1e.copyWith(
+              decoration: TextDecoration.underline,
+              decorationColor: const Color(0XFF1E1E1E),
             ),
           ),
         ],
