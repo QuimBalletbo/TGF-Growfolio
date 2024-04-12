@@ -3,8 +3,8 @@ import 'package:flutter_application_1/Model/app_export.dart';
 import 'package:flutter_application_1/View/Screens/dialogs/taxation_conf_dialog.dart';
 import 'package:flutter_application_1/View/widgets/custom_space_button.dart';
 import 'package:flutter_application_1/View/widgets/ArrowBackIosColumn.dart';
-import 'package:flutter_application_1/View/Screens/dialogs/create_Portfolio_dialog.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/taxation_conf_controller.dart';
+import 'package:flutter_application_1/View/widgets/custom_PortfolioCard.dart';
 
 // ignore_for_file: must_be_immutable
 class TaxationConfigurationOneScreen extends StatefulWidget {
@@ -25,6 +25,7 @@ class _TaxationConfigurationOneScreenState
   int shortToLongTransition = 0;
   double dividendTax = 0;
   double fwt = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,17 +52,34 @@ class _TaxationConfigurationOneScreenState
                   child: CreateTaxationConfigurationDialog(
                       viewController: widget.viewController),
                 ),
-                Container(
-                  color: Colors.white, // Set the background color to white
-                  child: Text(
-                    "The taxation: $taxation , taxaRateShortTerm: $taxaRateShortTerm, taxaRateLongtTerm: $taxaRateLongtTerm, shortToLongTransition: $shortToLongTransition , dividendTax: $dividendTax, fwt: $fwt",
-                    maxLines: 6,
-                    overflow: TextOverflow.ellipsis,
-                    style: CustomTextStyles.bodyMediumInterff1e1e1e.copyWith(
-                      decoration: TextDecoration.underline,
-                      decorationColor: const Color(0XFF1E1E1E),
-                    ),
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: widget
+                          .viewController.allPortfolios.portfolios.isEmpty
+                      ? [
+                          // Display message when there are no portfolios
+                          Container(
+                              margin: EdgeInsets.only(right: 42.h),
+                              alignment: Alignment.centerRight,
+                              child: Text("There are currently no portfolios",
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style:
+                                      CustomTextStyles.titleLargeMontserrat)),
+                        ]
+                      : [
+                          // Render portfolios if available
+                          ...widget.viewController.allPortfolios.portfolios.map(
+                            (portfolio) => Column(
+                              children: [
+                                customPortfolioCard(portfolio,
+                                    widget.viewController.singlePortfolio),
+                                const SizedBox(height: 31),
+                              ],
+                            ),
+                          ),
+                        ],
                 ),
 
                 SizedBox(height: 22.v),
@@ -98,6 +116,7 @@ class _TaxationConfigurationOneScreenState
       shortToLongTransition = widget.viewController.shortToLongTransition;
       dividendTax = widget.viewController.dividendTax;
       fwt = widget.viewController.fwt;
+      widget.viewController.initController();
     });
   }
 

@@ -26,6 +26,8 @@ class _CreateBrokerFeesConfigurationOneScreenState
   bool brokerFees = false;
   bool rebalancing = false;
 
+  bool errorFieldEmpty = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +52,19 @@ class _CreateBrokerFeesConfigurationOneScreenState
                   child: CreatePortfolioConfigurationDialog(
                       viewController: widget.viewController),
                 ),
-
+                Align(
+                  alignment: Alignment.center,
+                  child: Visibility(
+                    visible: errorFieldEmpty,
+                    child: Text(
+                      "Invalid format. one or more fields are empty. Please fill in all fields and try again",
+                      style: errorFieldEmpty
+                          ? CustomTextStyles.bodyMediumPrimary
+                              .copyWith(color: Colors.red)
+                          : CustomTextStyles.bodyMediumPrimary,
+                    ),
+                  ),
+                ),
                 SizedBox(height: 22.v),
                 CustomSpaceButton(
                   text: "Continue",
@@ -63,7 +77,7 @@ class _CreateBrokerFeesConfigurationOneScreenState
                   text: "Cancel",
                   buttonStyle: CustomButtonStyles.outlinePrimaryTL19,
                   onTap: () {
-                    onTapReload(context);
+                    onTapGoBack(context);
                   },
                 ),
 
@@ -85,7 +99,9 @@ class _CreateBrokerFeesConfigurationOneScreenState
     );
   }
 
-  onTapReload(BuildContext context) {
+  onTapReload(BuildContext context) {}
+
+  onTapContinue(BuildContext context) {
     setState(() {
       portfolioName = widget.viewController.portfolioName;
       monetaryAmount = widget.viewController.monetaryAmount;
@@ -95,11 +111,20 @@ class _CreateBrokerFeesConfigurationOneScreenState
       taxation = widget.viewController.taxation;
       brokerFees = widget.viewController.brokerFees;
       rebalancing = widget.viewController.rebalancing;
+      errorFieldEmpty = widget.viewController.checkAttributesNotEmpty(
+          portfolioName, duration, monetaryAmount, frequencyInvesting);
+      if (!errorFieldEmpty) {
+        widget.viewController.createPortfolio(
+            portfolioName,
+            duration,
+            monetaryAmount,
+            frequencyInvesting,
+            taxation,
+            brokerFees,
+            rebalancing);
+        Navigator.pushNamed(context, AppRoutes.taxationScreen);
+      }
     });
-  }
-
-  onTapContinue(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.taxationScreen);
   }
 
   onTapGoBack(BuildContext context) {
