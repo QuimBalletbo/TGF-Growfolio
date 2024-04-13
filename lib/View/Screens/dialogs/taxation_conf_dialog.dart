@@ -140,15 +140,6 @@ class _CreateTaxationConfigurationDialogDialogState
               },
             ),
             SizedBox(height: 6.0),
-            Text(
-              "The taxation: $taxation , taxaRateShortTerm: $taxaRateShortTerm, taxaRateLongtTerm: $taxaRateLongtTerm, shortToLongTransition: $shortToLongTransition , dividendTax: $dividendTax, fwt: $fwt",
-              maxLines: 6,
-              overflow: TextOverflow.ellipsis,
-              style: CustomTextStyles.bodyMediumInterff1e1e1e.copyWith(
-                decoration: TextDecoration.underline,
-                decorationColor: const Color(0XFF1E1E1E),
-              ),
-            ),
           ],
         ),
       ),

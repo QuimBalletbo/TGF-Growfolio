@@ -8,6 +8,9 @@ class AuthService {
   late Realm _realm;
   late RealmResults<Portfolio> _portfolios;
   late RealmResults<CreatePortfolio> _createportfolio;
+  late RealmResults<CreateStock> _createStocks;
+  late RealmResults<CreateETF> _createETFs;
+  late RealmResults<CreateBond> _createBonds;
   late Profile _profile;
   late User _user;
   factory AuthService() {
@@ -16,38 +19,61 @@ class AuthService {
   AuthService._internal();
   void initialize(User user) {
     _user = user;
-    _realm = Realm(Configuration.flexibleSync(
-        user, [Portfolio.schema, Profile.schema, CreatePortfolio.schema]));
+    _realm = Realm(Configuration.flexibleSync(user, [
+      Portfolio.schema,
+      Profile.schema,
+      CreateStock.schema,
+      CreateETF.schema,
+      CreateBond.schema,
+      CreatePortfolio.schema
+    ]));
     _realm.subscriptions.update((mutableSubscriptions) {
       mutableSubscriptions.add(_realm.all<Portfolio>());
       mutableSubscriptions.add(_realm.all<Profile>());
       mutableSubscriptions.add(_realm.all<CreatePortfolio>());
+      mutableSubscriptions.add(_realm.all<CreateStock>());
+      mutableSubscriptions.add(_realm.all<CreateETF>());
+      mutableSubscriptions.add(_realm.all<CreateBond>());
     });
 
     _portfolios = _realm.query<Portfolio>('userId == \$0', [user.id]);
-    _profile = _realm.query<Profile>('userId == \$0', [user.id]).first;
     _createportfolio =
         _realm.query<CreatePortfolio>('userId == \$0', [user.id]);
+    _createStocks = _realm.query<CreateStock>('userId == \$0', [user.id]);
+    _createETFs = _realm.query<CreateETF>('userId == \$0', [user.id]);
+    _createBonds = _realm.query<CreateBond>('userId == \$0', [user.id]);
+    _profile = _realm.query<Profile>('userId == \$0', [user.id]).first;
   }
 
   void initializefirstTime(User user, String username) {
     _user = user;
-    _realm = Realm(Configuration.flexibleSync(
-        user, [Portfolio.schema, Profile.schema, CreatePortfolio.schema]));
+    _realm = Realm(Configuration.flexibleSync(user, [
+      Portfolio.schema,
+      Profile.schema,
+      CreateStock.schema,
+      CreateETF.schema,
+      CreateBond.schema,
+      CreatePortfolio.schema
+    ]));
     _realm.subscriptions.update((mutableSubscriptions) {
       mutableSubscriptions.add(_realm.all<Portfolio>());
       mutableSubscriptions.add(_realm.all<Profile>());
       mutableSubscriptions.add(_realm.all<CreatePortfolio>());
+      mutableSubscriptions.add(_realm.all<CreateStock>());
+      mutableSubscriptions.add(_realm.all<CreateETF>());
+      mutableSubscriptions.add(_realm.all<CreateBond>());
     });
-
     _portfolios = _realm.query<Portfolio>('userId == \$0', [user.id]);
+    _createportfolio =
+        _realm.query<CreatePortfolio>('userId == \$0', [user.id]);
+    _createStocks = _realm.query<CreateStock>('userId == \$0', [user.id]);
+    _createETFs = _realm.query<CreateETF>('userId == \$0', [user.id]);
+    _createBonds = _realm.query<CreateBond>('userId == \$0', [user.id]);
     _realm.write(() => _realm.add(
           Profile(
               ObjectId(), username, user.id, 0, 'none', 'none', 'none', 'none'),
         ));
     _profile = _realm.query<Profile>('userId == \$0', [user.id]).first;
-    _createportfolio =
-        _realm.query<CreatePortfolio>('userId == \$0', [user.id]);
   }
 
   User getUser() {
@@ -64,6 +90,18 @@ class AuthService {
 
   RealmResults<CreatePortfolio> getCreatePortfolio() {
     return _createportfolio;
+  }
+
+  RealmResults<CreateStock> getCreateStocks() {
+    return _createStocks;
+  }
+
+  RealmResults<CreateETF> getCreateETFs() {
+    return _createETFs;
+  }
+
+  RealmResults<CreateBond> getCreateBonds() {
+    return _createBonds;
   }
 
   Profile getProfile() {

@@ -99,8 +99,6 @@ class _CreateBrokerFeesConfigurationOneScreenState
     );
   }
 
-  onTapReload(BuildContext context) {}
-
   onTapContinue(BuildContext context) {
     setState(() {
       portfolioName = widget.viewController.portfolioName;

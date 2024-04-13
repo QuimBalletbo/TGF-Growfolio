@@ -26,6 +26,8 @@ class _TaxationConfigurationOneScreenState
   double dividendTax = 0;
   double fwt = 0;
 
+  bool errorFieldEmpty = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,6 +53,19 @@ class _TaxationConfigurationOneScreenState
                       maxHeight: MediaQuery.of(context).size.height * 0.53),
                   child: CreateTaxationConfigurationDialog(
                       viewController: widget.viewController),
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Visibility(
+                    visible: errorFieldEmpty,
+                    child: Text(
+                      "Invalid format. one or more fields are empty. Please fill in all fields and try again",
+                      style: errorFieldEmpty
+                          ? CustomTextStyles.bodyMediumPrimary
+                              .copyWith(color: Colors.red)
+                          : CustomTextStyles.bodyMediumPrimary,
+                    ),
+                  ),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -116,7 +131,8 @@ class _TaxationConfigurationOneScreenState
       shortToLongTransition = widget.viewController.shortToLongTransition;
       dividendTax = widget.viewController.dividendTax;
       fwt = widget.viewController.fwt;
-      widget.viewController.initController();
+
+      errorFieldEmpty = widget.viewController.setTaxationPortfolio();
     });
   }
 

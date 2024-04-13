@@ -6,11 +6,12 @@ class _CreateStock {
   @PrimaryKey()
   @MapTo('_id')
   late ObjectId id;
-  late String name;
-  late bool fwt;
-  late int stockAllocation;
-  late double avgReturn;
   late double avgDividend;
+  late double avgReturn;
+  late bool fwt;
+  late String name;
+  late int stockAllocation;
+  late String userId;
 }
 
 @RealmModel()
@@ -18,12 +19,13 @@ class _CreateETF {
   @PrimaryKey()
   @MapTo('_id')
   late ObjectId id;
-  late String name;
-  late bool fwt;
-  late int eTFAllocation;
-  late double avgReturn;
   late double avgDividend;
+  late double avgReturn;
+  late int eTFAllocation;
   late double expRatio;
+  late bool fwt;
+  late String name;
+  late String userId;
 }
 
 @RealmModel()
@@ -31,12 +33,13 @@ class _CreateBond {
   @PrimaryKey()
   @MapTo('_id')
   late ObjectId id;
-  late String name;
-  late bool fwt;
   late int bondAllocation;
   late double couponRate;
   late double faceValue;
+  late bool fwt;
   late double maturityPeriod;
+  late String name;
+  late String userId;
 }
 
 @RealmModel()
@@ -44,33 +47,32 @@ class _CreatePortfolio {
   @PrimaryKey()
   @MapTo('_id')
   late ObjectId id;
-  late String userId;
-  late String name;
-  late int duration;
-  late double monetaryObjective;
-  late String frequencyInvesting;
-  late bool taxation;
+  late double accountMaintenanceFee;
+  late double accountMaintenanceFlatFee;
+  late double bondAllocationPercentage;
+  late List<_CreateBond> bonds;
   late bool brokerFees;
-  late bool rebalancing;
-  late double taxRateShortTerm;
-  late double taxRateLongTerm;
-  late int shortToLongTransition;
   late double dividendTax;
+  late int duration;
+  late double etfAllocationPercentage;
+  late List<_CreateETF> etfs;
+  late String frequencyInvesting;
   late double fwt;
+  late bool includeBonds;
+  late bool includeETF;
+  late bool includeStocks;
+  late double monetaryObjective;
+  late String name;
+  late bool rebalancing;
+  late int shortToLongTransition;
+  late double stockAllocationPercentage;
   late double stockPurchaseFee;
   late double stockPurchaseFlatFee;
   late double stockSaleFee;
   late double stockSaleFlatFee;
-  late double accountMaintenanceFee;
-  late double accountMaintenanceFlatFee;
-  late bool includeStocks;
-  late bool includeETF;
-  late bool includeBonds;
-  late double stockAllocationPercentage;
-  late double etfAllocationPercentage;
-  late double bondAllocationPercentage;
-
   late List<_CreateStock> stocks;
-  late List<_CreateETF> etfs;
-  late List<_CreateBond> bonds;
+  late double taxRateLongTerm;
+  late double taxRateShortTerm;
+  late bool taxation;
+  late String userId;
 }

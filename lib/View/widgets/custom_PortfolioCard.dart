@@ -21,7 +21,7 @@ Widget customPortfolioCard(
       decoration: AppDecoration.outlinePrimary3
           .copyWith(borderRadius: BorderRadiusStyle.roundedBorder18),
       child: Text(
-        "Portfolio Name: ${createPortfolios.name}, Portfolio duration: ${createPortfolios.duration}, Portfolio monetaryObjective: ${createPortfolios.monetaryObjective}, Portfolio frequencyInvesting: ${createPortfolios.frequencyInvesting}, Portfolio taxation: ${createPortfolios.taxation}, Portfolio brokerFees: ${createPortfolios.brokerFees}, Portfolio rebalancing: ${createPortfolios.rebalancing}",
+        "Portfolio Name: ${createPortfolios.name}, Portfolio duration: ${createPortfolios.duration}, Portfolio monetaryObjective: ${createPortfolios.monetaryObjective}, Portfolio frequencyInvesting: ${createPortfolios.frequencyInvesting}, Portfolio taxation: ${createPortfolios.taxation}, Portfolio brokerFees: ${createPortfolios.brokerFees}, Portfolio rebalancing: ${createPortfolios.rebalancing}, shortTerm: ${createPortfolios.taxRateShortTerm}, longTerm: ${createPortfolios.taxRateLongTerm}, shortToLongTransition: ${createPortfolios.shortToLongTransition}, Taxation dividendTax: ${createPortfolios.dividendTax}, Taxation fwt: ${createPortfolios.fwt}",
         style: CustomTextStyles.headlineSmallInterWhiteA700,
       ),
     ),

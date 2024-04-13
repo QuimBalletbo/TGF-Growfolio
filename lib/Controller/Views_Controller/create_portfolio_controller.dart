@@ -64,15 +64,24 @@ class CreatePortfolioViewController {
       bool taxation,
       bool brokerFees,
       bool rebalancing) {
+    realm.write(() => realm.deleteAll<CreatePortfolio>());
+
     realm.write(() => realm.add(CreatePortfolio(
           ObjectId(),
-          user.id,
-          portfolioName,
-          duration,
-          monetaryAmount,
-          frequencyInvesting,
-          taxation,
+          0,
+          0,
+          0,
           brokerFees,
+          0,
+          duration,
+          0,
+          frequencyInvesting,
+          0,
+          false,
+          false,
+          false,
+          monetaryAmount,
+          portfolioName,
           rebalancing,
           0,
           0,
@@ -82,15 +91,8 @@ class CreatePortfolioViewController {
           0,
           0,
           0,
-          0,
-          0,
-          0,
-          false,
-          false,
-          false,
-          0,
-          0,
-          0,
+          taxation,
+          user.id,
         )));
   }
 }

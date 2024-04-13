@@ -1,6 +1,7 @@
 import 'package:flutter_application_1/Model/listCreatePortfolio.dart';
 import 'package:realm/realm.dart';
 import 'package:flutter_application_1/Model/utils/auth_service.dart';
+import 'package:flutter_application_1/Model/data/createPortfolio.dart';
 
 class CreateTaxationConfigurationViewController {
   String taxation = '';
@@ -12,8 +13,11 @@ class CreateTaxationConfigurationViewController {
   var portfolios = AuthService().getCreatePortfolio();
   final user = AuthService().getUser();
   final Realm realm = AuthService().getRealm();
-  late ListCreatePortfolio allPortfolios;
-  late PortfolioBloc singlePortfolio;
+  late CreatePortfolio taxationPortfolio = portfolios.first;
+
+  late PortfolioBloc singlePortfolio = PortfolioBloc(realm: realm);
+  late ListCreatePortfolio allPortfolios =
+      ListCreatePortfolio(portfolios: portfolios, realm: realm, user: user);
 
   setTaxation(String value) {
     taxation = value;
@@ -39,9 +43,28 @@ class CreateTaxationConfigurationViewController {
     fwt = value;
   }
 
-  initController() {
-    allPortfolios =
-        ListCreatePortfolio(portfolios: portfolios, realm: realm, user: user);
-    singlePortfolio = PortfolioBloc(realm: realm);
+  bool setTaxationPortfolio() {
+    if (taxation == 'Include' && shortToLongTransition > 0) {
+      realm.write(() {
+        taxationPortfolio.taxRateShortTerm = taxaRateShortTerm;
+        taxationPortfolio.taxRateLongTerm = taxaRateLongtTerm;
+        taxationPortfolio.shortToLongTransition = shortToLongTransition;
+        taxationPortfolio.dividendTax = dividendTax;
+        taxationPortfolio.fwt = fwt;
+      });
+      return false;
+    }
+    if (taxation == 'Exclude') {
+      realm.write(() {
+        taxationPortfolio.taxRateShortTerm = 0.23;
+        taxationPortfolio.taxRateLongTerm = 0.23;
+        taxationPortfolio.shortToLongTransition = 1;
+        taxationPortfolio.dividendTax = 0.21;
+        taxationPortfolio.fwt = 0.10;
+      });
+      return false;
+    }
+
+    return true;
   }
 }
