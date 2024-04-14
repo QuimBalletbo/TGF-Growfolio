@@ -7,7 +7,7 @@ class AuthService {
   static final AuthService _instance = AuthService._internal();
   late Realm _realm;
   late RealmResults<Portfolio> _portfolios;
-  late RealmResults<CreatePortfolio> _createportfolio;
+  late CreatePortfolio _createportfolio;
   late RealmResults<CreateStock> _createStocks;
   late RealmResults<CreateETF> _createETFs;
   late RealmResults<CreateBond> _createBonds;
@@ -38,7 +38,7 @@ class AuthService {
 
     _portfolios = _realm.query<Portfolio>('userId == \$0', [user.id]);
     _createportfolio =
-        _realm.query<CreatePortfolio>('userId == \$0', [user.id]);
+        _realm.query<CreatePortfolio>('userId == \$0', [user.id]).first;
     _createStocks = _realm.query<CreateStock>('userId == \$0', [user.id]);
     _createETFs = _realm.query<CreateETF>('userId == \$0', [user.id]);
     _createBonds = _realm.query<CreateBond>('userId == \$0', [user.id]);
@@ -65,7 +65,7 @@ class AuthService {
     });
     _portfolios = _realm.query<Portfolio>('userId == \$0', [user.id]);
     _createportfolio =
-        _realm.query<CreatePortfolio>('userId == \$0', [user.id]);
+        _realm.query<CreatePortfolio>('userId == \$0', [user.id]).first;
     _createStocks = _realm.query<CreateStock>('userId == \$0', [user.id]);
     _createETFs = _realm.query<CreateETF>('userId == \$0', [user.id]);
     _createBonds = _realm.query<CreateBond>('userId == \$0', [user.id]);
@@ -88,19 +88,24 @@ class AuthService {
     return _portfolios;
   }
 
-  RealmResults<CreatePortfolio> getCreatePortfolio() {
+  CreatePortfolio getCreatePortfolio() {
+    _createportfolio = _createportfolio =
+        _realm.query<CreatePortfolio>('userId == \$0', [_user.id]).first;
     return _createportfolio;
   }
 
   RealmResults<CreateStock> getCreateStocks() {
+    _createStocks = _realm.query<CreateStock>('userId == \$0', [_user.id]);
     return _createStocks;
   }
 
   RealmResults<CreateETF> getCreateETFs() {
+    _createETFs = _realm.query<CreateETF>('userId == \$0', [_user.id]);
     return _createETFs;
   }
 
   RealmResults<CreateBond> getCreateBonds() {
+    _createBonds = _realm.query<CreateBond>('userId == \$0', [_user.id]);
     return _createBonds;
   }
 

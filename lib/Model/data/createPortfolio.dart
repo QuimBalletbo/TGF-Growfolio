@@ -54,6 +54,9 @@ class _CreatePortfolio {
   late bool brokerFees;
   late double dividendTax;
   late int duration;
+  late String equalWeightBonds;
+  late String equalWeightETFs;
+  late String equalWeightStocks;
   late double etfAllocationPercentage;
   late List<_CreateETF> etfs;
   late String frequencyInvesting;

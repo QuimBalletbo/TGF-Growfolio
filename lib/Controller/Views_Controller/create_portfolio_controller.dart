@@ -12,6 +12,11 @@ class CreatePortfolioViewController {
   bool rebalancing = false;
   final user = AuthService().getUser();
   final Realm realm = AuthService().getRealm();
+  var portfolio = AuthService().getCreatePortfolio();
+  var stocks = AuthService().getCreateStocks();
+  var etfs = AuthService().getCreateETFs();
+  var bonds = AuthService().getCreateBonds();
+
   setPortfolioName(String value) {
     portfolioName = value;
   }
@@ -64,7 +69,10 @@ class CreatePortfolioViewController {
       bool taxation,
       bool brokerFees,
       bool rebalancing) {
-    realm.write(() => realm.deleteAll<CreatePortfolio>());
+    realm.write(() => realm.delete<CreatePortfolio>(portfolio));
+    realm.write(() => realm.deleteMany<CreateStock>(stocks));
+    realm.write(() => realm.deleteMany<CreateETF>(etfs));
+    realm.write(() => realm.deleteMany<CreateBond>(bonds));
 
     realm.write(() => realm.add(CreatePortfolio(
           ObjectId(),
@@ -74,6 +82,9 @@ class CreatePortfolioViewController {
           brokerFees,
           0,
           duration,
+          "",
+          "",
+          "",
           0,
           frequencyInvesting,
           0,

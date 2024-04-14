@@ -11,7 +11,7 @@ class CreateBrokerFeesConfiguration {
   bool checkDoubleValidity(String value) {
     try {
       double doubleValue = double.parse(value);
-      if (doubleValue > 0 && doubleValue < 10000) {
+      if (doubleValue >= 0 && doubleValue <= 10000) {
         return false;
       } else {
         return true;

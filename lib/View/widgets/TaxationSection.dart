@@ -5,12 +5,14 @@ class TaxationSection extends StatefulWidget {
   final String text_1;
   final String text_2;
   final Function(String) onSelectionChanged;
+  final String initialSelection;
 
   TaxationSection({
     Key? key,
     required this.text_1,
     required this.text_2,
     required this.onSelectionChanged,
+    this.initialSelection = "",
   }) : super(key: key);
 
   @override
@@ -23,6 +25,15 @@ class _TaxationSectionState extends State<TaxationSection> {
     "Include",
   ];
   String frequencyInvesting = "";
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initialSelection.isNotEmpty &&
+        radioList.contains(widget.initialSelection)) {
+      frequencyInvesting = widget.initialSelection;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

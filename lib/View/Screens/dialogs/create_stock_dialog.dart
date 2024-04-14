@@ -22,6 +22,7 @@ class _CreateStockDialogState extends State<CreateStockDialog> {
 
   bool errorStockAllocation = false;
   bool errorStockName = false;
+  bool errorFieldEmpty = false;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -93,7 +94,8 @@ class _CreateStockDialogState extends State<CreateStockDialog> {
             text: "Include Foreign Withholding Tax",
             onToggleChanged: (value) {
               setState(() {
-                includeFWT = value; // Update the portfolio name in the state
+                includeFWT = widget.controller.getIncludeFWT(
+                    value); // Update the portfolio name in the state
               });
             },
           ),
@@ -113,7 +115,7 @@ class _CreateStockDialogState extends State<CreateStockDialog> {
           ),
           const SizedBox(height: 6.0),
           EnterTextPercentage(
-            text: "Stock Allocation (%)  of total portfolio",
+            text: "Stock Allocation (%)  of total Stocks",
             defaultText: "%",
             controller: controller.enterTextController,
             onTextChanged: (value) {
@@ -121,7 +123,7 @@ class _CreateStockDialogState extends State<CreateStockDialog> {
                 errorStockAllocation =
                     widget.controller.checkIntegerValidity(value);
                 stockAllocation = widget.controller
-                    .getIntegerValue(value, errorStockAllocation);
+                    .getStockAllocation(value, errorStockAllocation);
               });
             },
           ),
@@ -138,23 +140,36 @@ class _CreateStockDialogState extends State<CreateStockDialog> {
               ),
             ),
           ),
-          const SizedBox(height: 6.0),
-          Text(
-            "stockAllocation: $stockAllocation stockName: $stockName includeFWT: $includeFWT",
-            maxLines: 6,
-            overflow: TextOverflow.ellipsis,
-            style: CustomTextStyles.bodyMediumInterff1e1e1e.copyWith(
-              decoration: TextDecoration.underline,
-              decorationColor: const Color(0XFF1E1E1E),
+          Align(
+            alignment: Alignment.center,
+            child: Visibility(
+              visible: errorStockAllocation,
+              child: Text(
+                "Invalid format. one or more fields are empty. Please fill in all fields and try again",
+                style: errorStockAllocation
+                    ? CustomTextStyles.bodyMediumPrimary
+                        .copyWith(color: Colors.red)
+                    : CustomTextStyles.bodyMediumPrimary,
+              ),
             ),
           ),
           const SizedBox(height: 6.0),
           CustomSpaceButton(
             text: "Save Stock",
-            onTap: () {},
+            onTap: () {
+              onTapContinue(context);
+            },
           ),
         ],
       ),
     ));
+  }
+
+  onTapContinue(BuildContext context) {
+    setState(() {
+      errorFieldEmpty =
+          widget.controller.createStock(stockName, includeFWT, stockAllocation);
+      Navigator.pushNamed(context, AppRoutes.stockConfigurationScreen);
+    });
   }
 }

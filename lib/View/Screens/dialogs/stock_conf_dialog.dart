@@ -4,6 +4,7 @@ import 'package:flutter_application_1/View/widgets/enter_text_euros.dart';
 import 'package:flutter_application_1/View/widgets/TaxationSection.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/Dialog_Controller/stock_conf_dialog_controller.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/stock_conf_controller.dart';
+import 'package:flutter_application_1/View/widgets/custom_StockCard.dart';
 
 class StockConfigurationDialog extends StatefulWidget {
   final CreateStockConfController viewController;
@@ -31,13 +32,15 @@ class _CreateStockConfigurationDialogState
 
   CreateStockConfigurationController dialogController =
       CreateStockConfigurationController();
-  bool includeStocks = false;
-  bool equallyWeightedStocks = false;
-  double stockAllocation = 0;
 
   bool errorStockAllocation = false;
   @override
   Widget build(BuildContext context) {
+    bool includeStocks = controller.initateIncludeStocks();
+    String includeStockstoText =
+        controller.getIncludeStocksString(includeStocks);
+    String equalWeightStocks = controller.initiateEqualWeightStocks();
+    double stockAllocation = controller.initiateStockAllocation();
     return SingleChildScrollView(
         child: Container(
       padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 30.0),
@@ -64,6 +67,7 @@ class _CreateStockConfigurationDialogState
                 includeStocks = controller.getIncludeStocks(value);
               });
             },
+            initialSelection: includeStockstoText,
           ),
           Container(
             width: 304.h,
@@ -93,10 +97,10 @@ class _CreateStockConfigurationDialogState
             text_2: "The stocks will not be equally weighted",
             onSelectionChanged: (value) {
               setState(() {
-                equallyWeightedStocks =
-                    controller.getEquallyWeightedStocks(value);
+                equalWeightStocks = controller.getEquallyWeightedStocks(value);
               });
             },
+            initialSelection: equalWeightStocks,
           ),
           EnterTextEuros(
             text: "Stock Allocation (%)  of total portfolio",
@@ -109,6 +113,7 @@ class _CreateStockConfigurationDialogState
                     controller.getStockAllocation(value, errorStockAllocation);
               });
             },
+            initialSelection: stockAllocation.toString(),
           ),
           Align(
             alignment: Alignment.center,
@@ -133,14 +138,33 @@ class _CreateStockConfigurationDialogState
               style: theme.textTheme.bodyLarge,
             ),
           ),
-          Text(
-            "The includeStocks: $includeStocks , equallyWeightedStocks: $equallyWeightedStocks, stockAllocation: $stockAllocation",
-            maxLines: 6,
-            overflow: TextOverflow.ellipsis,
-            style: CustomTextStyles.bodyMediumInterff1e1e1e.copyWith(
-              decoration: TextDecoration.underline,
-              decorationColor: const Color(0XFF1E1E1E),
-            ),
+          const SizedBox(height: 6.0),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: controller.stocksPortfolio.stocks.isEmpty
+                ? [
+                    // Display message when there are no portfolios
+                    Container(
+                        margin: EdgeInsets.only(right: 42.h),
+                        alignment: Alignment.centerRight,
+                        child: Text("There are currently no stocks",
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: CustomTextStyles.titleLargeMontserrat)),
+                  ]
+                : [
+                    // Render portfolios if available stocksPortfolio
+                    ...controller.stocksPortfolio.stocks.map(
+                      (stocksPortfolio) => Column(
+                        children: [
+                          customStockCard(controller.stocksPortfolio,
+                              controller.singleStock),
+                          const SizedBox(height: 31),
+                        ],
+                      ),
+                    ),
+                  ],
           ),
         ],
       ),

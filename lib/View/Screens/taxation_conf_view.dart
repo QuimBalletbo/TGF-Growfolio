@@ -19,13 +19,6 @@ class TaxationConfigurationOneScreen extends StatefulWidget {
 
 class _TaxationConfigurationOneScreenState
     extends State<TaxationConfigurationOneScreen> {
-  String taxation = '';
-  double taxaRateShortTerm = 0;
-  double taxaRateLongtTerm = 0;
-  int shortToLongTransition = 0;
-  double dividendTax = 0;
-  double fwt = 0;
-
   bool errorFieldEmpty = false;
 
   @override
@@ -67,35 +60,6 @@ class _TaxationConfigurationOneScreenState
                     ),
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: widget
-                          .viewController.allPortfolios.portfolios.isEmpty
-                      ? [
-                          // Display message when there are no portfolios
-                          Container(
-                              margin: EdgeInsets.only(right: 42.h),
-                              alignment: Alignment.centerRight,
-                              child: Text("There are currently no portfolios",
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style:
-                                      CustomTextStyles.titleLargeMontserrat)),
-                        ]
-                      : [
-                          // Render portfolios if available
-                          ...widget.viewController.allPortfolios.portfolios.map(
-                            (portfolio) => Column(
-                              children: [
-                                customPortfolioCard(portfolio,
-                                    widget.viewController.singlePortfolio),
-                                const SizedBox(height: 31),
-                              ],
-                            ),
-                          ),
-                        ],
-                ),
 
                 SizedBox(height: 22.v),
                 CustomSpaceButton(
@@ -109,7 +73,7 @@ class _TaxationConfigurationOneScreenState
                   text: "Go Back",
                   buttonStyle: CustomButtonStyles.outlinePrimaryTL19,
                   onTap: () {
-                    onTapReload(context);
+                    onTapGoBack(context);
                   },
                 ),
 
@@ -123,21 +87,15 @@ class _TaxationConfigurationOneScreenState
     );
   }
 
-  onTapReload(BuildContext context) {
-    setState(() {
-      taxation = widget.viewController.taxation;
-      taxaRateShortTerm = widget.viewController.taxaRateShortTerm;
-      taxaRateLongtTerm = widget.viewController.taxaRateLongtTerm;
-      shortToLongTransition = widget.viewController.shortToLongTransition;
-      dividendTax = widget.viewController.dividendTax;
-      fwt = widget.viewController.fwt;
-
-      errorFieldEmpty = widget.viewController.setTaxationPortfolio();
-    });
-  }
+  onTapReload(BuildContext context) {}
 
   onTapContinue(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.brokerFeesScreen);
+    setState(() {
+      errorFieldEmpty = widget.viewController.setTaxationPortfolio();
+    });
+    if (!errorFieldEmpty) {
+      Navigator.pushNamed(context, AppRoutes.brokerFeesScreen);
+    }
   }
 
   onTapGoBack(BuildContext context) {

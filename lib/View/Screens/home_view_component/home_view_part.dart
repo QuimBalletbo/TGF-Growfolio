@@ -7,7 +7,7 @@ import 'package:flutter_application_1/View/widgets/custom_image_button.dart';
 import 'package:flutter_application_1/View/Screens/home_view_component/home_view_bottom_part.dart';
 import 'package:flutter_application_1/View/Screens/dialogs/max_portfolio_dialog.dart';
 import 'package:flutter_application_1/Model/listBloc.dart';
-import 'package:flutter_application_1/View/widgets/custom_StockCard.dart';
+import 'package:flutter_application_1/View/widgets/custom_betaPortfolio.dart';
 import 'package:flutter_application_1/Model/itemBloc.dart';
 
 class PGinaDIniciAlumneOnePage extends StatelessWidget {

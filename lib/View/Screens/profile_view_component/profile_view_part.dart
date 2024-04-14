@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/app_export.dart';
 import 'package:flutter_application_1/View/widgets/app_bar/appbar_trailing_image.dart';
 import 'package:flutter_application_1/View/widgets/app_bar/custom_app_bar.dart';
-import 'package:flutter_application_1/View/widgets/custom_StockCard.dart';
+import 'package:flutter_application_1/View/widgets/custom_betaPortfolio.dart';
 import 'package:flutter_application_1/View/widgets/app_bar/appbar_subtitle.dart';
 import 'package:flutter_application_1/View/Screens/home_view_component/home_view_bottom_part.dart';
 import 'package:flutter_application_1/Model/listBloc.dart';

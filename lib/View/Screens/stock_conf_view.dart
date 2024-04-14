@@ -5,6 +5,7 @@ import 'package:flutter_application_1/View/widgets/custom_space_button.dart';
 import 'package:flutter_application_1/View/widgets/ArrowBackIosColumn.dart';
 import 'package:flutter_application_1/View/widgets/custom_image_button.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/stock_conf_controller.dart';
+import 'package:flutter_application_1/View/widgets/custom_PortfolioCard.dart';
 
 class StockConfiguration extends StatefulWidget {
   StockConfiguration({Key? key}) : super(key: key);
@@ -16,10 +17,7 @@ class StockConfiguration extends StatefulWidget {
 }
 
 class _StockConfigurationScreenState extends State<StockConfiguration> {
-  bool includeStocks = false;
-  bool equallyWeightedStocks = false;
-  double stockAllocation = 0;
-
+  bool errorFieldEmpty = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,15 +43,16 @@ class _StockConfigurationScreenState extends State<StockConfiguration> {
                   child: StockConfigurationDialog(
                       viewController: widget.viewController),
                 ),
-                Container(
-                  color: Colors.white, // Set the background color to white
-                  child: Text(
-                    "The includeStocks: $includeStocks , equallyWeightedStocks: $equallyWeightedStocks, stockAllocation: $stockAllocation",
-                    maxLines: 6,
-                    overflow: TextOverflow.ellipsis,
-                    style: CustomTextStyles.bodyMediumInterff1e1e1e.copyWith(
-                      decoration: TextDecoration.underline,
-                      decorationColor: const Color(0XFF1E1E1E),
+                Align(
+                  alignment: Alignment.center,
+                  child: Visibility(
+                    visible: errorFieldEmpty,
+                    child: Text(
+                      "Invalid format. one or more fields are empty. Please fill in all fields and try again",
+                      style: errorFieldEmpty
+                          ? CustomTextStyles.bodyMediumPrimary
+                              .copyWith(color: Colors.red)
+                          : CustomTextStyles.bodyMediumPrimary,
                     ),
                   ),
                 ),
@@ -83,7 +82,7 @@ class _StockConfigurationScreenState extends State<StockConfiguration> {
                   text: "Go Back",
                   buttonStyle: CustomButtonStyles.outlinePrimaryTL19,
                   onTap: () {
-                    onTapReload(context);
+                    onTapGoBack(context);
                   },
                 ),
 
@@ -97,16 +96,13 @@ class _StockConfigurationScreenState extends State<StockConfiguration> {
     );
   }
 
-  onTapReload(BuildContext context) {
-    setState(() {
-      includeStocks = widget.viewController.includeStocks;
-      equallyWeightedStocks = widget.viewController.equallyWeightedStocks;
-      stockAllocation = widget.viewController.stockAllocation;
-    });
-  }
-
   onTapContinue(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.createStockScreen);
+    setState(() {
+      errorFieldEmpty = widget.viewController.setStockConfPortfolio();
+    });
+    if (!errorFieldEmpty) {
+      Navigator.pushNamed(context, AppRoutes.createStockScreen);
+    }
   }
 
   onTapGoBack(BuildContext context) {

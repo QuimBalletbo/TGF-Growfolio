@@ -296,6 +296,9 @@ class CreatePortfolio extends _CreatePortfolio
     bool brokerFees,
     double dividendTax,
     int duration,
+    String equalWeightBonds,
+    String equalWeightETFs,
+    String equalWeightStocks,
     double etfAllocationPercentage,
     String frequencyInvesting,
     double fwt,
@@ -328,6 +331,9 @@ class CreatePortfolio extends _CreatePortfolio
     RealmObjectBase.set(this, 'brokerFees', brokerFees);
     RealmObjectBase.set(this, 'dividendTax', dividendTax);
     RealmObjectBase.set(this, 'duration', duration);
+    RealmObjectBase.set(this, 'equalWeightBonds', equalWeightBonds);
+    RealmObjectBase.set(this, 'equalWeightETFs', equalWeightETFs);
+    RealmObjectBase.set(this, 'equalWeightStocks', equalWeightStocks);
     RealmObjectBase.set(
         this, 'etfAllocationPercentage', etfAllocationPercentage);
     RealmObjectBase.set(this, 'frequencyInvesting', frequencyInvesting);
@@ -408,6 +414,27 @@ class CreatePortfolio extends _CreatePortfolio
   int get duration => RealmObjectBase.get<int>(this, 'duration') as int;
   @override
   set duration(int value) => RealmObjectBase.set(this, 'duration', value);
+
+  @override
+  String get equalWeightBonds =>
+      RealmObjectBase.get<String>(this, 'equalWeightBonds') as String;
+  @override
+  set equalWeightBonds(String value) =>
+      RealmObjectBase.set(this, 'equalWeightBonds', value);
+
+  @override
+  String get equalWeightETFs =>
+      RealmObjectBase.get<String>(this, 'equalWeightETFs') as String;
+  @override
+  set equalWeightETFs(String value) =>
+      RealmObjectBase.set(this, 'equalWeightETFs', value);
+
+  @override
+  String get equalWeightStocks =>
+      RealmObjectBase.get<String>(this, 'equalWeightStocks') as String;
+  @override
+  set equalWeightStocks(String value) =>
+      RealmObjectBase.set(this, 'equalWeightStocks', value);
 
   @override
   double get etfAllocationPercentage =>
@@ -571,6 +598,9 @@ class CreatePortfolio extends _CreatePortfolio
       SchemaProperty('brokerFees', RealmPropertyType.bool),
       SchemaProperty('dividendTax', RealmPropertyType.double),
       SchemaProperty('duration', RealmPropertyType.int),
+      SchemaProperty('equalWeightBonds', RealmPropertyType.string),
+      SchemaProperty('equalWeightETFs', RealmPropertyType.string),
+      SchemaProperty('equalWeightStocks', RealmPropertyType.string),
       SchemaProperty('etfAllocationPercentage', RealmPropertyType.double),
       SchemaProperty('etfs', RealmPropertyType.object,
           linkTarget: 'CreateETF', collectionType: RealmCollectionType.list),

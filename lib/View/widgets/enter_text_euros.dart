@@ -4,9 +4,10 @@ import 'package:flutter_application_1/View/widgets/custom_text_form_field.dart';
 
 class EnterTextEuros extends StatelessWidget {
   final String text;
-  final String defaultText;
+  late String defaultText;
   final TextEditingController controller;
   final Function(String) onTextChanged;
+  final String initialSelection;
 
   EnterTextEuros({
     Key? key,
@@ -14,7 +15,16 @@ class EnterTextEuros extends StatelessWidget {
     required this.defaultText,
     required this.controller,
     required this.onTextChanged,
+    this.initialSelection = "",
   }) : super(key: key);
+  void checkInitialSelection() {
+    if (initialSelection.isNotEmpty &&
+        initialSelection != "0" &&
+        initialSelection != "0.0" &&
+        initialSelection != "0.00") {
+      defaultText = initialSelection;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

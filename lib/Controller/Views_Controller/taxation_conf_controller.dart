@@ -10,14 +10,9 @@ class CreateTaxationConfigurationViewController {
   int shortToLongTransition = 0;
   double dividendTax = 0;
   double fwt = 0;
-  var portfolios = AuthService().getCreatePortfolio();
+  var taxationPortfolio = AuthService().getCreatePortfolio();
   final user = AuthService().getUser();
   final Realm realm = AuthService().getRealm();
-  late CreatePortfolio taxationPortfolio = portfolios.first;
-
-  late PortfolioBloc singlePortfolio = PortfolioBloc(realm: realm);
-  late ListCreatePortfolio allPortfolios =
-      ListCreatePortfolio(portfolios: portfolios, realm: realm, user: user);
 
   setTaxation(String value) {
     taxation = value;
