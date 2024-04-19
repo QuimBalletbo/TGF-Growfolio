@@ -14,6 +14,8 @@ import 'package:flutter_application_1/View/Screens/taxation_conf_view.dart';
 import 'package:flutter_application_1/View/Screens/broker_fees_view.dart';
 import 'package:flutter_application_1/View/Screens/stock_conf_view.dart';
 import 'package:flutter_application_1/View/Screens/create_stock_view.dart';
+import 'package:flutter_application_1/View/Screens/etf_conf_view.dart';
+import 'package:flutter_application_1/View/Screens/create_etf_view.dart';
 import 'package:realm/realm.dart';
 
 class AppRoutes {
@@ -50,6 +52,8 @@ class AppRoutes {
   static const String brokerFeesScreen = '/brokerFeesScreen';
   static const String stockConfigurationScreen = '/stockConfigurationScreen';
   static const String createStockScreen = '/createStockScreen';
+  static const String etfConfigurationScreen = '/etfConfigurationScreen';
+  static const String createETFScreen = '/createETFScreen';
 
   static Map<String, WidgetBuilder> routes(App app) {
     return {
@@ -70,6 +74,8 @@ class AppRoutes {
       brokerFeesScreen: (context) => brokerFeesConfiguration(),
       stockConfigurationScreen: (context) => StockConfiguration(),
       createStockScreen: (context) => const CreateStock(),
+      etfConfigurationScreen: (context) => ETFConfiguration(),
+      createETFScreen: (context) => const CreateETF(),
     };
   }
 }

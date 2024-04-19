@@ -24,7 +24,7 @@ class ToggleButton extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: 8.v, bottom: 8.v),
             child: Container(
-              width: 78.h,
+              width: 108.h,
               margin: EdgeInsets.only(left: 8.h, right: 15.h),
               child: Text(
                 text,

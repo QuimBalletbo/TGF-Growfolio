@@ -24,14 +24,25 @@ class CreateStockConfController {
     stockAllocation = value;
   }
 
+  initializaValues() {
+    if (taxationPortfolio.equalWeightStocks != "") {
+      includeStocks = taxationPortfolio.includeStocks;
+      equalWeightStocks = taxationPortfolio.equalWeightStocks;
+      stockAllocation = taxationPortfolio.stockAllocationPercentage;
+    }
+  }
+
   bool setStockConfPortfolio() {
-    if (includeStocks && (equalWeightStocks == 'Include') ||
-        (equalWeightStocks == 'Exclude') && stockAllocation > 0) {
+    if (includeStocks &&
+        ((equalWeightStocks == 'Include') ||
+            (equalWeightStocks == 'Exclude')) &&
+        stockAllocation > 0) {
       realm.write(() {
         taxationPortfolio.includeStocks = includeStocks;
         taxationPortfolio.stockAllocationPercentage = stockAllocation;
         taxationPortfolio.equalWeightStocks = equalWeightStocks;
       });
+
       return false;
     }
     if (!includeStocks) {
@@ -44,5 +55,31 @@ class CreateStockConfController {
     }
 
     return true;
+  }
+
+  bool checkStockConfiguration() {
+    if (!includeStocks) {
+      return true;
+    }
+
+    return false;
+  }
+
+  bool checkStockDistribution() {
+    int numberStocks = taxationPortfolio.stocks.length;
+    double totalAllocation = 0.0;
+
+    if (numberStocks > 0) {
+      for (int i = 0; i < numberStocks; i++) {
+        totalAllocation += taxationPortfolio.stocks[i].stockAllocation;
+      }
+      if (totalAllocation > 100.0) {
+        return true;
+      }
+      if (totalAllocation < 99.0) {
+        return true;
+      }
+    }
+    return false;
   }
 }

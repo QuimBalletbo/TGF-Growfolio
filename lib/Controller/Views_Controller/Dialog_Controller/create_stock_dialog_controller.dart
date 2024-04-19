@@ -58,7 +58,9 @@ class CreateStockController {
     bool includeFWT,
     int stockAllocation,
   ) {
-    if (stockName.isEmpty || stockAllocation == 0) {
+    if (stockName.isEmpty ||
+        (stockAllocation == 0 &&
+            stocksPortfolio.equalWeightStocks == 'Include')) {
       return true;
     } else {
       if (stocksPortfolio.equalWeightStocks == 'Exclude') {

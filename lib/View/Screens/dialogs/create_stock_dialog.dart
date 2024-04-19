@@ -128,7 +128,7 @@ class _CreateStockDialogState extends State<CreateStockDialog> {
             },
           ),
           Align(
-            alignment: Alignment.center,
+            alignment: Alignment.topLeft,
             child: Visibility(
               visible: errorStockAllocation,
               child: Text(
@@ -141,12 +141,12 @@ class _CreateStockDialogState extends State<CreateStockDialog> {
             ),
           ),
           Align(
-            alignment: Alignment.center,
+            alignment: Alignment.topLeft,
             child: Visibility(
-              visible: errorStockAllocation,
+              visible: errorFieldEmpty,
               child: Text(
                 "Invalid format. one or more fields are empty. Please fill in all fields and try again",
-                style: errorStockAllocation
+                style: errorFieldEmpty
                     ? CustomTextStyles.bodyMediumPrimary
                         .copyWith(color: Colors.red)
                     : CustomTextStyles.bodyMediumPrimary,
@@ -169,7 +169,9 @@ class _CreateStockDialogState extends State<CreateStockDialog> {
     setState(() {
       errorFieldEmpty =
           widget.controller.createStock(stockName, includeFWT, stockAllocation);
-      Navigator.pushNamed(context, AppRoutes.stockConfigurationScreen);
+      if (errorFieldEmpty == false) {
+        Navigator.pushNamed(context, AppRoutes.stockConfigurationScreen);
+      }
     });
   }
 }

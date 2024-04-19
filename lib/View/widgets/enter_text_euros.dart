@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/app_export.dart';
 import 'package:flutter_application_1/View/widgets/custom_text_form_field.dart';
 
-class EnterTextEuros extends StatelessWidget {
+class EnterTextEuros extends StatefulWidget {
   final String text;
   late String defaultText;
   final TextEditingController controller;
@@ -17,12 +17,24 @@ class EnterTextEuros extends StatelessWidget {
     required this.onTextChanged,
     this.initialSelection = "",
   }) : super(key: key);
+
+  @override
+  _EnterTextEurosState createState() => _EnterTextEurosState();
+}
+
+class _EnterTextEurosState extends State<EnterTextEuros> {
+  @override
+  void initState() {
+    super.initState();
+    checkInitialSelection();
+  }
+
   void checkInitialSelection() {
-    if (initialSelection.isNotEmpty &&
-        initialSelection != "0" &&
-        initialSelection != "0.0" &&
-        initialSelection != "0.00") {
-      defaultText = initialSelection;
+    if (widget.initialSelection.isNotEmpty &&
+        widget.initialSelection != "0" &&
+        widget.initialSelection != "0.0" &&
+        widget.initialSelection != "0.00") {
+      widget.defaultText = widget.initialSelection;
     }
   }
 
@@ -41,7 +53,7 @@ class EnterTextEuros extends StatelessWidget {
               width: 178.h,
               margin: EdgeInsets.only(left: 8.h, right: 15.h),
               child: Text(
-                text,
+                widget.text,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: theme.textTheme.bodyLarge,
@@ -63,13 +75,13 @@ class EnterTextEuros extends StatelessWidget {
                       left: 8.h,
                     ),
                     child: CustomTextFormField(
-                      controller: controller,
-                      hintText: defaultText,
+                      controller: widget.controller,
+                      hintText: widget.defaultText,
                       hintStyle: theme.textTheme.bodyMedium!,
                       textInputType: TextInputType.emailAddress,
                       onEditingComplete: () {
-                        onTextChanged(
-                            controller.text); // Call the callback function
+                        widget.onTextChanged(widget
+                            .controller.text); // Call the callback function
                       },
                     ),
                   ),

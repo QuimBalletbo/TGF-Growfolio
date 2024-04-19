@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/app_export.dart';
-import 'package:flutter_application_1/View/Screens/dialogs/stock_conf_dialog.dart';
+import 'package:flutter_application_1/View/Screens/dialogs/etf_conf_dialog.dart';
 import 'package:flutter_application_1/View/widgets/custom_space_button.dart';
 import 'package:flutter_application_1/View/widgets/ArrowBackIosColumn.dart';
 import 'package:flutter_application_1/View/widgets/custom_image_button.dart';
-import 'package:flutter_application_1/Controller/Views_Controller/stock_conf_controller.dart';
+import 'package:flutter_application_1/Controller/Views_Controller/etf_conf_controller.dart';
 
-class StockConfiguration extends StatefulWidget {
-  StockConfiguration({Key? key}) : super(key: key);
-  CreateStockConfController viewController = CreateStockConfController();
+class ETFConfiguration extends StatefulWidget {
+  ETFConfiguration({Key? key}) : super(key: key);
+  CreateETFConfController viewController = CreateETFConfController();
 
   @override
   _StockConfigurationScreenState createState() =>
       _StockConfigurationScreenState();
 }
 
-class _StockConfigurationScreenState extends State<StockConfiguration> {
+class _StockConfigurationScreenState extends State<ETFConfiguration> {
   @override
   void initState() {
     super.initState();
@@ -23,12 +23,12 @@ class _StockConfigurationScreenState extends State<StockConfiguration> {
   }
 
   bool errorFieldEmpty = false;
-  bool errorStockConfiguration = false;
-  bool errorStockDistribution = false;
+  bool errorETFConfiguration = false;
+  bool errorETFDistribution = false;
 
-  bool includeStocks = false;
-  String equalWeightStocks = "";
-  double stockAllocation = 0;
+  bool includeETFs = false;
+  String equalWeightETFs = "";
+  double etfAllocation = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,14 +44,14 @@ class _StockConfigurationScreenState extends State<StockConfiguration> {
               children: [
                 // AppBar
                 const ArrowBackIosColumn(
-                  text: "Stock configuration",
+                  text: "ETF configuration",
                 ), // Placing the app bar here
 
                 SizedBox(height: 22.v),
                 Container(
                   constraints: BoxConstraints(
                       maxHeight: MediaQuery.of(context).size.height * 0.40),
-                  child: StockConfigurationDialog(
+                  child: ETFConfigurationDialog(
                       viewController: widget.viewController),
                 ),
                 Align(
@@ -70,10 +70,10 @@ class _StockConfigurationScreenState extends State<StockConfiguration> {
                 Align(
                   alignment: Alignment.center,
                   child: Visibility(
-                    visible: errorStockConfiguration,
+                    visible: errorETFConfiguration,
                     child: Text(
-                      "Stock Configuration Error: Unable to Create Stock if Stocks Aren't Included in Your Portfolio.",
-                      style: errorStockConfiguration
+                      "ETF Configuration Error: Unable to Create ETF if ETFs Aren't Included in Your Portfolio.",
+                      style: errorETFConfiguration
                           ? CustomTextStyles.bodyMediumPrimary
                               .copyWith(color: Colors.red)
                           : CustomTextStyles.bodyMediumPrimary,
@@ -83,22 +83,34 @@ class _StockConfigurationScreenState extends State<StockConfiguration> {
                 Align(
                   alignment: Alignment.center,
                   child: Visibility(
-                    visible: errorStockDistribution,
+                    visible: errorETFDistribution,
                     child: Text(
-                      "Error: Stock Distribution Issue Total allocation must be 100% ",
-                      style: errorStockDistribution
+                      "Error: ETF Distribution Issue Total allocation must be 100% ",
+                      style: errorETFDistribution
                           ? CustomTextStyles.bodyMediumPrimary
                               .copyWith(color: Colors.red)
                           : CustomTextStyles.bodyMediumPrimary,
                     ),
                   ),
                 ),
+                Container(
+                  color: Colors.white, // Set the background color to white
+                  child: Text(
+                    "The errorFieldEmpty: $errorFieldEmpty , errorStockConfiguration: $errorETFConfiguration, includeStocks: $includeETFs, equalWeightStocks: $equalWeightETFs, ETFAllocation: $etfAllocation",
+                    maxLines: 6,
+                    overflow: TextOverflow.ellipsis,
+                    style: CustomTextStyles.bodyMediumInterff1e1e1e.copyWith(
+                      decoration: TextDecoration.underline,
+                      decorationColor: const Color(0XFF1E1E1E),
+                    ),
+                  ),
+                ),
 
                 SizedBox(height: 22.v),
                 CustomImageButton(
-                  text: "Add a Stock",
+                  text: "Add a ETF",
                   imageConstant: ImageConstant.imgPlus,
-                  onTap: () => onTapCreateStock(context),
+                  onTap: () => onTapCreateETF(context),
                 ),
                 SizedBox(height: 22.v),
                 CustomSpaceButton(
@@ -137,28 +149,28 @@ class _StockConfigurationScreenState extends State<StockConfiguration> {
   onTapContinue(BuildContext context) {
     setState(() {
       errorFieldEmpty = widget.viewController.setStockConfPortfolio();
-      errorStockDistribution = widget.viewController.checkStockDistribution();
+      errorETFDistribution = widget.viewController.checkStockDistribution();
     });
-    if (!errorFieldEmpty && !errorStockDistribution) {
-      Navigator.pushNamed(context, AppRoutes.etfConfigurationScreen);
+    if (!errorFieldEmpty && !errorETFDistribution) {
+      Navigator.pushNamed(context, AppRoutes.createStockScreen);
     }
   }
 
   onReload(BuildContext context) {
     setState(() {
-      includeStocks = widget.viewController.includeStocks;
-      equalWeightStocks = widget.viewController.equalWeightStocks;
-      stockAllocation = widget.viewController.stockAllocation;
+      includeETFs = widget.viewController.includeETFs;
+      equalWeightETFs = widget.viewController.equalWeightETFs;
+      etfAllocation = widget.viewController.etfAllocation;
     });
   }
 
-  onTapCreateStock(BuildContext context) {
+  onTapCreateETF(BuildContext context) {
     setState(() {
       errorFieldEmpty = widget.viewController.setStockConfPortfolio();
-      errorStockConfiguration = widget.viewController.checkStockConfiguration();
+      errorETFConfiguration = widget.viewController.checkStockConfiguration();
     });
-    if (!errorFieldEmpty && !errorStockConfiguration) {
-      Navigator.pushNamed(context, AppRoutes.createStockScreen);
+    if (!errorFieldEmpty && !errorETFConfiguration) {
+      Navigator.pushNamed(context, AppRoutes.createETFScreen);
     }
   }
 
