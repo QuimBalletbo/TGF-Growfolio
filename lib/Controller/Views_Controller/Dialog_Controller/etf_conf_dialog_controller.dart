@@ -5,7 +5,7 @@ import 'package:realm/realm.dart';
 import 'package:flutter_application_1/Model/utils/auth_service.dart';
 import 'package:flutter_application_1/Model/data/createPortfolio.dart';
 
-class CreateETFConfConfiguration {
+class CreateETFConfiguration {
   final CreateETFConfController viewController;
 
   var etfs = AuthService().getCreateETFs();
@@ -22,7 +22,7 @@ class CreateETFConfConfiguration {
   String equalWeightETFs = "";
   double etfAllocation = 0;
 
-  CreateETFConfConfiguration({
+  CreateETFConfiguration({
     required this.viewController,
   });
 

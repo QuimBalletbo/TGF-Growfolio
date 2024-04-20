@@ -31,7 +31,7 @@ class CreateETFConfController {
     }
   }
 
-  bool setStockConfPortfolio() {
+  bool setBondConfPortfolio() {
     if (includeETFs &&
         ((equalWeightETFs == 'Include') || (equalWeightETFs == 'Exclude')) &&
         etfAllocation > 0) {
@@ -55,7 +55,7 @@ class CreateETFConfController {
     return true;
   }
 
-  bool checkStockConfiguration() {
+  bool checkBondConfiguration() {
     if (!includeETFs) {
       return true;
     }
@@ -63,7 +63,7 @@ class CreateETFConfController {
     return false;
   }
 
-  bool checkStockDistribution() {
+  bool checkBondDistribution() {
     int numberETFs = portfolio.etfs.length;
     double totalAllocation = 0.0;
 

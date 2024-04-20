@@ -16,6 +16,9 @@ import 'package:flutter_application_1/View/Screens/stock_conf_view.dart';
 import 'package:flutter_application_1/View/Screens/create_stock_view.dart';
 import 'package:flutter_application_1/View/Screens/etf_conf_view.dart';
 import 'package:flutter_application_1/View/Screens/create_etf_view.dart';
+import 'package:flutter_application_1/View/Screens/bond_conf_view.dart';
+import 'package:flutter_application_1/View/Screens/create_bond_view.dart';
+
 import 'package:realm/realm.dart';
 
 class AppRoutes {
@@ -54,6 +57,8 @@ class AppRoutes {
   static const String createStockScreen = '/createStockScreen';
   static const String etfConfigurationScreen = '/etfConfigurationScreen';
   static const String createETFScreen = '/createETFScreen';
+  static const String bondConfigurationScreen = '/bondConfigurationScreen';
+  static const String createBondScreen = '/createBondScreen';
 
   static Map<String, WidgetBuilder> routes(App app) {
     return {
@@ -76,6 +81,8 @@ class AppRoutes {
       createStockScreen: (context) => const CreateStock(),
       etfConfigurationScreen: (context) => ETFConfiguration(),
       createETFScreen: (context) => const CreateETF(),
+      bondConfigurationScreen: (context) => BondConfiguration(),
+      createBondScreen: (context) => const CreateBond(),
     };
   }
 }

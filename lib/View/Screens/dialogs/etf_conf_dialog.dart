@@ -20,12 +20,12 @@ class ETFConfigurationDialog extends StatefulWidget {
 
 class _CreateStockConfigurationDialogState
     extends State<ETFConfigurationDialog> {
-  late CreateETFConfConfiguration controller;
+  late CreateETFConfiguration controller;
 
   @override
   void initState() {
     super.initState();
-    controller = CreateETFConfConfiguration(
+    controller = CreateETFConfiguration(
       viewController: widget.viewController,
     );
   }
@@ -157,7 +157,9 @@ class _CreateStockConfigurationDialogState
                     ...controller.etfPortfolio.etfs.map(
                       (etfs) => Column(
                         children: [
-                          customETFCard(etfs, controller.singleETF),
+                          customETFCard(etfs, controller.singleETF, () {
+                            setState(() {}); // Update the UI
+                          }),
                           const SizedBox(height: 31),
                         ],
                       ),

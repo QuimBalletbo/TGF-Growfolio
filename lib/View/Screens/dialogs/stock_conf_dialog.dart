@@ -158,7 +158,9 @@ class _CreateStockConfigurationDialogState
                     ...controller.stocksPortfolio.stocks.map(
                       (stocks) => Column(
                         children: [
-                          customStockCard(stocks, controller.singleStock),
+                          customStockCard(stocks, controller.singleStock, () {
+                            setState(() {}); // Update the UI
+                          }),
                           const SizedBox(height: 31),
                         ],
                       ),

@@ -11,11 +11,10 @@ class ETFConfiguration extends StatefulWidget {
   CreateETFConfController viewController = CreateETFConfController();
 
   @override
-  _StockConfigurationScreenState createState() =>
-      _StockConfigurationScreenState();
+  _ETFConfigurationScreenState createState() => _ETFConfigurationScreenState();
 }
 
-class _StockConfigurationScreenState extends State<ETFConfiguration> {
+class _ETFConfigurationScreenState extends State<ETFConfiguration> {
   @override
   void initState() {
     super.initState();
@@ -148,11 +147,11 @@ class _StockConfigurationScreenState extends State<ETFConfiguration> {
 
   onTapContinue(BuildContext context) {
     setState(() {
-      errorFieldEmpty = widget.viewController.setStockConfPortfolio();
-      errorETFDistribution = widget.viewController.checkStockDistribution();
+      errorFieldEmpty = widget.viewController.setBondConfPortfolio();
+      errorETFDistribution = widget.viewController.checkBondDistribution();
     });
     if (!errorFieldEmpty && !errorETFDistribution) {
-      Navigator.pushNamed(context, AppRoutes.createStockScreen);
+      Navigator.pushNamed(context, AppRoutes.bondConfigurationScreen);
     }
   }
 
@@ -166,8 +165,8 @@ class _StockConfigurationScreenState extends State<ETFConfiguration> {
 
   onTapCreateETF(BuildContext context) {
     setState(() {
-      errorFieldEmpty = widget.viewController.setStockConfPortfolio();
-      errorETFConfiguration = widget.viewController.checkStockConfiguration();
+      errorFieldEmpty = widget.viewController.setBondConfPortfolio();
+      errorETFConfiguration = widget.viewController.checkBondConfiguration();
     });
     if (!errorFieldEmpty && !errorETFConfiguration) {
       Navigator.pushNamed(context, AppRoutes.createETFScreen);
