@@ -111,7 +111,7 @@ class _StockConfigurationScreenState extends State<StockConfiguration> {
                 CustomSpaceButton(
                   text: "Finish Portfolio Configuration",
                   onTap: () {
-                    onReload(context);
+                    onTapFinish(context);
                   },
                 ),
 
@@ -144,12 +144,14 @@ class _StockConfigurationScreenState extends State<StockConfiguration> {
     }
   }
 
-  onReload(BuildContext context) {
+  onTapFinish(BuildContext context) {
     setState(() {
-      includeStocks = widget.viewController.includeStocks;
-      equalWeightStocks = widget.viewController.equalWeightStocks;
-      stockAllocation = widget.viewController.stockAllocation;
+      errorFieldEmpty = widget.viewController.setStockConfPortfolio();
+      errorStockDistribution = widget.viewController.checkStockDistribution();
     });
+    if (!errorFieldEmpty && !errorStockDistribution) {
+      Navigator.pushNamed(context, AppRoutes.finishConfScreen);
+    }
   }
 
   onTapCreateStock(BuildContext context) {

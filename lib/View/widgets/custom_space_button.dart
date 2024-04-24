@@ -19,7 +19,7 @@ class CustomSpaceButton extends StatelessWidget {
     return CustomElevatedButton(
         height: 45.v,
         text: text,
-        margin: EdgeInsets.only(left: 35.h, right: 58.h),
+        margin: EdgeInsets.only(left: 58.h, right: 58.h),
         alignment: Alignment.bottomLeft,
         buttonStyle: buttonStyle,
         buttonTextStyle: theme.textTheme.labelLarge!,

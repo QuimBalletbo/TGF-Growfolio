@@ -18,37 +18,26 @@ import 'package:flutter_application_1/View/Screens/etf_conf_view.dart';
 import 'package:flutter_application_1/View/Screens/create_etf_view.dart';
 import 'package:flutter_application_1/View/Screens/bond_conf_view.dart';
 import 'package:flutter_application_1/View/Screens/create_bond_view.dart';
+import 'package:flutter_application_1/View/Screens/finish_conf_view.dart';
 
 import 'package:realm/realm.dart';
 
 class AppRoutes {
   static const String iniciarSessiRegistrarSeScreen =
       '/iniciar_sessi_registrar_se_screen';
-
   static const String homeScreen = '/home_view';
-
   static const String profileContainerScreen = '/profile_view';
-
   static const String deleteAccountScreen = '/delete_account';
-
   static const String createAccountScreen = '/create_account';
-
   static const String passwordSecurityScreen = '/password_security_screen';
-
   static const String configuraciOneScreen = '/configuraci_one_screen';
-
   static const String pGinaDIniciAlumneTwoScreen =
       '/p_gina_d_inici_alumne_two_screen';
-
   static const String brokerFeesConfigurationOneScreen =
       '/broker_fees_configuration_one_screen';
-
   static const String modifyNameScreen = '/modifyNameScreen';
-
   static const String logOutScreen = '/logOutScreen';
-
   static const String logInScreen = '/logInScreen';
-
   static const String conditionsUseScreen = '/conditionsUseScreen';
   static const String cretatePortfolioScreen = '/CretatePortfolioScreen';
   static const String taxationScreen = '/taxationScreen';
@@ -59,6 +48,7 @@ class AppRoutes {
   static const String createETFScreen = '/createETFScreen';
   static const String bondConfigurationScreen = '/bondConfigurationScreen';
   static const String createBondScreen = '/createBondScreen';
+  static const String finishConfScreen = '/finishConfScreen';
 
   static Map<String, WidgetBuilder> routes(App app) {
     return {
@@ -83,6 +73,7 @@ class AppRoutes {
       createETFScreen: (context) => const CreateETF(),
       bondConfigurationScreen: (context) => BondConfiguration(),
       createBondScreen: (context) => const CreateBond(),
+      finishConfScreen: (context) => FinishConf(),
     };
   }
 }

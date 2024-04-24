@@ -111,7 +111,7 @@ class _BondConfigurationScreenState extends State<BondConfiguration> {
                 CustomSpaceButton(
                   text: "Finish Portfolio Configuration",
                   onTap: () {
-                    onReload(context);
+                    onTapContinue(context);
                   },
                 ),
 
@@ -140,16 +140,8 @@ class _BondConfigurationScreenState extends State<BondConfiguration> {
       errorBondDistribution = widget.viewController.checkBondDistribution();
     });
     if (!errorFieldEmpty && !errorBondDistribution) {
-      //Navigator.pushNamed(context, AppRoutes.createStockScreen);
+      Navigator.pushNamed(context, AppRoutes.finishConfScreen);
     }
-  }
-
-  onReload(BuildContext context) {
-    setState(() {
-      includeBonds = widget.viewController.includeBonds;
-      equalWeightBonds = widget.viewController.equalWeightBonds;
-      bondAllocation = widget.viewController.bondAllocation;
-    });
   }
 
   onTapCreateBond(BuildContext context) {

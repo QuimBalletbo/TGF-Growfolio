@@ -122,7 +122,7 @@ class _ETFConfigurationScreenState extends State<ETFConfiguration> {
                 CustomSpaceButton(
                   text: "Finish Portfolio Configuration",
                   onTap: () {
-                    onReload(context);
+                    onTapFinish(context);
                   },
                 ),
 
@@ -155,12 +155,14 @@ class _ETFConfigurationScreenState extends State<ETFConfiguration> {
     }
   }
 
-  onReload(BuildContext context) {
+  onTapFinish(BuildContext context) {
     setState(() {
-      includeETFs = widget.viewController.includeETFs;
-      equalWeightETFs = widget.viewController.equalWeightETFs;
-      etfAllocation = widget.viewController.etfAllocation;
+      errorFieldEmpty = widget.viewController.setBondConfPortfolio();
+      errorETFDistribution = widget.viewController.checkBondDistribution();
     });
+    if (!errorFieldEmpty && !errorETFDistribution) {
+      Navigator.pushNamed(context, AppRoutes.finishConfScreen);
+    }
   }
 
   onTapCreateETF(BuildContext context) {

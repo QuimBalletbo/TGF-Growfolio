@@ -23,7 +23,7 @@ class CustomImageButton extends StatelessWidget {
         height: 45.v,
         text: text,
         alignment: Alignment.centerLeft,
-        margin: EdgeInsets.only(left: 35.h, right: 58.h),
+        margin: EdgeInsets.only(left: 58.h, right: 58.h),
         leftIcon: Container(
             margin: EdgeInsets.only(right: 30.h),
             alignment: Alignment.centerLeft,
