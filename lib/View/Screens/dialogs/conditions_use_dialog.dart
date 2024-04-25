@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/app_export.dart';
 
 class ConditionsUseDialog extends StatelessWidget {
-  ConditionsUseDialog({Key? key}) : super(key: key);
-
-  TextEditingController passwordController = TextEditingController();
+  const ConditionsUseDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -253,7 +251,6 @@ La Salle Campus Barcelona-URL
 C/ de Sant Joan de la Salle, 42,
 Barcelona, Spain/Catalonia/Barcelona 08017
 Spain
-Phone: 608771866
 joaquim.balletbo@students.salle.url.edu
 
 ''',

@@ -105,11 +105,7 @@ class _FinishConfViewControllerState extends State<FinishConf> {
       value = widget.viewController.getValue();
     });
     if (!errorAllocation && !errorDistribution) {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        AppRoutes.homeScreen,
-        (route) => false,
-      );
+      Navigator.pushNamed(context, AppRoutes.calculatePortfolioScreen);
     }
   }
 

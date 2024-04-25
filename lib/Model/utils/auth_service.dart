@@ -2,6 +2,7 @@ import 'package:flutter_application_1/Model/data/profile.dart';
 import 'package:realm/realm.dart';
 import 'package:flutter_application_1/Model/data/portfolio.dart';
 import 'package:flutter_application_1/Model/data/createPortfolio.dart';
+import 'package:flutter_application_1/Model/data/portfolioReturn.dart';
 
 class AuthService {
   static final AuthService _instance = AuthService._internal();
@@ -11,6 +12,8 @@ class AuthService {
   late RealmResults<CreateStock> _createStocks;
   late RealmResults<CreateETF> _createETFs;
   late RealmResults<CreateBond> _createBonds;
+  late RealmResults<PortfolioReturn> _portfolioReturn;
+  late RealmResults<AssetReturn> _assetReturn;
   late Profile _profile;
   late User _user;
   factory AuthService() {
@@ -25,7 +28,9 @@ class AuthService {
       CreateStock.schema,
       CreateETF.schema,
       CreateBond.schema,
-      CreatePortfolio.schema
+      CreatePortfolio.schema,
+      PortfolioReturn.schema,
+      AssetReturn.schema
     ]));
     _realm.subscriptions.update((mutableSubscriptions) {
       mutableSubscriptions.add(_realm.all<Portfolio>());
@@ -34,6 +39,8 @@ class AuthService {
       mutableSubscriptions.add(_realm.all<CreateStock>());
       mutableSubscriptions.add(_realm.all<CreateETF>());
       mutableSubscriptions.add(_realm.all<CreateBond>());
+      mutableSubscriptions.add(_realm.all<PortfolioReturn>());
+      mutableSubscriptions.add(_realm.all<AssetReturn>());
     });
 
     _portfolios = _realm.query<Portfolio>('userId == \$0', [user.id]);
@@ -43,6 +50,9 @@ class AuthService {
     _createETFs = _realm.query<CreateETF>('userId == \$0', [user.id]);
     _createBonds = _realm.query<CreateBond>('userId == \$0', [user.id]);
     _profile = _realm.query<Profile>('userId == \$0', [user.id]).first;
+    _portfolioReturn =
+        _realm.query<PortfolioReturn>('userId == \$0', [user.id]);
+    _assetReturn = _realm.query<AssetReturn>('userId == \$0', [user.id]);
   }
 
   void initializefirstTime(User user, String username) {
@@ -53,7 +63,9 @@ class AuthService {
       CreateStock.schema,
       CreateETF.schema,
       CreateBond.schema,
-      CreatePortfolio.schema
+      CreatePortfolio.schema,
+      PortfolioReturn.schema,
+      AssetReturn.schema
     ]));
     _realm.subscriptions.update((mutableSubscriptions) {
       mutableSubscriptions.add(_realm.all<Portfolio>());
@@ -62,6 +74,8 @@ class AuthService {
       mutableSubscriptions.add(_realm.all<CreateStock>());
       mutableSubscriptions.add(_realm.all<CreateETF>());
       mutableSubscriptions.add(_realm.all<CreateBond>());
+      mutableSubscriptions.add(_realm.all<PortfolioReturn>());
+      mutableSubscriptions.add(_realm.all<AssetReturn>());
     });
     _portfolios = _realm.query<Portfolio>('userId == \$0', [user.id]);
     _createportfolio =
@@ -74,6 +88,9 @@ class AuthService {
               ObjectId(), username, user.id, 0, 'none', 'none', 'none', 'none'),
         ));
     _profile = _realm.query<Profile>('userId == \$0', [user.id]).first;
+    _portfolioReturn =
+        _realm.query<PortfolioReturn>('userId == \$0', [user.id]);
+    _assetReturn = _realm.query<AssetReturn>('userId == \$0', [user.id]);
   }
 
   User getUser() {
@@ -86,6 +103,17 @@ class AuthService {
 
   RealmResults<Portfolio> getPortfolios() {
     return _portfolios;
+  }
+
+  RealmResults<PortfolioReturn> getPortfolioReturn() {
+    _portfolioReturn =
+        _realm.query<PortfolioReturn>('userId == \$0', [_user.id]);
+    return _portfolioReturn;
+  }
+
+  RealmResults<AssetReturn> getAssetReturn() {
+    _assetReturn = _realm.query<AssetReturn>('userId == \$0', [_user.id]);
+    return _assetReturn;
   }
 
   CreatePortfolio getCreatePortfolio() {
