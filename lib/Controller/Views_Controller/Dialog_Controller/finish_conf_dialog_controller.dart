@@ -19,18 +19,12 @@ class FinishBondDialogController {
 
   int returnAllocation(String value) {
     if (value == 'Stock') {
-      viewController
-          .setStockAllocation(portfolio.stockAllocationPercentage.toInt());
       return portfolio.stockAllocationPercentage.toInt();
     }
     if (value == 'Bond') {
-      viewController
-          .setBondAllocation(portfolio.bondAllocationPercentage.toInt());
       return portfolio.bondAllocationPercentage.toInt();
     }
     if (value == 'ETF') {
-      viewController
-          .setEtfAllocation(portfolio.etfAllocationPercentage.toInt());
       return portfolio.etfAllocationPercentage.toInt();
     }
     return 0;
@@ -44,7 +38,7 @@ class FinishBondDialogController {
       for (int i = 0; i < numberStocks; i++) {
         totalAllocation += portfolio.stocks[i].stockAllocation;
       }
-
+      viewController.setStockAllocation(totalAllocation.toInt());
       return totalAllocation.toInt();
     }
     return 0;
@@ -58,7 +52,7 @@ class FinishBondDialogController {
       for (int i = 0; i < numberETFs; i++) {
         totalAllocation += portfolio.etfs[i].eTFAllocation;
       }
-
+      viewController.setEtfAllocation(totalAllocation.toInt());
       return totalAllocation.toInt();
     }
     return 0;
@@ -72,7 +66,7 @@ class FinishBondDialogController {
       for (int i = 0; i < numberBonds; i++) {
         totalAllocation += portfolio.bonds[i].bondAllocation;
       }
-
+      viewController.setBondAllocation(totalAllocation.toInt());
       return totalAllocation.toInt();
     }
     return 0;

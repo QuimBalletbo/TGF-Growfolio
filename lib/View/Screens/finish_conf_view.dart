@@ -17,7 +17,6 @@ class FinishConf extends StatefulWidget {
 class _FinishConfViewControllerState extends State<FinishConf> {
   bool errorAllocation = false;
   bool errorDistribution = false;
-  bool value = false;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +60,7 @@ class _FinishConfViewControllerState extends State<FinishConf> {
                 Container(
                   color: Colors.white, // Set the background color to white
                   child: Text(
-                    "The errorAllocation: $errorAllocation , errorDistribution: $errorDistribution , value: $value",
+                    "The errorAllocation: $errorAllocation , errorDistribution: $errorDistribution ",
                     maxLines: 6,
                     overflow: TextOverflow.ellipsis,
                     style: CustomTextStyles.bodyMediumInterff1e1e1e.copyWith(
@@ -102,7 +101,6 @@ class _FinishConfViewControllerState extends State<FinishConf> {
     setState(() {
       errorAllocation = widget.viewController.getErrorAllocation();
       errorDistribution = widget.viewController.checkErrorDistribution();
-      value = widget.viewController.getValue();
     });
     if (!errorAllocation && !errorDistribution) {
       Navigator.pushNamed(context, AppRoutes.calculatePortfolioScreen);

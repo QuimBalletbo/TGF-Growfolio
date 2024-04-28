@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/app_export.dart';
 import 'package:flutter_application_1/View/Screens/dialogs/calculate_portfolio_dialog.dart';
-import 'package:flutter_application_1/View/widgets/custom_space_button.dart';
 import 'package:flutter_application_1/View/widgets/smallArrowBack.dart';
+import 'package:flutter_application_1/Controller/Views_Controller/calculate_portfolio_controller.dart';
+import 'package:flutter_application_1/View/widgets/custom_space_button.dart';
 
-// ignore_for_file: must_be_immutable
-class CalculatePortfolio extends StatelessWidget {
-  const CalculatePortfolio({Key? key}) : super(key: key);
+class CalculatePortfolio extends StatefulWidget {
+  CalculatePortfolio({Key? key}) : super(key: key);
+  CalculatePortfolioController viewController = CalculatePortfolioController();
+
+  @override
+  _CalculatePortfolioState createState() => _CalculatePortfolioState();
+}
+
+class _CalculatePortfolioState extends State<CalculatePortfolio> {
+  bool endedCalculations = false;
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +39,17 @@ class CalculatePortfolio extends StatelessWidget {
                   child: CalculatePortfolioDialog(),
                 ),
                 SizedBox(height: 22.v),
+                CustomSpaceButton(
+                  text: "Calculate Portfolio  return",
+                  onTap: () {
+                    endedCalculations =
+                        widget.viewController.calculateStockReturn();
+                    onTapContinue(context);
+                  },
+                ),
 
                 SizedBox(height: 16.v),
+
                 // Form Content
               ],
             ),
@@ -42,7 +59,17 @@ class CalculatePortfolio extends StatelessWidget {
     );
   }
 
-  onTapContinue(BuildContext context) {}
+  onTapContinue(BuildContext context) {
+    // Wait for 3 seconds
+    Future.delayed(const Duration(seconds: 5), () {
+      // Check if calculations have ended
+      if (endedCalculations) {
+        Navigator.pushNamed(context, AppRoutes.showPortfolioScreen);
+      } else {
+        Navigator.pushNamed(context, AppRoutes.showPortfolioScreen);
+      }
+    });
+  }
 
   /// Section Widget
 }

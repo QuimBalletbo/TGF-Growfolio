@@ -103,12 +103,12 @@ class CreateETFController {
             )));
       }
 
-      addETFtoPortfolio(etfName);
+      addETFtoPortfolio();
       return false;
     }
   }
 
-  void addETFtoPortfolio(String etfName) {
+  void addETFtoPortfolio() {
     etf = realm.query<CreateETF>('id == \$0', [objectiD]).first;
 
     realm.write(() => etfsPortfolio.etfs.add(etf));

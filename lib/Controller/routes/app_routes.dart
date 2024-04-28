@@ -20,6 +20,7 @@ import 'package:flutter_application_1/View/Screens/bond_conf_view.dart';
 import 'package:flutter_application_1/View/Screens/create_bond_view.dart';
 import 'package:flutter_application_1/View/Screens/finish_conf_view.dart';
 import 'package:flutter_application_1/View/Screens/calculate_portfolio_view.dart';
+import 'package:flutter_application_1/View/Screens/showPortfolioValues_view.dart';
 
 import 'package:realm/realm.dart';
 
@@ -51,6 +52,7 @@ class AppRoutes {
   static const String createBondScreen = '/createBondScreen';
   static const String finishConfScreen = '/finishConfScreen';
   static const String calculatePortfolioScreen = '/calculatePortfolioScreen';
+  static const String showPortfolioScreen = '/showPortfolioScreen';
 
   static Map<String, WidgetBuilder> routes(App app) {
     return {
@@ -76,7 +78,8 @@ class AppRoutes {
       bondConfigurationScreen: (context) => BondConfiguration(),
       createBondScreen: (context) => const CreateBond(),
       finishConfScreen: (context) => FinishConf(),
-      calculatePortfolioScreen: (context) => const CalculatePortfolio(),
+      calculatePortfolioScreen: (context) => CalculatePortfolio(),
+      showPortfolioScreen: (context) => const ShowPortfolio(),
     };
   }
 }
