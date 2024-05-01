@@ -44,12 +44,12 @@ class CalculatePortfolioController {
         amountWithBrokerFee = createPortfolio.monetaryObjective;
       }
       if (createPortfolio.taxation &&
-          createPortfolio.shortToLongTransition < createPortfolio.duration) {
+          createPortfolio.shortToLongTransition > createPortfolio.duration) {
         amountWithTaxation =
             amountWithBrokerFee * (1 + createPortfolio.taxRateShortTerm / 100);
       }
       if (createPortfolio.taxation &&
-          createPortfolio.shortToLongTransition > createPortfolio.duration) {
+          createPortfolio.shortToLongTransition < createPortfolio.duration) {
         amountWithTaxation =
             amountWithBrokerFee * (1 + createPortfolio.taxRateLongTerm / 100);
       } else {
@@ -63,6 +63,9 @@ class CalculatePortfolioController {
       while (currentPortfolioValue < necesaryValue) {
         totalAmountInvested = 0;
         currentPortfolioValue = 0;
+        portfolioValueStocks = 0;
+        portfolioValueETFs = 0;
+        portfolioValueBonds = 0;
         if (createPortfolio.includeStocks) {
           // Calculate total effective growth for all stocks
           for (int i = 0; i < createPortfolio.stocks.length; i++) {
@@ -74,14 +77,17 @@ class CalculatePortfolioController {
               effectiveAnualGrowth = (1 - (createPortfolio.fwt / 100)) *
                       (createPortfolio.stocks[i].avgReturn / 100) +
                   ((createPortfolio.stocks[i].avgDividend / 100) -
-                      createPortfolio.dividendTax / 100);
+                          createPortfolio.dividendTax / 100) *
+                      (createPortfolio.stocks[i].avgDividend / 100);
             }
             if (!createPortfolio.stocks[i].fwt && createPortfolio.taxation) {
               effectiveAnualGrowth =
                   (createPortfolio.stocks[i].avgReturn / 100) +
                       ((createPortfolio.stocks[i].avgDividend / 100) -
-                          createPortfolio.dividendTax / 100);
-            } else {
+                              createPortfolio.dividendTax / 100) *
+                          (createPortfolio.stocks[i].avgDividend / 100);
+            }
+            if (!createPortfolio.stocks[i].fwt && !createPortfolio.taxation) {
               effectiveAnualGrowth =
                   (createPortfolio.stocks[i].avgReturn / 100) +
                       (createPortfolio.stocks[i].avgDividend / 100);
@@ -93,7 +99,6 @@ class CalculatePortfolioController {
             }
 
             // Calculate effective growth based on frequency of investing
-            effectiveGrowth = effectiveAnualGrowth;
 
             // Calculate the returns for the given period of the stock
             double stockAllocation =
@@ -105,10 +110,13 @@ class CalculatePortfolioController {
                 frequency == 'One-time') {
               int periods = 0;
               if (frequency == 'Monthly') {
+                effectiveGrowth = effectiveAnualGrowth / 12;
                 periods = 12 * createPortfolio.duration;
               } else if (frequency == 'Quarterly') {
+                effectiveGrowth = effectiveAnualGrowth / 4;
                 periods = 4 * createPortfolio.duration;
               } else if (frequency == 'Annual' || frequency == 'One-time') {
+                effectiveGrowth = effectiveAnualGrowth;
                 periods = createPortfolio.duration;
               }
               if (frequency == 'One-time') {
@@ -337,7 +345,7 @@ class CalculatePortfolioController {
         }
         avgAnualReturn = pow((currentPortfolioValue / totalAmountInvested),
                 (1 / createPortfolio.duration)) -
-            100;
+            1;
         // Increment the amount invested for the next iteration
         amountInvestedPeriodically++;
       }
@@ -345,7 +353,8 @@ class CalculatePortfolioController {
       diversificationScore = calculateDiversificationScore();
       durationScore = calculateDurationScore();
       returnScore = calculateReturnScore(avgAnualReturn);
-
+      print(
+          "Creating PortfolioReturn main values: $portfolioValueStocks, $portfolioValueETFs, $portfolioValueBonds, $currentPortfolioValue");
       realm.write(() => realm.add(PortfolioReturn(
             newportfolioID,
             allocationScore,
@@ -581,7 +590,7 @@ class CalculatePortfolioController {
           double bondAllocation =
               createPortfolio.bonds[i].bondAllocation / 100.0;
           double bondValueChange = 0;
-          int couponAjustment = 0;
+          double couponAjustment = 0;
           int periods = 0;
           if (frequency == 'Monthly' ||
               frequency == 'Quarterly' ||
@@ -662,6 +671,7 @@ class CalculatePortfolioController {
         }
       }
     } catch (e) {
+      print("Exapetion reached: $e");
       return false;
     }
     return true;
@@ -701,7 +711,7 @@ class CalculatePortfolioController {
       return 100;
     } else {
       // Calculate linearly interpolated value between 0 and 1
-      return (totalAssets - 1) * (100 ~/ 9).toDouble();
+      return totalAssets * 10;
     }
   }
 
@@ -711,17 +721,18 @@ class CalculatePortfolioController {
     } else if (createPortfolio.duration >= 20) {
       return 100.0;
     } else {
-      return 10.0 * pow(2, (createPortfolio.duration - 1) / 19);
+      return createPortfolio.duration * 5.0;
     }
   }
 
   double calculateReturnScore(double avgAnualReturn) {
-    if (avgAnualReturn <= 0) {
+    double avgReturn = avgAnualReturn * 100;
+    if (avgReturn <= 0) {
       return 0.0;
-    } else if (avgAnualReturn >= 20) {
+    } else if (avgReturn >= 20) {
       return 100.0;
     } else {
-      return 10 * (1 - (1 / (1 + avgAnualReturn))) * 100;
+      return avgReturn * 5;
     }
   }
 

@@ -2,25 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/app_export.dart';
 import 'package:flutter_application_1/View/widgets/app_bar/appbar_trailing_image.dart';
 import 'package:flutter_application_1/View/widgets/app_bar/custom_app_bar.dart';
-import 'package:flutter_application_1/View/widgets/custom_betaPortfolio.dart';
 import 'package:flutter_application_1/View/widgets/app_bar/appbar_subtitle.dart';
 import 'package:flutter_application_1/View/Screens/home_view_component/home_view_bottom_part.dart';
-import 'package:flutter_application_1/Model/listBloc.dart';
-import 'package:flutter_application_1/Model/itemBloc.dart';
 import 'package:flutter_application_1/Model/utils/auth_service.dart';
 import 'package:flutter_application_1/Model/data/profile.dart';
+import 'package:flutter_application_1/Controller/Views_Controller/home_view_controller.dart';
+import 'package:flutter_application_1/View/widgets/custom_PortfolioReturnCard.dart';
 
-class ProfileOneScreen extends StatelessWidget {
-  ProfileOneScreen({Key? key, required this.bloc, required this.singlebloc})
-      : super(key: key);
+class ProfileOneScreen extends StatefulWidget {
+  ProfileOneScreen({Key? key}) : super(key: key);
 
-  TextEditingController returnvalueController = TextEditingController();
+  @override
+  _ProfileOneScreenState createState() => _ProfileOneScreenState();
+}
 
-  TextEditingController namevalueController = TextEditingController();
+class _ProfileOneScreenState extends State<ProfileOneScreen> {
+  HomeViewController controller = HomeViewController();
 
-  GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-  final ListBloc bloc;
-  final ItemBloc singlebloc;
+  @override
+  void initState() {
+    super.initState();
+    controller.initializeNumPortfolio();
+    controller.initializePreferedAsset();
+    controller.initializeBestPortfolio();
+    controller.initializeRiskiestPortfolio();
+    controller.initializeBestPerformingPortfolio();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +57,7 @@ class ProfileOneScreen extends StatelessWidget {
                       children: [
                         _buildPerfilColumn(context, profile),
                         SizedBox(height: 15.v),
-                        _buildReturnvalueColumn(context, bloc),
+                        _buildReturnvalueColumn(context),
                         SizedBox(height: 15.v),
                         _buildPortfolioReviewColumn(context, profile),
                       ],
@@ -133,7 +140,7 @@ class ProfileOneScreen extends StatelessWidget {
                 ),
                 SizedBox(width: 10.v), // Adjust as needed for spacing
                 Text(
-                  "${profile?.portfolionum ?? "null"}",
+                  "${controller.numPortfolio ?? "null"}",
                   style: theme.textTheme.bodyLarge,
                 ),
               ],
@@ -186,7 +193,7 @@ class ProfileOneScreen extends StatelessWidget {
                   bottom: 22.v,
                 ),
                 child: Text(
-                  profile?.preferedAssetclass ?? "null",
+                  controller.preferedAsset,
                   style: theme.textTheme.titleLarge,
                 ),
               ),
@@ -198,7 +205,7 @@ class ProfileOneScreen extends StatelessWidget {
             child: _buildRiskiestPortfolioRow(
               context,
               riskiestPortfolioText: "Best performing portfolio:",
-              allStockPlanText: profile?.bestPerformingPortfolio ?? "null",
+              allStockPlanText: controller.bestPerformingPortfolio,
             ),
           ),
           SizedBox(height: 15.v),
@@ -207,7 +214,7 @@ class ProfileOneScreen extends StatelessWidget {
             child: _buildRiskiestPortfolioRow(
               context,
               riskiestPortfolioText: "Riskiest  portfolio:",
-              allStockPlanText: profile?.riskiestPortfolio ?? "null",
+              allStockPlanText: controller.riskiestPortfolio,
             ),
           ),
           SizedBox(height: 19.v),
@@ -239,7 +246,7 @@ class ProfileOneScreen extends StatelessWidget {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: profile?.bestPortfolio ?? "null",
+                          text: controller.bestPortfolio,
                           style: CustomTextStyles.titleLargeff000000,
                         ),
                       ],
@@ -257,7 +264,7 @@ class ProfileOneScreen extends StatelessWidget {
   }
 
   /// Section Widget
-  Widget _buildReturnvalueColumn(BuildContext context, ListBloc bloc) {
+  Widget _buildReturnvalueColumn(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: 15.h,
@@ -296,25 +303,27 @@ class ProfileOneScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.end,
-              children: bloc.portfolios.isEmpty
+              children: controller.allPortfolioReturn.isEmpty
                   ? [
                       // Display message when there are no portfolios
                       Container(
                           margin: EdgeInsets.only(right: 42.h),
                           alignment: Alignment.centerRight,
-                          child: Text("There are currently no portfolios",
+                          child: Text("There are currently no Portfolios",
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: CustomTextStyles.titleLargeMontserrat)),
-
                       SizedBox(height: 22.v),
                     ]
                   : [
-                      // Render portfolios if available
-                      ...bloc.portfolios.map(
-                        (portfolio) => Column(
+                      // Render portfolios if available BondPortfolio
+                      ...controller.allPortfolioReturn.map(
+                        (portfolios) => Column(
                           children: [
-                            customStockCard(portfolio, singlebloc),
+                            customPortfolioReturnCard(
+                                portfolios, controller.singlePortfolio, () {
+                              // Update the UI
+                            }),
                             const SizedBox(height: 31),
                           ],
                         ),

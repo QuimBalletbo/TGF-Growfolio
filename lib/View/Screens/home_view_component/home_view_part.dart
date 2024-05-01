@@ -9,16 +9,13 @@ import 'package:flutter_application_1/View/Screens/dialogs/max_portfolio_dialog.
 import 'package:flutter_application_1/Model/listBloc.dart';
 import 'package:flutter_application_1/View/widgets/custom_betaPortfolio.dart';
 import 'package:flutter_application_1/Model/itemBloc.dart';
+import 'package:flutter_application_1/Controller/Views_Controller/home_view_controller.dart';
+import 'package:flutter_application_1/View/widgets/custom_PortfolioReturnCard.dart';
 
 class PGinaDIniciAlumneOnePage extends StatelessWidget {
-  PGinaDIniciAlumneOnePage(
-      {Key? key, required this.bloc, required this.singlebloc})
-      : super(key: key);
-  TextEditingController perfilController = TextEditingController();
+  PGinaDIniciAlumneOnePage({Key? key}) : super(key: key);
+  HomeViewController controller = HomeViewController();
 
-  TextEditingController allStockPlanController = TextEditingController();
-  final ListBloc bloc;
-  final ItemBloc singlebloc;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -52,13 +49,13 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: bloc.portfolios.isEmpty
+                    children: controller.allPortfolioReturn.isEmpty
                         ? [
                             // Display message when there are no portfolios
                             Container(
                                 margin: EdgeInsets.only(right: 42.h),
                                 alignment: Alignment.centerRight,
-                                child: Text("There are currently no portfolios",
+                                child: Text("There are currently no Portfolios",
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     style:
@@ -86,18 +83,19 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
                               imageConstant: ImageConstant.imgPlus,
                               onTap: () => onTapCreateNewPortfolio(context),
                             ),
-                            SizedBox(height: 15.v),
-                            FloatingActionButton(
-                                onPressed: bloc.addNewItems,
-                                child: const Icon(Icons.add)),
+
                             SizedBox(height: 22.v),
                           ]
                         : [
-                            // Render portfolios if available
-                            ...bloc.portfolios.map(
-                              (portfolio) => Column(
+                            // Render portfolios if available BondPortfolio
+                            ...controller.allPortfolioReturn.map(
+                              (portfolios) => Column(
                                 children: [
-                                  customStockCard(portfolio, singlebloc),
+                                  customPortfolioReturnCard(
+                                      portfolios, controller.singlePortfolio,
+                                      () {
+                                    // Update the UI
+                                  }),
                                   const SizedBox(height: 31),
                                 ],
                               ),
@@ -131,10 +129,6 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
                               },
                             ),
 
-                            SizedBox(height: 15.v),
-                            FloatingActionButton(
-                                onPressed: bloc.addNewItems,
-                                child: const Icon(Icons.add)),
                             SizedBox(height: 22.v),
                           ],
                   ),

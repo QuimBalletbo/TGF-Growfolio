@@ -43,7 +43,7 @@ class _CreateBondConfigurationDialogState extends State<PortfolioValuesDialog> {
                     Container(
                         margin: EdgeInsets.only(right: 42.h),
                         alignment: Alignment.centerRight,
-                        child: Text("There are currently no Bonds",
+                        child: Text("There are currently no Portfolios",
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: CustomTextStyles.titleLargeMontserrat)),

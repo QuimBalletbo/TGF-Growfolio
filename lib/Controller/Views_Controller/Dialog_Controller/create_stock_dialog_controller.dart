@@ -67,8 +67,8 @@ class CreateStockController {
         int numberStocks = (stocksPortfolio.stocks.length) + 1;
         realm.write(() => realm.add(CreateStock(
               objectiD,
-              0,
-              0,
+              10,
+              10,
               includeFWT,
               stockName,
               (100 ~/ numberStocks),
@@ -86,8 +86,8 @@ class CreateStockController {
       if (stocksPortfolio.equalWeightStocks == 'Include') {
         realm.write(() => realm.add(CreateStock(
               objectiD,
-              0,
-              0,
+              10,
+              10,
               includeFWT,
               stockName,
               stockAllocation,

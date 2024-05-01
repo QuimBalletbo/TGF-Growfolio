@@ -15,6 +15,11 @@ class CalculatePortfolio extends StatefulWidget {
 
 class _CalculatePortfolioState extends State<CalculatePortfolio> {
   bool endedCalculations = false;
+  @override
+  void initState() {
+    super.initState();
+    endedCalculations = widget.viewController.calculateStockReturn();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +47,6 @@ class _CalculatePortfolioState extends State<CalculatePortfolio> {
                 CustomSpaceButton(
                   text: "Calculate Portfolio  return",
                   onTap: () {
-                    endedCalculations =
-                        widget.viewController.calculateStockReturn();
                     onTapContinue(context);
                   },
                 ),
@@ -61,14 +64,11 @@ class _CalculatePortfolioState extends State<CalculatePortfolio> {
 
   onTapContinue(BuildContext context) {
     // Wait for 3 seconds
-    Future.delayed(const Duration(seconds: 5), () {
-      // Check if calculations have ended
-      if (endedCalculations) {
-        Navigator.pushNamed(context, AppRoutes.showPortfolioScreen);
-      } else {
-        Navigator.pushNamed(context, AppRoutes.showPortfolioScreen);
-      }
-    });
+
+    // Check if calculations have ended
+    if (endedCalculations) {
+      Navigator.pushNamed(context, AppRoutes.showPortfolioScreen);
+    }
   }
 
   /// Section Widget
