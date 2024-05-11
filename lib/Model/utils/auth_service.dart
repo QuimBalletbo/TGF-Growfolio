@@ -32,6 +32,7 @@ class AuthService {
       PortfolioReturn.schema,
       AssetReturn.schema
     ]));
+    print("Fins aqui arribo 2 ");
     _realm.subscriptions.update((mutableSubscriptions) {
       mutableSubscriptions.add(_realm.all<Portfolio>());
       mutableSubscriptions.add(_realm.all<Profile>());
@@ -42,14 +43,17 @@ class AuthService {
       mutableSubscriptions.add(_realm.all<PortfolioReturn>());
       mutableSubscriptions.add(_realm.all<AssetReturn>());
     });
-
+    print("Fins aqui arribo 3 ");
     _portfolios = _realm.query<Portfolio>('userId == \$0', [user.id]);
     _createportfolio =
         _realm.query<CreatePortfolio>('userId == \$0', [user.id]).first;
     _createStocks = _realm.query<CreateStock>('userId == \$0', [user.id]);
     _createETFs = _realm.query<CreateETF>('userId == \$0', [user.id]);
     _createBonds = _realm.query<CreateBond>('userId == \$0', [user.id]);
+    print("Fins aqui arribo 4 ");
+
     _profile = _realm.query<Profile>('userId == \$0', [user.id]).first;
+    print("Fins aqui arribo 5");
     _portfolioReturn =
         _realm.query<PortfolioReturn>('userId == \$0', [user.id]);
     _assetReturn = _realm.query<AssetReturn>('userId == \$0', [user.id]);
@@ -83,9 +87,10 @@ class AuthService {
     _createStocks = _realm.query<CreateStock>('userId == \$0', [user.id]);
     _createETFs = _realm.query<CreateETF>('userId == \$0', [user.id]);
     _createBonds = _realm.query<CreateBond>('userId == \$0', [user.id]);
+    ObjectId objectId = ObjectId();
     _realm.write(() => _realm.add(
-          Profile(
-              ObjectId(), username, user.id, 0, 'none', 'none', 'none', 'none'),
+          Profile(ObjectId(), username, user.id, 0, 'none', 'none', 'none',
+              'none', objectId),
         ));
     _profile = _realm.query<Profile>('userId == \$0', [user.id]).first;
     _portfolioReturn =

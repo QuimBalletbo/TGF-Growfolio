@@ -95,7 +95,7 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
                                       portfolios, controller.singlePortfolio,
                                       () {
                                     // Update the UI
-                                  }),
+                                  }, context),
                                   const SizedBox(height: 31),
                                 ],
                               ),

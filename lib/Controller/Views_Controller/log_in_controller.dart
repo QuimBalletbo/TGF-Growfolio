@@ -17,7 +17,9 @@ class LoginController {
     try {
       error = false;
       user = await _app.logIn(Credentials.emailPassword(email, password));
+      print("Fins aqui arribo ");
       AuthService().initialize(user);
+      print("Fins aqui arribo 6 ");
       print(
           "Successful logging in: User id: ${user.id} User id: ${user.profile}");
       Navigator.pushNamedAndRemoveUntil(

@@ -56,7 +56,7 @@ class _CreateBondConfigurationDialogState extends State<PortfolioValuesDialog> {
                           customPortfolioReturnCard(
                               portfolios, controller.singlePortfolio, () {
                             setState(() {}); // Update the UI
-                          }),
+                          }, context),
                           const SizedBox(height: 31),
                         ],
                       ),

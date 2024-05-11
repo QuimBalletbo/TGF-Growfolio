@@ -30,6 +30,9 @@ class CustomTextStyles {
   static get bodyLargeff000000 => theme.textTheme.bodyLarge!.copyWith(
         color: const Color(0XFF000000),
       );
+  static get bodyLargeWhite => theme.textTheme.bodyLarge!.copyWith(
+        color: const Color(0XFFFFFFFF),
+      );
   static get bodyMediumInterPrimaryContainer =>
       theme.textTheme.bodyMedium!.inter.copyWith(
         color: theme.colorScheme.primaryContainer,
@@ -134,6 +137,11 @@ class CustomTextStyles {
   static get headlineSmallMontserratLight =>
       theme.textTheme.headlineSmall!.montserrat.copyWith(
         fontWeight: FontWeight.w300,
+      );
+  static get headlineSmallMontserratLightWhite =>
+      theme.textTheme.headlineSmall!.montserrat.copyWith(
+        fontWeight: FontWeight.w300,
+        color: const Color(0XFFFFFFFF),
       );
   static get headlineSmallMontserratOnPrimary =>
       theme.textTheme.headlineSmall!.montserrat.copyWith(

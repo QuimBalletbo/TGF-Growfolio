@@ -17,6 +17,7 @@ class Profile extends _Profile with RealmEntity, RealmObjectBase, RealmObject {
     String bestPerformingPortfolio,
     String riskiestPortfolio,
     String bestPortfolio,
+    ObjectId selectedPortfolio,
   ) {
     RealmObjectBase.set(this, '_id', id);
     RealmObjectBase.set(this, 'userName', userName);
@@ -27,6 +28,7 @@ class Profile extends _Profile with RealmEntity, RealmObjectBase, RealmObject {
         this, 'bestPerformingPortfolio', bestPerformingPortfolio);
     RealmObjectBase.set(this, 'riskiestPortfolio', riskiestPortfolio);
     RealmObjectBase.set(this, 'bestPortfolio', bestPortfolio);
+    RealmObjectBase.set(this, 'selectedPortfolio', selectedPortfolio);
   }
 
   Profile._();
@@ -82,6 +84,13 @@ class Profile extends _Profile with RealmEntity, RealmObjectBase, RealmObject {
       RealmObjectBase.set(this, 'bestPortfolio', value);
 
   @override
+  ObjectId get selectedPortfolio =>
+      RealmObjectBase.get<ObjectId>(this, 'selectedPortfolio') as ObjectId;
+  @override
+  set selectedPortfolio(ObjectId value) =>
+      RealmObjectBase.set(this, 'selectedPortfolio', value);
+
+  @override
   Stream<RealmObjectChanges<Profile>> get changes =>
       RealmObjectBase.getChanges<Profile>(this);
 
@@ -102,6 +111,7 @@ class Profile extends _Profile with RealmEntity, RealmObjectBase, RealmObject {
       SchemaProperty('bestPerformingPortfolio', RealmPropertyType.string),
       SchemaProperty('riskiestPortfolio', RealmPropertyType.string),
       SchemaProperty('bestPortfolio', RealmPropertyType.string),
+      SchemaProperty('selectedPortfolio', RealmPropertyType.objectid),
     ]);
   }
 }

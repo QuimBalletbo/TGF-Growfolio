@@ -13,4 +13,5 @@ class _Profile {
   late String bestPerformingPortfolio;
   late String riskiestPortfolio;
   late String bestPortfolio;
+  late ObjectId selectedPortfolio;
 }
