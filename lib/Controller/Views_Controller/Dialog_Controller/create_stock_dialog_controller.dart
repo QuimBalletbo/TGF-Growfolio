@@ -1,7 +1,11 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/data/createPortfolio.dart';
 import 'package:realm/realm.dart';
 import 'package:flutter_application_1/Model/utils/auth_service.dart';
+import 'package:flutter_application_1/Model/utils/JSONObject.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_application_1/Model/noDataBaseData/TicketSearch.dart';
 
 class CreateStockController {
   final user = AuthService().getUser();
@@ -105,9 +109,55 @@ class CreateStockController {
 
     realm.write(() => stocksPortfolio.stocks.add(stock));
   }
+
+  Future<List<TicketSearch>> fetchDataTicketSearch(String keyword) async {
+    const String apiKey = 'E0QVKDIL619SRX98';
+    // final String apiUrl =  'https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=$keyword&apikey=$apiKey';
+    final String apiUrl =
+        'https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=BA&apikey=demo';
+
+    try {
+      // Make the HTTP GET request
+      http.Response response = await http.get(Uri.parse(apiUrl));
+
+      // Check if the request was successful (status code 200)
+      if (response.statusCode == 200) {
+        // Parse the JSON response
+        Map<String, dynamic>? data = json.decode(response.body);
+        print("data recibed");
+        // Check if 'bestMatches' is null or not
+        print(data);
+        if (data != null && data.containsKey('bestMatches')) {
+          List<dynamic>? bestMatches = data['bestMatches'];
+
+          // Extract the name and symbol for each match
+          List<TicketSearch> matches = [];
+          if (bestMatches != null) {
+            for (var match in bestMatches) {
+              String symbol = match['1. symbol'];
+              String name = match['2. name'];
+              matches.add(TicketSearch(name: name, symbol: symbol));
+            }
+          }
+          print("matches created");
+          return matches.take(4).toList();
+        } else {
+          // Return an empty list if 'bestMatches' is null or not found
+          return [];
+        }
+      } else {
+        // If the request was not successful, throw an exception
+        throw Exception('Failed to load data: ${response.statusCode}');
+      }
+    } catch (e) {
+      // Handle any errors that occur during the process
+      throw Exception('Failed to load data: $e');
+    }
+  }
 }
 
 class StockController {
   TextEditingController stockNameController = TextEditingController();
   TextEditingController enterTextController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
 }

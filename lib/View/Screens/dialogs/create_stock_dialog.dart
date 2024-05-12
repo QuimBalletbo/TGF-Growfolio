@@ -5,6 +5,9 @@ import 'package:flutter_application_1/View/widgets/custom_toggle_button.dart';
 import 'package:flutter_application_1/View/widgets/name_title_text.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/Dialog_Controller/create_stock_dialog_controller.dart';
 import 'package:flutter_application_1/View/widgets/custom_space_button.dart';
+import 'package:flutter_application_1/View/widgets/searchBar.dart';
+import 'package:flutter_application_1/View/widgets/custom_TicketListCard.dart';
+import 'package:flutter_application_1/Model/noDataBaseData/TicketSearch.dart';
 
 class CreateStockDialog extends StatefulWidget {
   CreateStockDialog({Key? key}) : super(key: key);
@@ -19,6 +22,7 @@ class _CreateStockDialogState extends State<CreateStockDialog> {
   String stockName = '';
   bool includeFWT = false;
   int stockAllocation = 0;
+  List<TicketSearch> ticketSearchList = [];
 
   bool errorStockAllocation = false;
   bool errorStockName = false;
@@ -76,6 +80,39 @@ class _CreateStockDialogState extends State<CreateStockDialog> {
               });
             },
           ),
+          const SizedBox(height: 6.0),
+          CustomSearchBar(
+            controller: controller.searchController,
+            onEditionCompleate: (value) async {
+              // Perform the asynchronous operation
+              ticketSearchList =
+                  await widget.controller.fetchDataTicketSearch(value);
+
+              // Update the state with the search results
+              setState(() {});
+            },
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: ticketSearchList.isEmpty
+                ? []
+                : [
+                    // Render portfolios if available ETFPortfolio
+                    ...ticketSearchList.map(
+                      (ticketSearchList) => Column(
+                        children: [
+                          customTicketSearchList(ticketSearchList),
+                          const Divider(
+                            color: Colors.grey,
+                            indent: 4.0,
+                            endIndent: 4.0,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+          ),
+          const SizedBox(height: 6.0),
           Align(
             alignment: Alignment.center,
             child: Visibility(
