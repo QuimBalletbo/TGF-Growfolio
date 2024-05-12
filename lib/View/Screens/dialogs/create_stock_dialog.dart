@@ -8,6 +8,7 @@ import 'package:flutter_application_1/View/widgets/custom_space_button.dart';
 import 'package:flutter_application_1/View/widgets/searchBar.dart';
 import 'package:flutter_application_1/View/widgets/custom_TicketListCard.dart';
 import 'package:flutter_application_1/Model/noDataBaseData/TicketSearch.dart';
+import 'package:flutter_application_1/View/widgets/stock_name_card.dart';
 
 class CreateStockDialog extends StatefulWidget {
   CreateStockDialog({Key? key}) : super(key: key);
@@ -23,9 +24,12 @@ class _CreateStockDialogState extends State<CreateStockDialog> {
   bool includeFWT = false;
   int stockAllocation = 0;
   List<TicketSearch> ticketSearchList = [];
+  bool stockChoosen = false;
+  TicketSearch stockSearch = TicketSearch(name: '', symbol: '');
+  StockInfo stockInfo = StockInfo(avgDividend: 0, avgReturn: 0);
 
   bool errorStockAllocation = false;
-  bool errorStockName = false;
+  bool errorStockInfo = false;
   bool errorFieldEmpty = false;
   @override
   Widget build(BuildContext context) {
@@ -68,58 +72,71 @@ class _CreateStockDialogState extends State<CreateStockDialog> {
             endIndent: 4.0,
           ),
           const SizedBox(height: 6.0),
-          NameTitleText(
-            title: "Stock Name",
-            name: "Stock 1",
-            controller: controller.stockNameController,
-            onPortfolioNameChanged: (value) {
-              setState(() {
-                errorStockName = widget.controller.validateStockName(value);
-                stockName =
-                    widget.controller.getStockNameValue(value, errorStockName);
-              });
-            },
+          Visibility(
+            visible: stockChoosen && !errorStockInfo,
+            child: customSymbolContainer(stockSearch.name),
           ),
-          const SizedBox(height: 6.0),
-          CustomSearchBar(
-            controller: controller.searchController,
-            onEditionCompleate: (value) async {
-              // Perform the asynchronous operation
-              ticketSearchList =
-                  await widget.controller.fetchDataTicketSearch(value);
+          Visibility(
+            visible: !stockChoosen || errorStockInfo,
+            child: CustomSearchBar(
+              controller: controller.searchController,
+              onEditionCompleate: (value) async {
+                // Perform the asynchronous operation
+                ticketSearchList =
+                    await widget.controller.fetchDataTicketSearch(value);
 
-              // Update the state with the search results
-              setState(() {});
-            },
+                // Update the state with the search results
+                setState(() {});
+              },
+            ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: ticketSearchList.isEmpty
-                ? []
-                : [
-                    // Render portfolios if available ETFPortfolio
-                    ...ticketSearchList.map(
-                      (ticketSearchList) => Column(
-                        children: [
-                          customTicketSearchList(ticketSearchList),
-                          const Divider(
-                            color: Colors.grey,
-                            indent: 4.0,
-                            endIndent: 4.0,
-                          ),
-                        ],
+          Visibility(
+            visible: !stockChoosen || errorStockInfo,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: ticketSearchList.isEmpty
+                  ? []
+                  : [
+                      // Render portfolios if available ETFPortfolio
+                      ...ticketSearchList.map(
+                        (ticketSearchList) => Column(
+                          children: [
+                            CustomTicketSearchList(
+                              ticketSearch: ticketSearchList,
+                              onPressed: (ticketSearch) async {
+                                stockSearch = ticketSearch;
+                                stockChoosen = true;
+                                stockInfo = await widget.controller
+                                    .fetchStockInfo(stockSearch.symbol);
+                                errorStockInfo =
+                                    widget.controller.validateStock(stockInfo);
+
+                                print(
+                                    "dy: ${stockInfo.avgDividend}, avgR: ${stockInfo.avgReturn}");
+
+                                setState(() {});
+                                // Do something with the symbol value
+                              },
+                            ),
+                            const Divider(
+                              color: Colors.grey,
+                              indent: 4.0,
+                              endIndent: 4.0,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+            ),
           ),
           const SizedBox(height: 6.0),
           Align(
             alignment: Alignment.center,
             child: Visibility(
-              visible: errorStockName,
+              visible: errorStockInfo,
               child: Text(
-                "Invalid format. Please enter a valid stock name (3-20 characters, no special characters).",
-                style: errorStockName
+                "Sorry, the security you've chosen is not valid.",
+                style: errorStockInfo
                     ? CustomTextStyles.bodyMediumPrimary
                         .copyWith(color: Colors.red)
                     : CustomTextStyles.bodyMediumPrimary,
@@ -204,9 +221,15 @@ class _CreateStockDialogState extends State<CreateStockDialog> {
 
   onTapContinue(BuildContext context) {
     setState(() {
-      errorFieldEmpty =
-          widget.controller.createStock(stockName, includeFWT, stockAllocation);
-      if (errorFieldEmpty == false) {
+      errorFieldEmpty = widget.controller.validateStockName(stockSearch);
+      if (errorFieldEmpty == false && errorStockAllocation == false) {
+        errorFieldEmpty = widget.controller.createStock(
+            stockSearch.name,
+            includeFWT,
+            stockAllocation,
+            stockInfo.avgReturn,
+            stockInfo.avgDividend);
+
         Navigator.pushNamed(context, AppRoutes.stockConfigurationScreen);
       }
     });

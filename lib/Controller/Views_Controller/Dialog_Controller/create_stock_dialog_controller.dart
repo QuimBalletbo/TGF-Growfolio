@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/data/createPortfolio.dart';
 import 'package:realm/realm.dart';
 import 'package:flutter_application_1/Model/utils/auth_service.dart';
-import 'package:flutter_application_1/Model/utils/JSONObject.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_application_1/Model/noDataBaseData/TicketSearch.dart';
 
@@ -28,10 +27,15 @@ class CreateStockController {
     }
   }
 
-  bool validateStockName(String stockName) {
-    if ((stockName.isNotEmpty &&
-        stockName.length <= 20 &&
-        stockName.length >= 2)) {
+  bool validateStock(StockInfo stockInfo) {
+    if (stockInfo.avgDividend != 0 || stockInfo.avgReturn != 0) {
+      return false;
+    }
+    return true;
+  }
+
+  bool validateStockName(TicketSearch stockSearch) {
+    if (stockSearch.name != '' && stockSearch.symbol != '') {
       return false;
     }
     return true;
@@ -61,6 +65,8 @@ class CreateStockController {
     String stockName,
     bool includeFWT,
     int stockAllocation,
+    double avgReturn,
+    double avgDividendYield,
   ) {
     if (stockName.isEmpty ||
         (stockAllocation == 0 &&
@@ -71,8 +77,8 @@ class CreateStockController {
         int numberStocks = (stocksPortfolio.stocks.length) + 1;
         realm.write(() => realm.add(CreateStock(
               objectiD,
-              10,
-              10,
+              avgDividendYield,
+              avgReturn,
               includeFWT,
               stockName,
               (100 ~/ numberStocks),
@@ -90,8 +96,8 @@ class CreateStockController {
       if (stocksPortfolio.equalWeightStocks == 'Include') {
         realm.write(() => realm.add(CreateStock(
               objectiD,
-              10,
-              10,
+              avgDividendYield,
+              avgReturn,
               includeFWT,
               stockName,
               stockAllocation,
@@ -124,9 +130,6 @@ class CreateStockController {
       if (response.statusCode == 200) {
         // Parse the JSON response
         Map<String, dynamic>? data = json.decode(response.body);
-        print("data recibed");
-        // Check if 'bestMatches' is null or not
-        print(data);
         if (data != null && data.containsKey('bestMatches')) {
           List<dynamic>? bestMatches = data['bestMatches'];
 
@@ -144,6 +147,73 @@ class CreateStockController {
         } else {
           // Return an empty list if 'bestMatches' is null or not found
           return [];
+        }
+      } else {
+        // If the request was not successful, throw an exception
+        throw Exception('Failed to load data: ${response.statusCode}');
+      }
+    } catch (e) {
+      // Handle any errors that occur during the process
+      throw Exception('Failed to load data: $e');
+    }
+  }
+
+  Future<StockInfo> fetchStockInfo(String symbol) async {
+    const String apiKey = 'E0QVKDIL619SRX98';
+    // final String apiUrl ='https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=$symbol&apikey=$apiKey';
+    const String apiUrl =
+        'https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=IBM&apikey=demo';
+
+    try {
+      // Make the HTTP GET request
+      http.Response response = await http.get(Uri.parse(apiUrl));
+
+      // Check if the request was successful (status code 200)
+      if (response.statusCode == 200) {
+        print("data recibed");
+        // Parse the JSON response
+        Map<String, dynamic> data = json.decode(response.body);
+        if (data != null && data.containsKey('Monthly Adjusted Time Series')) {
+          print("matches starting");
+          // Extract relevant data
+          Map<String, dynamic> timeSeries =
+              data['Monthly Adjusted Time Series'];
+          List<Map<String, dynamic>> monthlyData = [];
+
+          timeSeries.forEach((key, value) {
+            monthlyData.add(value);
+          });
+
+          // Calculate average dividend and return
+          double totalDividend = 0.0;
+          double totalReturn = 100.0;
+          int dividendCount = 0;
+          double close = 0.0;
+
+          // Calculate dividend for the first 12 months
+          for (int i = 0; i < 12; i++) {
+            close = double.parse(monthlyData[0]['4. close']);
+            double dividend =
+                double.parse(monthlyData[i]['7. dividend amount']);
+            totalDividend += dividend;
+          }
+// Calculate average return for the last 5 months
+          for (int i = 0; i < 60; i++) {
+            double lastClose = double.parse(monthlyData[i]['4. close']);
+            i += 12;
+            double thisClose = double.parse(monthlyData[i]['4. close']);
+            totalReturn += ((thisClose - lastClose) / lastClose) * 100;
+          }
+          // Calculate average dividend and return
+          double avgDividend = (totalDividend / close) * 100;
+          double avgReturn = totalReturn / 5;
+
+          print("matches created");
+
+          return StockInfo(avgDividend: avgDividend, avgReturn: avgReturn);
+        } else {
+          // Return an empty list if 'bestMatches' is null or not found
+          return StockInfo(avgDividend: 0, avgReturn: 0);
         }
       } else {
         // If the request was not successful, throw an exception
