@@ -43,7 +43,7 @@ class ArrowBackIosColumn extends StatelessWidget {
                 alignment: Alignment.center,
                 children: [
                   const SizedBox(
-                    width: 60.0, // Adjust the width as needed
+                    width: 100.0, // Adjust the width as needed
                   ),
                   GestureDetector(
                     onTap: () {
@@ -61,7 +61,8 @@ class ArrowBackIosColumn extends StatelessWidget {
                   const Positioned(
                     bottom: 0,
                     child: Text(
-                      "Cancel",
+                      "Return to Home",
+                      maxLines: 2,
                       style: TextStyle(
                         color: Colors.white,
                       ),

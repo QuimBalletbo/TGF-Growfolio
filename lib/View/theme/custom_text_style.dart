@@ -31,6 +31,7 @@ class CustomTextStyles {
         color: const Color(0XFF000000),
       );
   static get bodyLargeWhite => theme.textTheme.bodyLarge!.copyWith(
+        fontSize: 48.fSize,
         color: const Color(0XFFFFFFFF),
       );
   static get bodyMediumInterPrimaryContainer =>

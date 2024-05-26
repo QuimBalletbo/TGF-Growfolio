@@ -118,9 +118,9 @@ class CreateStockController {
 
   Future<List<TicketSearch>> fetchDataTicketSearch(String keyword) async {
     const String apiKey = 'E0QVKDIL619SRX98';
-    // final String apiUrl =  'https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=$keyword&apikey=$apiKey';
     final String apiUrl =
-        'https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=BA&apikey=demo';
+        'https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=$keyword&apikey=$apiKey';
+    //final String apiUrl = 'https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=BA&apikey=demo';
 
     try {
       // Make the HTTP GET request
@@ -160,9 +160,9 @@ class CreateStockController {
 
   Future<StockInfo> fetchStockInfo(String symbol) async {
     const String apiKey = 'E0QVKDIL619SRX98';
-    // final String apiUrl ='https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=$symbol&apikey=$apiKey';
-    const String apiUrl =
-        'https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=IBM&apikey=demo';
+    final String apiUrl =
+        'https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=$symbol&apikey=$apiKey';
+    // const String apiUrl = 'https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=IBM&apikey=demo';
 
     try {
       // Make the HTTP GET request

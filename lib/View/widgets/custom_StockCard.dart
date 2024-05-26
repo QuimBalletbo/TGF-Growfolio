@@ -26,7 +26,7 @@ Widget customStockCard(
                   right:
                       8.0), // Add padding between bond name and bond allocation
               child: Text(
-                "${stock.name}, dy: ${stock.avgDividend}, aR: ${stock.avgReturn}", // Display bond name on the left side
+                stock.name, // Display bond name on the left side
                 maxLines: 4, // Allow multiline text
                 overflow: TextOverflow.ellipsis, // Handle overflow
                 style: CustomTextStyles.headlineSmallInterWhiteA700,

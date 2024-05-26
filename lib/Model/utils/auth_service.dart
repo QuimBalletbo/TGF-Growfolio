@@ -143,6 +143,7 @@ class AuthService {
   }
 
   Profile getProfile() {
+    _profile = _realm.query<Profile>('userId == \$0', [_user.id]).first;
     return _profile;
   }
 }

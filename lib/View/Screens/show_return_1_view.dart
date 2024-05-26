@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/app_export.dart';
-import 'package:flutter_application_1/View/Screens/dialogs/show_return_1_dialog.dart';
+import 'package:flutter_application_1/View/Screens/dialogs/show_return_1_1_dialog.dart';
+import 'package:flutter_application_1/View/Screens/dialogs/show_return_1_2_dialog.dart';
+import 'package:flutter_application_1/View/Screens/dialogs/show_return_1_3_dialog.dart';
 import 'package:flutter_application_1/View/widgets/BlueArrowBack.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/show_return_1_controller.dart';
 import 'package:flutter_application_1/View/widgets/custom_space_button.dart';
@@ -25,6 +27,8 @@ class _ShowReturnView1State extends State<ShowReturnView1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: appTheme.gray100,
+      resizeToAvoidBottomInset: false,
       body: Stack(
         fit: StackFit.expand,
         children: [
@@ -43,12 +47,24 @@ class _ShowReturnView1State extends State<ShowReturnView1> {
                 SizedBox(height: 22.v),
                 Container(
                   constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height * 0.59),
-                  child: ShowReturnDialog1(),
+                      maxHeight: MediaQuery.of(context).size.height * 0.4),
+                  child: ShowReturn1Dialog(),
+                ),
+                SizedBox(height: 22.v),
+                Container(
+                  constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height * 0.4),
+                  child: ShowReturn2Dialog(),
+                ),
+                SizedBox(height: 22.v),
+                Container(
+                  constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height * 0.4),
+                  child: ShowReturn3Dialog(),
                 ),
                 SizedBox(height: 22.v),
                 CustomSpaceButton(
-                  text: "Return to Home",
+                  text: "Next",
                   onTap: () {
                     onTapHome(context);
                   },
