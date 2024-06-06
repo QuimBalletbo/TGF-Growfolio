@@ -22,6 +22,9 @@ import 'package:flutter_application_1/View/Screens/finish_conf_view.dart';
 import 'package:flutter_application_1/View/Screens/calculate_portfolio_view.dart';
 import 'package:flutter_application_1/View/Screens/showPortfolioValues_view.dart';
 import 'package:flutter_application_1/View/Screens/show_return_1_view.dart';
+import 'package:flutter_application_1/View/Screens/show_return_2_view.dart';
+import 'package:flutter_application_1/View/Screens/show_return_3_view.dart';
+import 'package:flutter_application_1/View/Screens/show_return_4_view.dart';
 
 import 'package:realm/realm.dart';
 
@@ -55,6 +58,9 @@ class AppRoutes {
   static const String calculatePortfolioScreen = '/calculatePortfolioScreen';
   static const String showPortfolioScreen = '/showPortfolioScreen';
   static const String showReturnView1 = '/showReturnView1';
+  static const String showReturnView2 = '/showReturnView2';
+  static const String showReturnView3 = '/showReturnView3';
+  static const String showReturnView4 = '/showReturnView4';
 
   static Map<String, WidgetBuilder> routes(App app) {
     return {
@@ -83,6 +89,9 @@ class AppRoutes {
       calculatePortfolioScreen: (context) => CalculatePortfolio(),
       showPortfolioScreen: (context) => const ShowPortfolio(),
       showReturnView1: (context) => ShowReturnView1(),
+      showReturnView2: (context) => ShowReturnView2(),
+      showReturnView3: (context) => ShowReturnView3(),
+      showReturnView4: (context) => ShowReturnView4(),
     };
   }
 }

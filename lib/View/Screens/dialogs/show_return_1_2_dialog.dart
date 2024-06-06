@@ -4,7 +4,7 @@ import 'package:flutter_application_1/View/widgets/textNumbersInformation.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/show_return_1_controller.dart';
 import 'package:realm/realm.dart';
 import 'package:flutter_application_1/Model/data/portfolioReturn.dart';
-import 'package:flutter_application_1/View/widgets/customAssetList2.dart';
+import 'package:flutter_application_1/View/widgets/custom_AssetList.dart';
 
 // ignore_for_file: must_be_immutable
 class ShowReturn2Dialog extends StatefulWidget {

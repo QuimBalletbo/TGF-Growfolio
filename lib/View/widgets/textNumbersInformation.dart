@@ -13,9 +13,14 @@ class TextNumberInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String title = value == 1
-        ? 'Total Amount Invested for Each Asset'
-        : 'Total Value for Each Asset';
+    String title;
+    if (value == 1) {
+      title = 'Total Amount Invested for Each Asset';
+    } else if (value == 2) {
+      title = 'Total Value for Each Asset';
+    } else {
+      title = 'Final Portfolio Value';
+    }
 
     return Container(
       child: Row(
@@ -39,14 +44,15 @@ class TextNumberInfo extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: Text(
-              '100%',
-              style: CustomTextStyles.bodyLargeLight,
-              textAlign: TextAlign.right,
+          if (value != 3)
+            Expanded(
+              flex: 1,
+              child: Text(
+                '100%',
+                style: CustomTextStyles.bodyLargeLight,
+                textAlign: TextAlign.right,
+              ),
             ),
-          ),
         ],
       ),
     );

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter_application_1/Model/data/portfolioReturn.dart';
 import 'package:flutter_application_1/Model/data/profile.dart';
 import 'package:realm/realm.dart';
@@ -14,6 +12,15 @@ class ShowReturnView1Controller {
   String frequencyInvesting = '';
   double amountInvested = 0;
   double finalportfolioValue = 0;
+  double finalStockValue = 0;
+  double finalETFValue = 0;
+  double finalBondValue = 0;
+  double avgReturn = 0;
+  int score = 0;
+  double durationScore = 0;
+  double diversaificationScore = 0;
+  double returnScore = 0;
+  double allocationScore = 0;
 
   String initViewData() {
     portfolio = realm
@@ -46,5 +53,50 @@ class ShowReturnView1Controller {
   RealmList<AssetReturn> getAssets() {
     RealmList<AssetReturn> assetList = portfolio.assets;
     return assetList;
+  }
+
+  double getFinalStockValue() {
+    finalStockValue = portfolio.finalStockValue;
+    return finalStockValue;
+  }
+
+  double getFinalETFValue() {
+    finalETFValue = portfolio.finalETFValue;
+    return finalETFValue;
+  }
+
+  double getFinalBondValue() {
+    finalBondValue = portfolio.finalBondValue;
+    return finalBondValue;
+  }
+
+  double getFinalavgReturn() {
+    avgReturn = portfolio.avgReturn;
+    return avgReturn;
+  }
+
+  double getDurationScore() {
+    durationScore = portfolio.durationScore;
+    return durationScore;
+  }
+
+  double getDiversaificationScore() {
+    diversaificationScore = portfolio.diversaificationScore;
+    return diversaificationScore;
+  }
+
+  double getReturnScore() {
+    returnScore = portfolio.returnScore;
+    return returnScore;
+  }
+
+  double getAllocationScore() {
+    allocationScore = portfolio.allocationScore;
+    return allocationScore;
+  }
+
+  int getScore() {
+    score = portfolio.score;
+    return score;
   }
 }

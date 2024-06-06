@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/app_export.dart';
 import 'package:flutter_application_1/View/widgets/textNumbersInformation.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/show_return_1_controller.dart';
-import 'package:realm/realm.dart';
-import 'package:flutter_application_1/Model/data/portfolioReturn.dart';
-import 'package:flutter_application_1/View/widgets/custom_AssetList.dart';
+import 'package:flutter_application_1/View/widgets/custom_AssetList_2.dart';
 
 // ignore_for_file: must_be_immutable
 class ShowReturn3Dialog extends StatefulWidget {
@@ -20,11 +18,15 @@ class _ShowReturn3DialogState extends State<ShowReturn3Dialog> {
   void initState() {
     super.initState();
     finalportfolioValue = widget.controller.getFinalportfolioValue();
-    assetList = widget.controller.getAssets();
+    finalStockValue = widget.controller.getFinalStockValue();
+    finalETFValue = widget.controller.getFinalETFValue();
+    finalBondValue = widget.controller.getFinalBondValue();
   }
 
   double finalportfolioValue = 0;
-  late RealmList<AssetReturn> assetList;
+  double finalStockValue = 0;
+  double finalETFValue = 0;
+  double finalBondValue = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ class _ShowReturn3DialogState extends State<ShowReturn3Dialog> {
                 children: [
                   TextNumberInfo(
                     text: finalportfolioValue.toStringAsFixed(2),
-                    value: 2,
+                    value: 3,
                   ),
                   const SizedBox(height: 6.0),
                   Divider(
@@ -50,28 +52,37 @@ class _ShowReturn3DialogState extends State<ShowReturn3Dialog> {
                   ),
                   SizedBox(height: 20.v),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: assetList.isEmpty
-                        ? []
-                        : [
-                            // Render portfolios if available ETFPortfolio
-                            ...assetList.map(
-                              (assetList) => Column(
-                                children: [
-                                  CustomAssetList(
-                                    asset: assetList,
-                                    totalAmount: finalportfolioValue,
-                                    value: 0,
-                                  ),
-                                  const Divider(
-                                    indent: 4.0,
-                                    endIndent: 4.0,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                  ),
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // Render portfolios if available ETFPortfolio
+                        CustomAssetList2(
+                          amount: finalStockValue,
+                          name: "Stock Value",
+                          isPercentage: false,
+                        ),
+                        const Divider(
+                          indent: 4.0,
+                          endIndent: 4.0,
+                        ),
+                        CustomAssetList2(
+                          amount: finalETFValue,
+                          name: "ETF Value",
+                          isPercentage: false,
+                        ),
+                        const Divider(
+                          indent: 4.0,
+                          endIndent: 4.0,
+                        ),
+                        CustomAssetList2(
+                          amount: finalBondValue,
+                          name: "Bond Value",
+                          isPercentage: false,
+                        ),
+                        const Divider(
+                          indent: 4.0,
+                          endIndent: 4.0,
+                        ),
+                      ]),
                 ])));
   }
 }
