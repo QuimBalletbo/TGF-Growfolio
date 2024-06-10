@@ -29,6 +29,12 @@ class NameTitleText extends StatelessWidget {
       case 'portfolio':
         title = 'Portfolio Performance Analysis';
         break;
+      case 'score':
+        title = 'Portfolio Score';
+        break;
+      case 'final':
+        title = 'Final Portfolio Value';
+        break;
       default:
         title = 'Individual Asset Investment';
     }

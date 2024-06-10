@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/app_export.dart';
-import 'package:flutter_application_1/View/Screens/dialogs/show_return_1_2_dialog.dart';
+import 'package:flutter_application_1/View/Screens/dialogs/show_return_3_2_dialog.dart';
 import 'package:flutter_application_1/View/Screens/dialogs/show_return_3_1_dialog.dart';
 import 'package:flutter_application_1/View/widgets/BlueArrowBack.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/show_return_1_controller.dart';
@@ -47,7 +47,7 @@ class _ShowReturnView1State extends State<ShowReturnView3> {
                 Container(
                   constraints: BoxConstraints(
                       maxHeight: MediaQuery.of(context).size.height * 0.4),
-                  child: ShowReturn2Dialog(),
+                  child: ShowReturnGraphicDialog(),
                 ),
                 SizedBox(height: 22.v),
                 Container(

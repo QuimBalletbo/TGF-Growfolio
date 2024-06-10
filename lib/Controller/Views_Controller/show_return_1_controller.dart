@@ -21,6 +21,9 @@ class ShowReturnView1Controller {
   double diversaificationScore = 0;
   double returnScore = 0;
   double allocationScore = 0;
+  double finalStockPercentage = 0;
+  double finalETFPercentage = 0;
+  double finalBondPercentage = 0;
 
   String initViewData() {
     portfolio = realm
@@ -98,5 +101,28 @@ class ShowReturnView1Controller {
   int getScore() {
     score = portfolio.score;
     return score;
+  }
+
+  double getFinalStockPercentageValue() {
+    portfolio = realm
+        .query<PortfolioReturn>('id == \$0', [profile.selectedPortfolio]).first;
+    finalportfolioValue = portfolio.finalportfolioValue;
+    finalStockValue = portfolio.finalStockValue;
+    finalStockPercentage = (finalStockValue / finalportfolioValue) * 100;
+    return finalStockPercentage;
+  }
+
+  double getFinalETFPercentageValue() {
+    finalportfolioValue = portfolio.finalportfolioValue;
+    finalETFValue = portfolio.finalETFValue;
+    finalETFPercentage = (finalETFValue / finalportfolioValue) * 100;
+    return finalETFPercentage;
+  }
+
+  double getFinalBondPercentageValue() {
+    finalportfolioValue = portfolio.finalportfolioValue;
+    finalBondValue = portfolio.finalBondValue;
+    finalBondPercentage = (finalBondValue / finalportfolioValue) * 100;
+    return finalBondPercentage;
   }
 }
