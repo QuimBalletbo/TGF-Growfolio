@@ -47,7 +47,7 @@ class Portfolio extends _Portfolio
   static SchemaObject? _schema;
   static SchemaObject _initSchema() {
     RealmObjectBase.registerFactory(Portfolio._);
-    return const SchemaObject(ObjectType.realmObject, Portfolio, 'Portfolio', [
+    return SchemaObject(ObjectType.realmObject, Portfolio, 'Portfolio', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
       SchemaProperty('no', RealmPropertyType.int),

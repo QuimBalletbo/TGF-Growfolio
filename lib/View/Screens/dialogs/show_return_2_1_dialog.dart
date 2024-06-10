@@ -5,29 +5,30 @@ import 'package:flutter_application_1/Controller/Views_Controller/show_return_1_
 import 'package:flutter_application_1/View/widgets/custom_AssetList_2.dart';
 
 // ignore_for_file: must_be_immutable
-class ShowReturn2Dialog extends StatefulWidget {
-  ShowReturn2Dialog({Key? key}) : super(key: key);
+class ShowReturnBreakDownDialog extends StatefulWidget {
+  ShowReturnBreakDownDialog({Key? key}) : super(key: key);
   ShowReturnView1Controller controller = ShowReturnView1Controller();
 
   @override
-  _ShowReturn2DialogState createState() => _ShowReturn2DialogState();
+  _ShowReturnBreakDownDialogState createState() =>
+      _ShowReturnBreakDownDialogState();
 }
 
-class _ShowReturn2DialogState extends State<ShowReturn2Dialog> {
+class _ShowReturnBreakDownDialogState extends State<ShowReturnBreakDownDialog> {
   @override
   void initState() {
     super.initState();
-    finalportfolioValue = widget.controller.getFinalportfolioValue();
-    finalStockValue = widget.controller.getFinalStockValue();
-    finalETFValue = widget.controller.getFinalETFValue();
-    finalBondValue = widget.controller.getFinalBondValue();
+    totalAmountInvested = widget.controller.getAmountInvested();
+    amountInvestedStock = widget.controller.getAmountInvestedStock();
+    amountInvestedETF = widget.controller.getAmountInvestedETF();
+    amountInvestedBond = widget.controller.getAmountInvestedBond();
     avgReturn = widget.controller.getFinalavgReturn();
   }
 
-  double finalportfolioValue = 0;
-  double finalStockValue = 0;
-  double finalETFValue = 0;
-  double finalBondValue = 0;
+  double totalAmountInvested = 0;
+  double amountInvestedStock = 0;
+  double amountInvestedETF = 0;
+  double amountInvestedBond = 0;
   double avgReturn = 0;
 
   @override
@@ -43,8 +44,8 @@ class _ShowReturn2DialogState extends State<ShowReturn2Dialog> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextNumberInfo(
-                    text: finalportfolioValue.toStringAsFixed(2),
-                    value: 3,
+                    text: totalAmountInvested.toStringAsFixed(2),
+                    value: 4,
                   ),
                   const SizedBox(height: 6.0),
                   Divider(
@@ -58,8 +59,8 @@ class _ShowReturn2DialogState extends State<ShowReturn2Dialog> {
                       children: [
                         // Render portfolios if available ETFPortfolio
                         CustomAssetList2(
-                          amount: finalStockValue,
-                          name: "Stock Value",
+                          amount: amountInvestedStock,
+                          name: "Total Stock Investment",
                           isPercentage: false,
                         ),
                         const Divider(
@@ -67,8 +68,8 @@ class _ShowReturn2DialogState extends State<ShowReturn2Dialog> {
                           endIndent: 4.0,
                         ),
                         CustomAssetList2(
-                          amount: finalETFValue,
-                          name: "ETF Value",
+                          amount: amountInvestedETF,
+                          name: "Total ETF Investment",
                           isPercentage: false,
                         ),
                         const Divider(
@@ -76,8 +77,8 @@ class _ShowReturn2DialogState extends State<ShowReturn2Dialog> {
                           endIndent: 4.0,
                         ),
                         CustomAssetList2(
-                          amount: finalBondValue,
-                          name: "Bond Value",
+                          amount: amountInvestedBond,
+                          name: "Total Bond Investment",
                           isPercentage: false,
                         ),
                         const Divider(

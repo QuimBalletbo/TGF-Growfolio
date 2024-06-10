@@ -24,6 +24,9 @@ class ShowReturnView1Controller {
   double finalStockPercentage = 0;
   double finalETFPercentage = 0;
   double finalBondPercentage = 0;
+  double amountInvestedStock = 0;
+  double amountInvestedETF = 0;
+  double amountInvestedBond = 0;
 
   String initViewData() {
     portfolio = realm
@@ -124,5 +127,23 @@ class ShowReturnView1Controller {
     finalBondValue = portfolio.finalBondValue;
     finalBondPercentage = (finalBondValue / finalportfolioValue) * 100;
     return finalBondPercentage;
+  }
+
+  double getAmountInvestedStock() {
+    double percentage = portfolio.stockAllocationPercentage;
+    amountInvestedStock = (percentage / 100) * amountInvested;
+    return amountInvestedStock;
+  }
+
+  double getAmountInvestedETF() {
+    double percentage = portfolio.etfAllocationPercentage;
+    amountInvestedETF = (percentage / 100) * amountInvested;
+    return amountInvestedETF;
+  }
+
+  double getAmountInvestedBond() {
+    double percentage = portfolio.bondAllocationPercentage;
+    amountInvestedBond = (percentage / 100) * amountInvested;
+    return amountInvestedBond;
   }
 }

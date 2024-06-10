@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/app_export.dart';
+import 'package:flutter_application_1/View/Screens/dialogs/show_return_2_2_dialog.dart';
 import 'package:flutter_application_1/View/Screens/dialogs/show_return_2_1_dialog.dart';
 import 'package:flutter_application_1/View/widgets/BlueArrowBack.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/show_return_1_controller.dart';
@@ -43,13 +44,16 @@ class _ShowReturnView1State extends State<ShowReturnView2> {
                   title: portfolioName,
                 ), // Placing the app bar here
                 SizedBox(height: 22.v),
-
-                // algo
+                Container(
+                  constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height * 0.4),
+                  child: ShowReturn2_1Dialog(),
+                ),
                 SizedBox(height: 22.v),
                 Container(
                   constraints: BoxConstraints(
                       maxHeight: MediaQuery.of(context).size.height * 0.4),
-                  child: ShowReturn2Dialog(),
+                  child: ShowReturnBreakDownDialog(),
                 ),
                 SizedBox(height: 22.v),
                 CustomSpaceButton(

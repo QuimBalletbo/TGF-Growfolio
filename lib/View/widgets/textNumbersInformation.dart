@@ -18,8 +18,10 @@ class TextNumberInfo extends StatelessWidget {
       title = 'Total Amount Invested for Each Asset';
     } else if (value == 2) {
       title = 'Total Value for Each Asset';
-    } else {
+    } else if (value == 3) {
       title = 'Final Portfolio Value';
+    } else {
+      title = 'Total Investment';
     }
 
     return Container(
@@ -44,7 +46,7 @@ class TextNumberInfo extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-          if (value != 3)
+          if (value != 3 && value != 4)
             Expanded(
               flex: 1,
               child: Text(

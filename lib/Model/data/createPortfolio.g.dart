@@ -80,8 +80,7 @@ class CreateStock extends _CreateStock
   static SchemaObject? _schema;
   static SchemaObject _initSchema() {
     RealmObjectBase.registerFactory(CreateStock._);
-    return const SchemaObject(
-        ObjectType.realmObject, CreateStock, 'CreateStock', [
+    return SchemaObject(ObjectType.realmObject, CreateStock, 'CreateStock', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
       SchemaProperty('avgDividend', RealmPropertyType.double),
@@ -175,7 +174,7 @@ class CreateETF extends _CreateETF
   static SchemaObject? _schema;
   static SchemaObject _initSchema() {
     RealmObjectBase.registerFactory(CreateETF._);
-    return const SchemaObject(ObjectType.realmObject, CreateETF, 'CreateETF', [
+    return SchemaObject(ObjectType.realmObject, CreateETF, 'CreateETF', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
       SchemaProperty('avgDividend', RealmPropertyType.double),
@@ -271,8 +270,7 @@ class CreateBond extends _CreateBond
   static SchemaObject? _schema;
   static SchemaObject _initSchema() {
     RealmObjectBase.registerFactory(CreateBond._);
-    return const SchemaObject(
-        ObjectType.realmObject, CreateBond, 'CreateBond', [
+    return SchemaObject(ObjectType.realmObject, CreateBond, 'CreateBond', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
       SchemaProperty('bondAllocation', RealmPropertyType.int),
@@ -586,7 +584,7 @@ class CreatePortfolio extends _CreatePortfolio
   static SchemaObject? _schema;
   static SchemaObject _initSchema() {
     RealmObjectBase.registerFactory(CreatePortfolio._);
-    return const SchemaObject(
+    return SchemaObject(
         ObjectType.realmObject, CreatePortfolio, 'CreatePortfolio', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),

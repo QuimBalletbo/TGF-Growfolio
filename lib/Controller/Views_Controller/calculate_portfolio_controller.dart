@@ -33,6 +33,11 @@ class CalculatePortfolioController {
       double diversificationScore = 0;
       double durationScore = 0;
       double returnScore = 0;
+      double bondAllocationPercentage =
+          createPortfolio.bondAllocationPercentage;
+      double etfAllocationPercentage = createPortfolio.etfAllocationPercentage;
+      double stockAllocationPercentage =
+          createPortfolio.stockAllocationPercentage;
 
       // Calculate flat fee and amount with tax based on portfolio settings
       if (createPortfolio.brokerFees) {
@@ -360,9 +365,11 @@ class CalculatePortfolioController {
             allocationScore,
             totalAmountInvested,
             avgAnualReturn,
+            bondAllocationPercentage,
             diversificationScore,
             createPortfolio.duration,
             durationScore,
+            etfAllocationPercentage,
             portfolioValueBonds,
             portfolioValueETFs,
             portfolioValueStocks,
@@ -372,6 +379,7 @@ class CalculatePortfolioController {
             returnScore,
             calculateFinalScore(allocationScore, diversificationScore,
                 durationScore, returnScore),
+            stockAllocationPercentage,
             user.id,
           )));
 
