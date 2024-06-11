@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/app_export.dart';
 import 'package:flutter_application_1/View/Screens/dialogs/show_return_3_2_dialog.dart';
-import 'package:flutter_application_1/View/Screens/dialogs/show_return_3_1_dialog.dart';
+import 'package:flutter_application_1/View/Screens/dialogs/show_return_2_1_dialog.dart';
 import 'package:flutter_application_1/View/widgets/BlueArrowBack.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/show_return_1_controller.dart';
 import 'package:flutter_application_1/View/widgets/custom_space_button.dart';
@@ -46,14 +46,14 @@ class _ShowReturnView1State extends State<ShowReturnView3> {
                 SizedBox(height: 22.v),
                 Container(
                   constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height * 0.4),
+                      maxHeight: MediaQuery.of(context).size.height * 0.45),
                   child: ShowReturnGraphicDialog(),
                 ),
                 SizedBox(height: 22.v),
                 Container(
                   constraints: BoxConstraints(
                       maxHeight: MediaQuery.of(context).size.height * 0.4),
-                  child: ShowReturn3Dialog(),
+                  child: ShowReturnBreakDownDialog(),
                 ),
                 SizedBox(height: 22.v),
                 CustomSpaceButton(

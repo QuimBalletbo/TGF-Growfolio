@@ -34,7 +34,7 @@ class CustomAssetList2 extends StatelessWidget {
                   ? '${amount.toStringAsFixed(2)} %'
                   : '${amount.toStringAsFixed(2)} €',
               style: const TextStyle(fontSize: 16),
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.right,
             ),
           ),
           // Right column

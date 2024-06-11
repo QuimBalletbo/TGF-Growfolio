@@ -7,7 +7,6 @@ class RateDate extends StatelessWidget {
   final String defaultText;
   final Function(String) onNumberChanged;
   List<String> dropdownItemList = [
-    " 0",
     " 1",
     " 2",
     " 3",

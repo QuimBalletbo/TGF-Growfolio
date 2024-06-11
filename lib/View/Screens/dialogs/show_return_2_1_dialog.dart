@@ -22,14 +22,12 @@ class _ShowReturnBreakDownDialogState extends State<ShowReturnBreakDownDialog> {
     amountInvestedStock = widget.controller.getAmountInvestedStock();
     amountInvestedETF = widget.controller.getAmountInvestedETF();
     amountInvestedBond = widget.controller.getAmountInvestedBond();
-    avgReturn = widget.controller.getFinalavgReturn();
   }
 
   double totalAmountInvested = 0;
   double amountInvestedStock = 0;
   double amountInvestedETF = 0;
   double amountInvestedBond = 0;
-  double avgReturn = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -80,15 +78,6 @@ class _ShowReturnBreakDownDialogState extends State<ShowReturnBreakDownDialog> {
                           amount: amountInvestedBond,
                           name: "Total Bond Investment",
                           isPercentage: false,
-                        ),
-                        const Divider(
-                          indent: 4.0,
-                          endIndent: 4.0,
-                        ),
-                        CustomAssetList2(
-                          amount: avgReturn,
-                          name: "avg Anual Return",
-                          isPercentage: true,
                         ),
                       ]),
                 ])));

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/app_export.dart';
+import 'package:flutter_application_1/View/widgets/squaresWithWords.dart';
 
 class CustomColorBar extends StatelessWidget {
   final int value1;
@@ -20,7 +21,7 @@ class CustomColorBar extends StatelessWidget {
         const SizedBox(height: 4),
         _buildPercentages(),
         const SizedBox(height: 4),
-        _buildSquaresWithWords(),
+        SquaresWithWords(),
       ],
     );
   }
@@ -97,34 +98,6 @@ class CustomColorBar extends StatelessWidget {
         Text('${value1.toString()}%'),
         Text('${value2.toString()}%'),
         Text('${value3.toString()}%'),
-      ],
-    );
-  }
-
-  Widget _buildSquaresWithWords() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        _buildSquareWithWord('Stocks', Color(0xFF3D2FE7)),
-        _buildSquareWithWord('ETFs', Color(0xFF2BD9FE)),
-        _buildSquareWithWord('Bonds', Color(0xFF2BFE7F)),
-      ],
-    );
-  }
-
-  Widget _buildSquareWithWord(String word, Color color) {
-    return Row(
-      children: [
-        Container(
-          width: 10.0,
-          height: 10.0,
-          margin: EdgeInsets.only(right: 4.0),
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(2.0),
-          ),
-        ),
-        Text(word),
       ],
     );
   }

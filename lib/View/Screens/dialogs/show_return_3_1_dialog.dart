@@ -21,12 +21,14 @@ class _ShowReturn3DialogState extends State<ShowReturn3Dialog> {
     finalStockValue = widget.controller.getFinalStockValue();
     finalETFValue = widget.controller.getFinalETFValue();
     finalBondValue = widget.controller.getFinalBondValue();
+    avgReturn = widget.controller.getFinalavgReturn();
   }
 
   double finalportfolioValue = 0;
   double finalStockValue = 0;
   double finalETFValue = 0;
   double finalBondValue = 0;
+  double avgReturn = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +83,11 @@ class _ShowReturn3DialogState extends State<ShowReturn3Dialog> {
                         const Divider(
                           indent: 4.0,
                           endIndent: 4.0,
+                        ),
+                        CustomAssetList2(
+                          amount: avgReturn * 100,
+                          name: "avg Anual Return",
+                          isPercentage: true,
                         ),
                       ]),
                 ])));
