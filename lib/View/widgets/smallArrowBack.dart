@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/app_export.dart';
 
 class ArrowBackIosColumn extends StatelessWidget {
+  final VoidCallback onTapGoBack; // Add this line
+
   const ArrowBackIosColumn({
     Key? key,
+    required this.onTapGoBack, // Add this line
   }) : super(key: key);
 
   @override
@@ -23,9 +26,7 @@ class ArrowBackIosColumn extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      onTapGoBack(context);
-                    },
+                    onTap: onTapGoBack, // Modify this line
                     child: const Icon(
                       Icons.arrow_back,
                       color: Colors.black,
@@ -77,9 +78,5 @@ class ArrowBackIosColumn extends StatelessWidget {
       AppRoutes.homeScreen,
       (route) => false,
     );
-  }
-
-  onTapGoBack(BuildContext context) {
-    Navigator.pop(context);
   }
 }

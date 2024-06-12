@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appTheme.gray100,
-      body: PGinaDIniciAlumneOnePage(), // Use the widget directly
+      body: HomePage(), // Use the widget directly
       bottomNavigationBar: CustomBottomBar(
         selectedIndex: 0, // Set the index of the Home tab
         onChanged: (type) {

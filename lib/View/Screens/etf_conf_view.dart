@@ -92,18 +92,6 @@ class _ETFConfigurationScreenState extends State<ETFConfiguration> {
                     ),
                   ),
                 ),
-                Container(
-                  color: Colors.white, // Set the background color to white
-                  child: Text(
-                    "The errorFieldEmpty: $errorFieldEmpty , errorStockConfiguration: $errorETFConfiguration, includeStocks: $includeETFs, equalWeightStocks: $equalWeightETFs, ETFAllocation: $etfAllocation",
-                    maxLines: 6,
-                    overflow: TextOverflow.ellipsis,
-                    style: CustomTextStyles.bodyMediumInterff1e1e1e.copyWith(
-                      decoration: TextDecoration.underline,
-                      decorationColor: const Color(0XFF1E1E1E),
-                    ),
-                  ),
-                ),
 
                 SizedBox(height: 22.v),
                 CustomImageButton(

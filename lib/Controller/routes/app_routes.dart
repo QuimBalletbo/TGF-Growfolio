@@ -20,7 +20,7 @@ import 'package:flutter_application_1/View/Screens/bond_conf_view.dart';
 import 'package:flutter_application_1/View/Screens/create_bond_view.dart';
 import 'package:flutter_application_1/View/Screens/finish_conf_view.dart';
 import 'package:flutter_application_1/View/Screens/calculate_portfolio_view.dart';
-import 'package:flutter_application_1/View/Screens/showPortfolioValues_view.dart';
+import 'package:flutter_application_1/View/Screens/error_portfolio_view.dart';
 import 'package:flutter_application_1/View/Screens/show_return_1_view.dart';
 import 'package:flutter_application_1/View/Screens/show_return_2_view.dart';
 import 'package:flutter_application_1/View/Screens/show_return_3_view.dart';
@@ -56,7 +56,7 @@ class AppRoutes {
   static const String createBondScreen = '/createBondScreen';
   static const String finishConfScreen = '/finishConfScreen';
   static const String calculatePortfolioScreen = '/calculatePortfolioScreen';
-  static const String showPortfolioScreen = '/showPortfolioScreen';
+  static const String showErrorPortfolioScreen = '/showErrorPortfolioScreen';
   static const String showReturnView1 = '/showReturnView1';
   static const String showReturnView2 = '/showReturnView2';
   static const String showReturnView3 = '/showReturnView3';
@@ -87,7 +87,7 @@ class AppRoutes {
       createBondScreen: (context) => const CreateBond(),
       finishConfScreen: (context) => FinishConf(),
       calculatePortfolioScreen: (context) => CalculatePortfolio(),
-      showPortfolioScreen: (context) => const ShowPortfolio(),
+      showErrorPortfolioScreen: (context) => const ShowErrorPortfolio(),
       showReturnView1: (context) => ShowReturnView1(),
       showReturnView2: (context) => ShowReturnView2(),
       showReturnView3: (context) => ShowReturnView3(),

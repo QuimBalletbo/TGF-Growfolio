@@ -12,9 +12,21 @@ import 'package:flutter_application_1/Model/itemBloc.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/home_view_controller.dart';
 import 'package:flutter_application_1/View/widgets/custom_PortfolioReturnCard.dart';
 
-class PGinaDIniciAlumneOnePage extends StatelessWidget {
-  PGinaDIniciAlumneOnePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   HomeViewController controller = HomeViewController();
+  int numPortfolio = 0;
+  @override
+  void initState() {
+    super.initState();
+    controller.initializeNumPortfolio();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +119,7 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
                               buttonStyle:
                                   CustomButtonStyles.outlinePrimaryTL19,
                               onTap: () {
-                                onTapEditAPortfolio(context);
+                                onTapDeletePortfolio(context);
                               },
                             ),
                             SizedBox(height: 15.v),
@@ -172,7 +184,7 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
 
   /// Navigates to the pGinaDIniciAlumneTwoScreen when the action is triggered.
   onTapDeletePortfolio(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.pGinaDIniciAlumneTwoScreen);
+    Navigator.pushNamed(context, AppRoutes.showErrorPortfolioScreen);
   }
 
   /// Displays a dialog with the [PGinaDIniciAlumneThreeDialog] content.
@@ -192,6 +204,17 @@ class PGinaDIniciAlumneOnePage extends StatelessWidget {
 
   /// Navigates to the brokerFeesConfigurationOneScreen when the action is triggered.
   onTapCreateNewPortfolio(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.cretatePortfolioScreen);
+    if (controller.numPortfolio >= 4) {
+      showDialog(
+          context: context,
+          builder: (_) => const AlertDialog(
+                content: PGinaDIniciAlumneThreeDialog(),
+                backgroundColor: Colors.transparent,
+                contentPadding: EdgeInsets.zero,
+                insetPadding: EdgeInsets.only(left: 0),
+              ));
+    } else {
+      Navigator.pushNamed(context, AppRoutes.cretatePortfolioScreen);
+    }
   }
 }

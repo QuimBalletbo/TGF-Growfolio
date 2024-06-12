@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/app_export.dart';
-import 'package:flutter_application_1/View/Screens/dialogs/showPortfolioValues_dialog.dart';
+import 'package:flutter_application_1/View/Screens/dialogs/error_portfolio_dialog.dart';
 import 'package:flutter_application_1/View/widgets/custom_space_button.dart';
-import 'package:flutter_application_1/View/widgets/ArrowBackIosColumn.dart';
+import 'package:flutter_application_1/View/widgets/smallArrowBack.dart';
 
 // ignore_for_file: must_be_immutable
-class ShowPortfolio extends StatelessWidget {
-  const ShowPortfolio({Key? key}) : super(key: key);
+class ShowErrorPortfolio extends StatelessWidget {
+  const ShowErrorPortfolio({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,18 +22,26 @@ class ShowPortfolio extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 // AppBar
-                const ArrowBackIosColumn(
-                  text: "Show portfolio return",
-                ), // Placing the app bar here
-
+                ArrowBackIosColumn(
+                  onTapGoBack: () {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                ),
                 SizedBox(height: 22.v),
                 Container(
                   constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height * 0.53),
-                  child: PortfolioValuesDialog(),
+                      maxHeight: MediaQuery.of(context).size.height * 0.75),
+                  child: ErrorPortfolioDialog(),
                 ),
                 SizedBox(height: 22.v),
-
+                CustomSpaceButton(
+                  text: "Return to Home",
+                  onTap: () {
+                    onTapContinue(context);
+                  },
+                ),
+                SizedBox(height: 22.v),
                 CustomSpaceButton(
                   text: "Go Back",
                   buttonStyle: CustomButtonStyles.outlinePrimaryTL19,
@@ -61,7 +69,8 @@ class ShowPortfolio extends StatelessWidget {
   }
 
   onTapGoBack(BuildContext context) {
-    Navigator.pop(context);
+    Navigator.of(context).pop(); // Go back to the previous screen
+    Navigator.of(context).pop();
   }
 
   /// Section Widget

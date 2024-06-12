@@ -3,7 +3,7 @@ import 'package:flutter_application_1/Model/app_export.dart';
 import 'package:flutter_application_1/View/Screens/dialogs/calculate_portfolio_dialog.dart';
 import 'package:flutter_application_1/View/widgets/smallArrowBack.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/calculate_portfolio_controller.dart';
-import 'package:flutter_application_1/View/widgets/custom_space_button.dart';
+import 'dart:async';
 
 class CalculatePortfolio extends StatefulWidget {
   CalculatePortfolio({Key? key}) : super(key: key);
@@ -14,11 +14,19 @@ class CalculatePortfolio extends StatefulWidget {
 }
 
 class _CalculatePortfolioState extends State<CalculatePortfolio> {
-  bool endedCalculations = false;
+  int endedCalculations = 0;
+  Timer? _timer;
+  bool _tenSecondsPassed = false;
+
   @override
   void initState() {
     super.initState();
-    endedCalculations = widget.viewController.calculateStockReturn();
+    // Start the repeated function call
+    _startTimer();
+    // Check if 10 seconds have passed
+    _checkTenSecondsPassed();
+    // Initial calculation
+    widget.viewController.calculateStockReturn();
   }
 
   @override
@@ -35,7 +43,11 @@ class _CalculatePortfolioState extends State<CalculatePortfolio> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 // AppBar
-                const ArrowBackIosColumn(), // Placing the app bar here
+                ArrowBackIosColumn(
+                  onTapGoBack: () {
+                    Navigator.pop(context);
+                  },
+                ), // Placing the app bar here
 
                 SizedBox(height: 22.v),
                 Container(
@@ -43,14 +55,6 @@ class _CalculatePortfolioState extends State<CalculatePortfolio> {
                       maxHeight: MediaQuery.of(context).size.height * 0.59),
                   child: CalculatePortfolioDialog(),
                 ),
-                SizedBox(height: 22.v),
-                CustomSpaceButton(
-                  text: "Calculate Portfolio  return",
-                  onTap: () {
-                    onTapContinue(context);
-                  },
-                ),
-
                 SizedBox(height: 16.v),
 
                 // Form Content
@@ -62,14 +66,42 @@ class _CalculatePortfolioState extends State<CalculatePortfolio> {
     );
   }
 
-  onTapContinue(BuildContext context) {
-    // Wait for 3 seconds
+  void _startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      onTapContinue(context);
+    });
+  }
 
-    // Check if calculations have ended
-    if (endedCalculations) {
-      Navigator.pushNamed(context, AppRoutes.showPortfolioScreen);
+  void _checkTenSecondsPassed() async {
+    await Future.delayed(Duration(seconds: 10));
+    if (!_tenSecondsPassed) {
+      _tenSecondsPassed = true;
+      if (mounted) {
+        Navigator.pushNamed(context, AppRoutes.homeScreen);
+      }
     }
   }
 
-  /// Section Widget
+  void onTapContinue(BuildContext context) {
+    setState(() {
+      endedCalculations = widget.viewController.getEndedCalculations();
+    });
+
+    if (endedCalculations == 1) {
+      _timer?.cancel();
+      Navigator.pushNamed(context, AppRoutes.homeScreen);
+    } else if (endedCalculations == 2) {
+      _timer?.cancel();
+      Navigator.pushNamed(context, AppRoutes.showErrorPortfolioScreen);
+    } else if (_tenSecondsPassed) {
+      _timer?.cancel();
+      Navigator.pushNamed(context, AppRoutes.showErrorPortfolioScreen);
+    }
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
 }

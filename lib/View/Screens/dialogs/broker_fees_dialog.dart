@@ -211,15 +211,6 @@ class _CreateBrokerFeesConfigurationDialogState
               ),
             ),
           ),
-          Text(
-            "The selection: $selection , stockPurchaseFee: $stockPurchaseFee, stockPurchaseFlatFee: $stockPurchaseFlatFee, stockSaleFee: $stockSaleFee , stockSaleFlatFee: $stockSaleFlatFee, accountMantainanceFee: $accountMantainanceFee, accountMantainanceFlatFee: $accountMantainanceFlatFee",
-            maxLines: 6,
-            overflow: TextOverflow.ellipsis,
-            style: CustomTextStyles.bodyMediumInterff1e1e1e.copyWith(
-              decoration: TextDecoration.underline,
-              decorationColor: const Color(0XFF1E1E1E),
-            ),
-          ),
         ],
       ),
     ));

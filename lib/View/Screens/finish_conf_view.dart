@@ -57,19 +57,6 @@ class _FinishConfViewControllerState extends State<FinishConf> {
                   ),
                 ),
                 SizedBox(height: 22.v),
-                Container(
-                  color: Colors.white, // Set the background color to white
-                  child: Text(
-                    "The errorAllocation: $errorAllocation , errorDistribution: $errorDistribution ",
-                    maxLines: 6,
-                    overflow: TextOverflow.ellipsis,
-                    style: CustomTextStyles.bodyMediumInterff1e1e1e.copyWith(
-                      decoration: TextDecoration.underline,
-                      decorationColor: const Color(0XFF1E1E1E),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 22.v),
                 CustomSpaceButton(
                   text: "Calculate Portfolio  return",
                   onTap: () {

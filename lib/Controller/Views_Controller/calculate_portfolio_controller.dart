@@ -12,9 +12,11 @@ class CalculatePortfolioController {
   final user = AuthService().getUser();
   final Realm realm = AuthService().getRealm();
   ObjectId newportfolioID = ObjectId();
+  int endedCalculations = 0;
 
-  bool calculateStockReturn() {
+  void calculateStockReturn() {
     try {
+      endedCalculations = 0;
       String frequency = createPortfolio.frequencyInvesting;
 
       // Initialize the amount invested and current portfolio value
@@ -680,9 +682,14 @@ class CalculatePortfolioController {
       }
     } catch (e) {
       print("Exapetion reached: $e");
-      return false;
+      endedCalculations = 2;
+      return;
     }
-    return true;
+    endedCalculations = 1;
+  }
+
+  int getEndedCalculations() {
+    return endedCalculations;
   }
 
   void addAssettoPortfolio(ObjectId assetID) {

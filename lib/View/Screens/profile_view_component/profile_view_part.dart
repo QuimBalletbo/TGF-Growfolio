@@ -352,7 +352,7 @@ class _ProfileOneScreenState extends State<ProfileOneScreen> {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: "Riskiest  portfolio:",
+                  text: riskiestPortfolioText,
                   style: CustomTextStyles.titleLargeff000000,
                 ),
               ],
