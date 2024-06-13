@@ -72,24 +72,7 @@ class _HomePageState extends State<HomePage> {
                                     overflow: TextOverflow.ellipsis,
                                     style:
                                         CustomTextStyles.titleLargeMontserrat)),
-                            SizedBox(height: 22.v),
-                            CustomImageButton(
-                              text: "Delete Portfolio         ",
-                              imageConstant: ImageConstant
-                                  .imgInterfaceremovecircledeleteaddcirclesubtractbuttonbuttonsremove,
-                              buttonStyle:
-                                  CustomButtonStyles.outlinePrimaryTL19,
-                              onTap: () => onTapEditAPortfolio(context),
-                            ),
 
-                            SizedBox(height: 15.v),
-                            CustomImageButton(
-                              text: "Edit a  Portfolio         ",
-                              imageConstant: ImageConstant
-                                  .imgInterfaceeditwritecirclechangecircleeditmodifypencilwritewriting,
-                              onTap: () => onTapEditAPortfolio(context),
-                            ),
-                            SizedBox(height: 15.v),
                             CustomImageButton(
                               text: "Create new Portfolio",
                               imageConstant: ImageConstant.imgPlus,
@@ -112,27 +95,7 @@ class _HomePageState extends State<HomePage> {
                                 ],
                               ),
                             ),
-                            CustomImageButton(
-                              text: "Delete Portfolio         ",
-                              imageConstant: ImageConstant
-                                  .imgInterfaceremovecircledeleteaddcirclesubtractbuttonbuttonsremove,
-                              buttonStyle:
-                                  CustomButtonStyles.outlinePrimaryTL19,
-                              onTap: () {
-                                onTapDeletePortfolio(context);
-                              },
-                            ),
-                            SizedBox(height: 15.v),
-                            CustomImageButton(
-                              text: "Edit a  Portfolio         ",
-                              imageConstant: ImageConstant
-                                  .imgInterfaceeditwritecirclechangecircleeditmodifypencilwritewriting,
-                              onTap: () {
-                                onTapEditAPortfolio(context);
-                              },
-                            ),
 
-                            SizedBox(height: 15.v),
                             CustomImageButton(
                               text: "Create new Portfolio",
                               imageConstant: ImageConstant.imgPlus,
@@ -182,28 +145,9 @@ class _HomePageState extends State<HomePage> {
         isScrollControlled: true);
   }
 
-  /// Navigates to the pGinaDIniciAlumneTwoScreen when the action is triggered.
-  onTapDeletePortfolio(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.showErrorPortfolioScreen);
-  }
-
-  /// Displays a dialog with the [PGinaDIniciAlumneThreeDialog] content.
-  onTapEditAPortfolio(BuildContext context) {
-    bool isStackReset = !Navigator.canPop(context);
-    if (isStackReset == true) {
-      showDialog(
-          context: context,
-          builder: (_) => const AlertDialog(
-                content: PGinaDIniciAlumneThreeDialog(),
-                backgroundColor: Colors.transparent,
-                contentPadding: EdgeInsets.zero,
-                insetPadding: EdgeInsets.only(left: 0),
-              ));
-    }
-  }
-
   /// Navigates to the brokerFeesConfigurationOneScreen when the action is triggered.
   onTapCreateNewPortfolio(BuildContext context) {
+    controller.initializeNumPortfolio();
     if (controller.numPortfolio >= 4) {
       showDialog(
           context: context,

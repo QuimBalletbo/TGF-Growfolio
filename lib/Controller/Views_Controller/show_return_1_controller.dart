@@ -40,6 +40,7 @@ class ShowReturnView1Controller {
   bool hasStocks = false;
   bool hasETFs = false;
   bool hasBonds = false;
+  double amountInvestedPeriodically = 0;
 
   String initViewData() {
     portfolio = realm
@@ -53,6 +54,16 @@ class ShowReturnView1Controller {
         .query<PortfolioReturn>('id == \$0', [profile.selectedPortfolio]).first;
     frequencyInvesting = portfolio.frequencyInvesting;
     return frequencyInvesting;
+  }
+
+  double getAmountInvestedPeriodically() {
+    if (frequencyInvesting == 'One-time') {
+      amountInvestedPeriodically = portfolio.amountInvested;
+    } else {
+      amountInvestedPeriodically =
+          portfolio.amountInvested / portfolio.duration;
+    }
+    return amountInvestedPeriodically;
   }
 
   double getAmountInvested() {

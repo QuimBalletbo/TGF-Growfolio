@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/app_export.dart';
-import 'package:flutter_application_1/View/widgets/textInformation.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/show_return_1_controller.dart';
 import 'package:realm/realm.dart';
 import 'package:flutter_application_1/Model/data/portfolioReturn.dart';
 import 'package:flutter_application_1/View/widgets/custom_AssetCard.dart';
+import 'package:flutter_application_1/View/widgets/custom_textNumberInformation.dart';
 
 // ignore_for_file: must_be_immutable
 class ShowReturn1Dialog extends StatefulWidget {
@@ -21,9 +21,12 @@ class _ShowReturn1DialogState extends State<ShowReturn1Dialog> {
     super.initState();
     frequencyInvesting = widget.controller.getFrequencyInvesting();
     assetList = widget.controller.getAssets();
+    amountInvestedPeriodically =
+        widget.controller.getAmountInvestedPeriodically();
   }
 
   String frequencyInvesting = "";
+  double amountInvestedPeriodically = 0;
   late RealmList<AssetReturn> assetList;
 
   @override
@@ -38,8 +41,9 @@ class _ShowReturn1DialogState extends State<ShowReturn1Dialog> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  NameTitleText(
+                  TextNumberInfo(
                     text: frequencyInvesting,
+                    value: amountInvestedPeriodically,
                   ),
                   const SizedBox(height: 6.0),
                   Divider(

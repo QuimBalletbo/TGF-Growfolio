@@ -1,8 +1,8 @@
-import 'package:flutter_application_1/Model/listCreatePortfolio.dart';
 import 'package:realm/realm.dart';
 import 'package:flutter_application_1/Model/utils/auth_service.dart';
 import 'package:flutter_application_1/Model/data/createPortfolio.dart';
 import 'package:flutter_application_1/Model/data/portfolioReturn.dart';
+import 'package:flutter_application_1/Model/noDataBaseData/stockReturn.dart';
 import 'dart:math';
 
 class CalculatePortfolioController {
@@ -13,8 +13,9 @@ class CalculatePortfolioController {
   final Realm realm = AuthService().getRealm();
   ObjectId newportfolioID = ObjectId();
   int endedCalculations = 0;
+  List<StockReturn> singleAssetReturn = [];
 
-  void calculateStockReturn() {
+  void calculatePortfolioReturn() {
     try {
       endedCalculations = 0;
       String frequency = createPortfolio.frequencyInvesting;
@@ -49,6 +50,7 @@ class CalculatePortfolioController {
         accountMaintenanceFlatFee = createPortfolio.accountMaintenanceFlatFee;
       } else {
         amountWithBrokerFee = createPortfolio.monetaryObjective;
+        accountMaintenanceFlatFee = 0;
       }
       if (createPortfolio.taxation &&
           createPortfolio.shortToLongTransition > createPortfolio.duration) {
@@ -73,35 +75,42 @@ class CalculatePortfolioController {
         portfolioValueStocks = 0;
         portfolioValueETFs = 0;
         portfolioValueBonds = 0;
+        singleAssetReturn.clear();
         if (createPortfolio.includeStocks) {
           // Calculate total effective growth for all stocks
           for (int i = 0; i < createPortfolio.stocks.length; i++) {
-            double effectiveAnualGrowth = 0;
-            double effectiveGrowth = 0;
+            double effectiveAnualStockGrowth = 0;
+            double effectiveStockGrowth = 0;
 
             // Calculate effective annual growth for the current stock
             if (createPortfolio.stocks[i].fwt && createPortfolio.taxation) {
-              effectiveAnualGrowth = (1 - (createPortfolio.fwt / 100)) *
+              effectiveAnualStockGrowth = (1 - (createPortfolio.fwt / 100)) *
                       (createPortfolio.stocks[i].avgReturn / 100) +
                   ((createPortfolio.stocks[i].avgDividend / 100) -
                           createPortfolio.dividendTax / 100) *
                       (createPortfolio.stocks[i].avgDividend / 100);
-            }
-            if (!createPortfolio.stocks[i].fwt && createPortfolio.taxation) {
-              effectiveAnualGrowth =
+            } else if (!createPortfolio.stocks[i].fwt &&
+                createPortfolio.taxation) {
+              effectiveAnualStockGrowth =
                   (createPortfolio.stocks[i].avgReturn / 100) +
                       ((createPortfolio.stocks[i].avgDividend / 100) -
                               createPortfolio.dividendTax / 100) *
                           (createPortfolio.stocks[i].avgDividend / 100);
-            }
-            if (!createPortfolio.stocks[i].fwt && !createPortfolio.taxation) {
-              effectiveAnualGrowth =
+            } else if (createPortfolio.stocks[i].fwt &&
+                !createPortfolio.taxation) {
+              effectiveAnualStockGrowth = (1 - (createPortfolio.fwt / 100)) *
+                      (createPortfolio.stocks[i].avgReturn / 100) +
+                  ((createPortfolio.stocks[i].avgDividend / 100));
+            } else {
+              effectiveAnualStockGrowth =
                   (createPortfolio.stocks[i].avgReturn / 100) +
                       (createPortfolio.stocks[i].avgDividend / 100);
             }
+
             if (createPortfolio.brokerFees) {
-              effectiveAnualGrowth -= createPortfolio.stockPurchaseFee / 100;
-              effectiveAnualGrowth -=
+              effectiveAnualStockGrowth -=
+                  createPortfolio.stockPurchaseFee / 100;
+              effectiveAnualStockGrowth -=
                   createPortfolio.accountMaintenanceFee / 100;
             }
 
@@ -111,32 +120,33 @@ class CalculatePortfolioController {
             double stockAllocation =
                 createPortfolio.stocks[i].stockAllocation / 100.0;
             double stockValueChange = 0;
+            double finalObjective = 0;
             if (frequency == 'Monthly' ||
                 frequency == 'Quarterly' ||
                 frequency == 'Annual' ||
                 frequency == 'One-time') {
               int periods = 0;
               if (frequency == 'Monthly') {
-                effectiveGrowth = effectiveAnualGrowth / 12;
+                effectiveStockGrowth = effectiveAnualStockGrowth / 12;
                 periods = 12 * createPortfolio.duration;
               } else if (frequency == 'Quarterly') {
-                effectiveGrowth = effectiveAnualGrowth / 4;
+                effectiveStockGrowth = effectiveAnualStockGrowth / 4;
                 periods = 4 * createPortfolio.duration;
               } else if (frequency == 'Annual' || frequency == 'One-time') {
-                effectiveGrowth = effectiveAnualGrowth;
+                effectiveStockGrowth = effectiveAnualStockGrowth;
                 periods = createPortfolio.duration;
               }
               if (frequency == 'One-time') {
                 if (createPortfolio.brokerFees) {
-                  stockValueChange = ((periods *
-                              pow((1 + effectiveGrowth),
+                  stockValueChange = ((amountInvestedPeriodically *
+                              pow((1 + effectiveStockGrowth),
                                   createPortfolio.duration)) *
                           stockAllocation *
                           (createPortfolio.stockAllocationPercentage / 100)) -
                       createPortfolio.stockPurchaseFlatFee;
                 } else {
-                  stockValueChange = ((periods *
-                          pow((1 + effectiveGrowth),
+                  stockValueChange = ((amountInvestedPeriodically *
+                          pow((1 + effectiveStockGrowth),
                               createPortfolio.duration)) *
                       stockAllocation *
                       (createPortfolio.stockAllocationPercentage / 100));
@@ -144,19 +154,26 @@ class CalculatePortfolioController {
               } else {
                 if (createPortfolio.brokerFees) {
                   stockValueChange = ((amountInvestedPeriodically *
-                              (pow((1 + effectiveGrowth), periods) - 1) /
-                              effectiveGrowth) *
+                              (pow((1 + effectiveStockGrowth), periods) - 1) /
+                              effectiveStockGrowth) *
                           stockAllocation *
                           (createPortfolio.stockAllocationPercentage / 100)) -
                       createPortfolio.stockPurchaseFlatFee;
                 } else {
                   stockValueChange = ((amountInvestedPeriodically *
-                              (pow((1 + effectiveGrowth), periods) - 1) /
-                              effectiveGrowth) *
+                              (pow((1 + effectiveStockGrowth), periods) - 1) /
+                              effectiveStockGrowth) *
                           stockAllocation) *
                       (createPortfolio.stockAllocationPercentage / 100);
                 }
               }
+              finalObjective =
+                  (createPortfolio.monetaryObjective * stockValueChange) /
+                      necesaryValue;
+              singleAssetReturn.add(StockReturn(
+                assetID: createPortfolio.stocks[i].id,
+                finalValue: finalObjective,
+              ));
             }
             // Update the current portfolio value
             portfolioValueStocks += stockValueChange;
@@ -166,84 +183,103 @@ class CalculatePortfolioController {
         if (createPortfolio.includeETF) {
           // Calculate total effective growth for all stocks
           for (int i = 0; i < createPortfolio.etfs.length; i++) {
-            double effectiveAnualGrowth = 0;
-            double effectiveGrowth = 0;
+            double effectiveAnualETFGrowth = 0;
+            double effectiveETFGrowth = 0;
 
             // Calculate effective annual growth for the current stock
             if (createPortfolio.etfs[i].fwt && createPortfolio.taxation) {
-              effectiveAnualGrowth = (1 - (createPortfolio.fwt / 100)) *
+              effectiveAnualETFGrowth = (1 -
+                          (createPortfolio.fwt / 100) -
+                          (createPortfolio.etfs[i].expRatio / 100)) *
                       (createPortfolio.etfs[i].avgReturn / 100) +
                   ((createPortfolio.etfs[i].avgDividend / 100) -
-                      createPortfolio.dividendTax / 100) -
-                  (createPortfolio.etfs[i].expRatio / 100);
-            }
-            if (!createPortfolio.etfs[i].fwt && createPortfolio.taxation) {
-              effectiveAnualGrowth = (createPortfolio.etfs[i].avgReturn / 100) +
-                  ((createPortfolio.etfs[i].avgDividend / 100) -
-                      createPortfolio.dividendTax / 100) -
-                  (createPortfolio.etfs[i].expRatio / 100);
+                          createPortfolio.dividendTax / 100) *
+                      (createPortfolio.etfs[i].avgDividend / 100);
+            } else if (!createPortfolio.etfs[i].fwt &&
+                createPortfolio.taxation) {
+              effectiveAnualETFGrowth =
+                  (1 - (createPortfolio.etfs[i].expRatio / 100)) *
+                          (createPortfolio.etfs[i].avgReturn / 100) +
+                      ((createPortfolio.etfs[i].avgDividend / 100) -
+                              createPortfolio.dividendTax / 100) *
+                          (createPortfolio.etfs[i].avgDividend / 100);
+            } else if (createPortfolio.etfs[i].fwt &&
+                !createPortfolio.taxation) {
+              effectiveAnualETFGrowth = (1 -
+                          (createPortfolio.fwt / 100) -
+                          (createPortfolio.etfs[i].expRatio / 100)) *
+                      (createPortfolio.etfs[i].avgReturn / 100) +
+                  ((createPortfolio.etfs[i].avgDividend / 100));
             } else {
-              effectiveAnualGrowth = (createPortfolio.etfs[i].avgReturn / 100) +
-                  (createPortfolio.etfs[i].avgDividend / 100) -
-                  (createPortfolio.etfs[i].expRatio / 100);
+              effectiveAnualETFGrowth =
+                  (1 - (createPortfolio.etfs[i].expRatio / 100)) *
+                          (createPortfolio.etfs[i].avgReturn / 100) +
+                      (createPortfolio.etfs[i].avgDividend / 100);
             }
             if (createPortfolio.brokerFees) {
-              effectiveAnualGrowth -= createPortfolio.stockPurchaseFee / 100;
-              effectiveAnualGrowth -=
+              effectiveAnualETFGrowth -= createPortfolio.stockPurchaseFee / 100;
+              effectiveAnualETFGrowth -=
                   createPortfolio.accountMaintenanceFee / 100;
             }
-
-            // Calculate effective growth based on frequency of investing
-            effectiveGrowth = effectiveAnualGrowth;
 
             // Calculate the returns for the given period of the stock
             double etfAllocation =
                 createPortfolio.etfs[i].eTFAllocation / 100.0;
             double etfValueChange = 0;
+            double finalObjective = 0;
             if (frequency == 'Monthly' ||
                 frequency == 'Quarterly' ||
-                frequency == 'Annual') {
+                frequency == 'Annual' ||
+                frequency == 'One-time') {
               int periods = 0;
               if (frequency == 'Monthly') {
+                effectiveETFGrowth = effectiveAnualETFGrowth / 12;
                 periods = 12 * createPortfolio.duration;
               } else if (frequency == 'Quarterly') {
+                effectiveETFGrowth = effectiveAnualETFGrowth / 4;
                 periods = 4 * createPortfolio.duration;
               } else if (frequency == 'Annual' || frequency == 'One-time') {
+                effectiveETFGrowth = effectiveAnualETFGrowth;
                 periods = createPortfolio.duration;
               }
               if (frequency == 'One-time') {
                 if (createPortfolio.brokerFees) {
-                  etfValueChange = ((periods *
-                              pow((1 + effectiveGrowth),
-                                  createPortfolio.duration)) *
+                  etfValueChange = ((amountInvestedPeriodically *
+                              pow((1 + effectiveETFGrowth), periods)) *
                           etfAllocation *
                           (createPortfolio.etfAllocationPercentage / 100)) -
                       createPortfolio.stockPurchaseFlatFee;
                 } else {
-                  etfValueChange = ((periods *
-                          pow((1 + effectiveGrowth),
-                              createPortfolio.duration)) *
+                  etfValueChange = ((amountInvestedPeriodically *
+                          pow((1 + effectiveETFGrowth), periods)) *
                       etfAllocation *
                       (createPortfolio.etfAllocationPercentage / 100));
                 }
               } else {
                 if (createPortfolio.brokerFees) {
                   etfValueChange = ((amountInvestedPeriodically *
-                              (pow((1 + effectiveGrowth), periods) - 1) /
-                              effectiveGrowth) *
+                              (pow((1 + effectiveETFGrowth), periods) - 1) /
+                              effectiveETFGrowth) *
                           etfAllocation *
                           (createPortfolio.etfAllocationPercentage / 100)) -
                       createPortfolio.stockPurchaseFlatFee;
                 } else {
                   etfValueChange = ((amountInvestedPeriodically *
-                              (pow((1 + effectiveGrowth), periods) - 1) /
-                              effectiveGrowth) *
+                              (pow((1 + effectiveETFGrowth), periods) - 1) /
+                              effectiveETFGrowth) *
                           etfAllocation) *
                       (createPortfolio.etfAllocationPercentage / 100);
                 }
               }
+              finalObjective =
+                  (createPortfolio.monetaryObjective * etfValueChange) /
+                      necesaryValue;
+              singleAssetReturn.add(StockReturn(
+                assetID: createPortfolio.etfs[i].id,
+                finalValue: finalObjective,
+              ));
             }
-
+            etfValueChange = etfValueChange / 100;
             // Update the current portfolio value
             portfolioValueETFs += etfValueChange;
             currentPortfolioValue += etfValueChange;
@@ -258,11 +294,17 @@ class CalculatePortfolioController {
             if (createPortfolio.bonds[i].fwt && createPortfolio.taxation) {
               couponRate = (1 - (createPortfolio.fwt / 100)) *
                       (createPortfolio.bonds[i].couponRate / 100) -
-                  (createPortfolio.dividendTax / 100);
-            }
-            if (!createPortfolio.bonds[i].fwt && createPortfolio.taxation) {
+                  (createPortfolio.bonds[i].couponRate / 100) *
+                      (createPortfolio.dividendTax / 100);
+            } else if (!createPortfolio.bonds[i].fwt &&
+                createPortfolio.taxation) {
               couponRate = (createPortfolio.bonds[i].couponRate / 100) -
-                  (createPortfolio.dividendTax / 100);
+                  (createPortfolio.bonds[i].couponRate / 100) *
+                      (createPortfolio.dividendTax / 100);
+            } else if (createPortfolio.bonds[i].fwt &&
+                !createPortfolio.taxation) {
+              couponRate = (1 - (createPortfolio.fwt / 100)) *
+                  (createPortfolio.bonds[i].couponRate / 100);
             } else {
               couponRate = (createPortfolio.bonds[i].couponRate / 100);
             }
@@ -275,9 +317,11 @@ class CalculatePortfolioController {
                 createPortfolio.bonds[i].bondAllocation / 100.0;
             double bondValueChange = 0;
             int couponAjustment = 0;
+            double finalObjective = 0;
             if (frequency == 'Monthly' ||
                 frequency == 'Quarterly' ||
-                frequency == 'Annual') {
+                frequency == 'Annual' ||
+                frequency == 'One-time') {
               int periods = 0;
               if (frequency == 'Monthly') {
                 periods = 12 * createPortfolio.duration;
@@ -337,8 +381,15 @@ class CalculatePortfolioController {
                       (createPortfolio.bondAllocationPercentage / 100)));
                 }
               }
+              finalObjective =
+                  (createPortfolio.monetaryObjective * bondValueChange) /
+                      necesaryValue;
+              singleAssetReturn.add(StockReturn(
+                assetID: createPortfolio.bonds[i].id,
+                finalValue: finalObjective,
+              ));
             }
-
+            bondValueChange = bondValueChange / 100;
             // Update the current portfolio value
             portfolioValueBonds += bondValueChange;
             currentPortfolioValue += bondValueChange;
@@ -361,7 +412,7 @@ class CalculatePortfolioController {
       durationScore = calculateDurationScore();
       returnScore = calculateReturnScore(avgAnualReturn);
       print(
-          "Creating PortfolioReturn main values: $portfolioValueStocks, $portfolioValueETFs, $portfolioValueBonds, $currentPortfolioValue");
+          "Creating PortfolioReturn main values: $newportfolioID, $portfolioValueStocks, $portfolioValueETFs, $portfolioValueBonds, $currentPortfolioValue");
       realm.write(() => realm.add(PortfolioReturn(
             newportfolioID,
             allocationScore,
@@ -389,90 +440,28 @@ class CalculatePortfolioController {
         for (int i = 0; i < createPortfolio.stocks.length; i++) {
           double finalValue = 0;
           double periodInvestment = 0;
-          double totalInvestment = 0;
-          double effectiveAnualGrowth = 0;
-          double effectiveGrowth = 0;
+          double specificStockInvestment = 0;
 
-          // Calculate effective annual growth for the current stock
-          if (createPortfolio.stocks[i].fwt && createPortfolio.taxation) {
-            effectiveAnualGrowth = (1 - (createPortfolio.fwt / 100)) *
-                    (createPortfolio.stocks[i].avgReturn / 100) +
-                ((createPortfolio.stocks[i].avgDividend / 100) -
-                    createPortfolio.dividendTax / 100);
-          }
-          if (!createPortfolio.stocks[i].fwt && createPortfolio.taxation) {
-            effectiveAnualGrowth = (createPortfolio.stocks[i].avgReturn / 100) +
-                ((createPortfolio.stocks[i].avgDividend / 100) -
-                    createPortfolio.dividendTax / 100);
-          } else {
-            effectiveAnualGrowth = (createPortfolio.stocks[i].avgReturn / 100) +
-                (createPortfolio.stocks[i].avgDividend / 100);
-          }
-          if (createPortfolio.brokerFees) {
-            effectiveAnualGrowth -= createPortfolio.stockPurchaseFee / 100;
-            effectiveAnualGrowth -= createPortfolio.accountMaintenanceFee / 100;
-          }
-
-          // Calculate effective growth based on frequency of investing
-          effectiveGrowth = effectiveAnualGrowth;
-          int periods = 0;
-          // Calculate the returns for the given period of the stock
-          double stockAllocation =
-              createPortfolio.stocks[i].stockAllocation / 100.0;
-          if (frequency == 'Monthly' ||
-              frequency == 'Quarterly' ||
-              frequency == 'Annual' ||
-              frequency == 'One-time') {
-            if (frequency == 'Monthly') {
-              periods = 12 * createPortfolio.duration;
-            } else if (frequency == 'Quarterly') {
-              periods = 4 * createPortfolio.duration;
-            } else if (frequency == 'Annual' || frequency == 'One-time') {
-              periods = createPortfolio.duration;
-            }
-            if (frequency == 'One-time') {
-              if (createPortfolio.brokerFees) {
-                finalValue = ((periods *
-                            pow((1 + effectiveGrowth),
-                                createPortfolio.duration)) *
-                        stockAllocation *
-                        (createPortfolio.stockAllocationPercentage / 100)) -
-                    createPortfolio.stockPurchaseFlatFee;
-              } else {
-                finalValue = ((periods *
-                        pow((1 + effectiveGrowth), createPortfolio.duration)) *
-                    stockAllocation *
-                    (createPortfolio.stockAllocationPercentage / 100));
-              }
-            } else {
-              if (createPortfolio.brokerFees) {
-                finalValue = ((amountInvestedPeriodically *
-                            (pow((1 + effectiveGrowth), periods) - 1) /
-                            effectiveGrowth) *
-                        stockAllocation *
-                        (createPortfolio.stockAllocationPercentage / 100)) -
-                    createPortfolio.stockPurchaseFlatFee;
-              } else {
-                finalValue = ((amountInvestedPeriodically *
-                            (pow((1 + effectiveGrowth), periods) - 1) /
-                            effectiveGrowth) *
-                        stockAllocation) *
-                    (createPortfolio.stockAllocationPercentage / 100);
-              }
-            }
-          }
           ObjectId assetID = ObjectId();
           periodInvestment = amountInvestedPeriodically *
-              (stockAllocation) *
-              (createPortfolio.stockAllocationPercentage / 100);
-          totalInvestment = periods * periodInvestment;
+              (createPortfolio.stockAllocationPercentage / 100) *
+              (createPortfolio.stocks[i].stockAllocation / 100);
+
+          specificStockInvestment = totalAmountInvested *
+              (createPortfolio.stockAllocationPercentage / 100) *
+              (createPortfolio.stocks[i].stockAllocation / 100);
+
+          finalValue = singleAssetReturn
+              .firstWhere(
+                  (element) => element.assetID == createPortfolio.stocks[i].id)
+              .finalValue;
 
           realm.write(() => realm.add(AssetReturn(
                 assetID,
                 finalValue,
                 periodInvestment,
                 createPortfolio.stocks[i].name,
-                totalInvestment,
+                specificStockInvestment,
                 user.id,
               )));
           addAssettoPortfolio(assetID);
@@ -482,92 +471,28 @@ class CalculatePortfolioController {
         for (int i = 0; i < createPortfolio.etfs.length; i++) {
           double finalValue = 0;
           double periodInvestment = 0;
-          double totalInvestment = 0;
-          double effectiveAnualGrowth = 0;
-          double effectiveGrowth = 0;
+          double specificETFInvestment = 0;
 
-          // Calculate effective annual growth for the current stock
-          if (createPortfolio.etfs[i].fwt && createPortfolio.taxation) {
-            effectiveAnualGrowth = (1 - (createPortfolio.fwt / 100)) *
-                    (createPortfolio.etfs[i].avgReturn / 100) +
-                ((createPortfolio.etfs[i].avgDividend / 100) -
-                    createPortfolio.dividendTax / 100) -
-                (createPortfolio.etfs[i].expRatio / 100);
-          }
-          if (!createPortfolio.etfs[i].fwt && createPortfolio.taxation) {
-            effectiveAnualGrowth = (createPortfolio.etfs[i].avgReturn / 100) +
-                ((createPortfolio.etfs[i].avgDividend / 100) -
-                    createPortfolio.dividendTax / 100) -
-                (createPortfolio.etfs[i].expRatio / 100);
-          } else {
-            effectiveAnualGrowth = (createPortfolio.etfs[i].avgReturn / 100) +
-                (createPortfolio.etfs[i].avgDividend / 100) -
-                (createPortfolio.etfs[i].expRatio / 100);
-          }
-          if (createPortfolio.brokerFees) {
-            effectiveAnualGrowth -= createPortfolio.stockPurchaseFee / 100;
-            effectiveAnualGrowth -= createPortfolio.accountMaintenanceFee / 100;
-          }
-
-          // Calculate effective growth based on frequency of investing
-          effectiveGrowth = effectiveAnualGrowth;
-          int periods = 0;
-          // Calculate the returns for the given period of the stock
-          double etfAllocation = createPortfolio.etfs[i].eTFAllocation / 100.0;
-          double etfValueChange = 0;
-          if (frequency == 'Monthly' ||
-              frequency == 'Quarterly' ||
-              frequency == 'Annual') {
-            if (frequency == 'Monthly') {
-              periods = 12 * createPortfolio.duration;
-            } else if (frequency == 'Quarterly') {
-              periods = 4 * createPortfolio.duration;
-            } else if (frequency == 'Annual' || frequency == 'One-time') {
-              periods = createPortfolio.duration;
-            }
-            if (frequency == 'One-time') {
-              if (createPortfolio.brokerFees) {
-                etfValueChange = ((periods *
-                            pow((1 + effectiveGrowth),
-                                createPortfolio.duration)) *
-                        etfAllocation *
-                        (createPortfolio.etfAllocationPercentage / 100)) -
-                    createPortfolio.stockPurchaseFlatFee;
-              } else {
-                etfValueChange = ((periods *
-                        pow((1 + effectiveGrowth), createPortfolio.duration)) *
-                    etfAllocation *
-                    (createPortfolio.etfAllocationPercentage / 100));
-              }
-            } else {
-              if (createPortfolio.brokerFees) {
-                etfValueChange = ((amountInvestedPeriodically *
-                            (pow((1 + effectiveGrowth), periods) - 1) /
-                            effectiveGrowth) *
-                        etfAllocation *
-                        (createPortfolio.etfAllocationPercentage / 100)) -
-                    createPortfolio.stockPurchaseFlatFee;
-              } else {
-                etfValueChange = ((amountInvestedPeriodically *
-                            (pow((1 + effectiveGrowth), periods) - 1) /
-                            effectiveGrowth) *
-                        etfAllocation) *
-                    (createPortfolio.etfAllocationPercentage / 100);
-              }
-            }
-          }
           ObjectId assetID = ObjectId();
           periodInvestment = amountInvestedPeriodically *
-              (etfAllocation) *
-              (createPortfolio.etfAllocationPercentage / 100);
-          totalInvestment = periods * periodInvestment;
+              (createPortfolio.etfAllocationPercentage / 100) *
+              (createPortfolio.etfs[i].eTFAllocation / 100);
+
+          specificETFInvestment = totalAmountInvested *
+              (createPortfolio.etfAllocationPercentage / 100) *
+              (createPortfolio.etfs[i].eTFAllocation / 100);
+
+          finalValue = singleAssetReturn
+              .firstWhere(
+                  (element) => element.assetID == createPortfolio.etfs[i].id)
+              .finalValue;
 
           realm.write(() => realm.add(AssetReturn(
                 assetID,
                 finalValue,
                 periodInvestment,
-                createPortfolio.stocks[i].name,
-                totalInvestment,
+                createPortfolio.etfs[i].name,
+                specificETFInvestment,
                 user.id,
               )));
           addAssettoPortfolio(assetID);
@@ -577,104 +502,28 @@ class CalculatePortfolioController {
         for (int i = 0; i < createPortfolio.bonds.length; i++) {
           double finalValue = 0;
           double periodInvestment = 0;
-          double totalInvestment = 0;
-          double couponRate = 0;
+          double specificBondInvestment = 0;
 
-          // Calculate effective annual growth for the current stock
-          if (createPortfolio.bonds[i].fwt && createPortfolio.taxation) {
-            couponRate = (1 - (createPortfolio.fwt / 100)) *
-                    (createPortfolio.bonds[i].couponRate / 100) -
-                (createPortfolio.dividendTax / 100);
-          }
-          if (!createPortfolio.bonds[i].fwt && createPortfolio.taxation) {
-            couponRate = (createPortfolio.bonds[i].couponRate / 100) -
-                (createPortfolio.dividendTax / 100);
-          } else {
-            couponRate = (createPortfolio.bonds[i].couponRate / 100);
-          }
-          if (createPortfolio.brokerFees) {
-            couponRate -= createPortfolio.stockPurchaseFee / 100;
-            couponRate -= createPortfolio.accountMaintenanceFee / 100;
-          }
-          // Calculate the returns for the given period of the stock
-          double bondAllocation =
-              createPortfolio.bonds[i].bondAllocation / 100.0;
-          double bondValueChange = 0;
-          double couponAjustment = 0;
-          int periods = 0;
-          if (frequency == 'Monthly' ||
-              frequency == 'Quarterly' ||
-              frequency == 'Annual') {
-            if (frequency == 'Monthly') {
-              periods = 12 * createPortfolio.duration;
-              couponAjustment = 12;
-            } else if (frequency == 'Quarterly') {
-              periods = 4 * createPortfolio.duration;
-              couponAjustment = 4;
-            } else if (frequency == 'Annual') {
-              periods = createPortfolio.duration;
-              couponAjustment = 1;
-            } else if (frequency == 'One-time') {
-              periods = min(createPortfolio.duration,
-                  createPortfolio.bonds[i].maturityPeriod.toInt());
-              couponAjustment = 1;
-            }
-            if (frequency == 'One-time') {
-              if (createPortfolio.brokerFees) {
-                bondValueChange = (((amountInvestedPeriodically *
-                                pow((1 + (couponRate / couponAjustment)),
-                                    periods)) +
-                            (createPortfolio.bonds[i].faceValue *
-                                pow((1 + (couponRate / couponAjustment)),
-                                    periods))) *
-                        bondAllocation *
-                        (createPortfolio.bondAllocationPercentage / 100)) -
-                    createPortfolio.stockPurchaseFlatFee;
-              } else {
-                bondValueChange = (((amountInvestedPeriodically *
-                            pow((1 + (couponRate / couponAjustment)),
-                                periods)) +
-                        (createPortfolio.bonds[i].faceValue *
-                            pow((1 + (couponRate / couponAjustment)),
-                                periods))) *
-                    bondAllocation *
-                    (createPortfolio.bondAllocationPercentage / 100));
-              }
-            } else {
-              if (createPortfolio.brokerFees) {
-                bondValueChange = ((amountInvestedPeriodically *
-                        ((pow((1 + (couponRate / couponAjustment)), (periods)) -
-                                1 / (couponRate / couponAjustment)) +
-                            (createPortfolio.bonds[i].faceValue *
-                                pow((1 + (couponRate / couponAjustment)),
-                                    periods))) *
-                        bondAllocation *
-                        (createPortfolio.bondAllocationPercentage / 100)) -
-                    createPortfolio.stockPurchaseFlatFee);
-              } else {
-                bondValueChange = ((amountInvestedPeriodically *
-                    ((pow((1 + (couponRate / couponAjustment)), (periods)) -
-                            1 / (couponRate / couponAjustment)) +
-                        (createPortfolio.bonds[i].faceValue *
-                            pow((1 + (couponRate / couponAjustment)),
-                                periods))) *
-                    bondAllocation *
-                    (createPortfolio.bondAllocationPercentage / 100)));
-              }
-            }
-          }
           ObjectId assetID = ObjectId();
           periodInvestment = amountInvestedPeriodically *
-              (bondAllocation) *
-              (createPortfolio.bondAllocationPercentage / 100);
-          totalInvestment = periods * periodInvestment;
+              (createPortfolio.bondAllocationPercentage / 100) *
+              (createPortfolio.bonds[i].bondAllocation / 100);
+
+          specificBondInvestment = totalAmountInvested *
+              (createPortfolio.bondAllocationPercentage / 100) *
+              (createPortfolio.bonds[i].bondAllocation / 100);
+
+          finalValue = singleAssetReturn
+              .firstWhere(
+                  (element) => element.assetID == createPortfolio.bonds[i].id)
+              .finalValue;
 
           realm.write(() => realm.add(AssetReturn(
                 assetID,
                 finalValue,
                 periodInvestment,
                 createPortfolio.bonds[i].name,
-                totalInvestment,
+                specificBondInvestment,
                 user.id,
               )));
           addAssettoPortfolio(assetID);
