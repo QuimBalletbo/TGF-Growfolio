@@ -6,9 +6,6 @@ import 'package:flutter_application_1/View/widgets/app_bar/custom_app_bar.dart';
 import 'package:flutter_application_1/View/widgets/custom_image_button.dart';
 import 'package:flutter_application_1/View/Screens/home_view_component/home_view_bottom_part.dart';
 import 'package:flutter_application_1/View/Screens/dialogs/max_portfolio_dialog.dart';
-import 'package:flutter_application_1/Model/listBloc.dart';
-import 'package:flutter_application_1/View/widgets/custom_betaPortfolio.dart';
-import 'package:flutter_application_1/Model/itemBloc.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/home_view_controller.dart';
 import 'package:flutter_application_1/View/widgets/custom_PortfolioReturnCard.dart';
 
@@ -72,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                                     overflow: TextOverflow.ellipsis,
                                     style:
                                         CustomTextStyles.titleLargeMontserrat)),
-
+                            const SizedBox(height: 31),
                             CustomImageButton(
                               text: "Create new Portfolio",
                               imageConstant: ImageConstant.imgPlus,
@@ -90,6 +87,7 @@ class _HomePageState extends State<HomePage> {
                                       portfolios, controller.singlePortfolio,
                                       () {
                                     // Update the UI
+                                    setState(() {});
                                   }, context),
                                   const SizedBox(height: 31),
                                 ],

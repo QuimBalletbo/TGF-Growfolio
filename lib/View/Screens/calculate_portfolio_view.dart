@@ -78,6 +78,7 @@ class _CalculatePortfolioState extends State<CalculatePortfolio> {
       } else if (endedCalculations == 2) {
         print('Error timer');
         timer.cancel();
+        widget.viewController.deletePortfolioWithError();
         Navigator.pushNamed(context, AppRoutes.showErrorPortfolioScreen);
       } else if (counter == 0 || endedCalculations == 5) {
         print('Cancel timer');

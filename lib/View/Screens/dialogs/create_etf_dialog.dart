@@ -46,7 +46,7 @@ class _CreateStockDialogState extends State<CreateETFdialog> {
         children: [
           NameTitleText(
             title: "ETF Name",
-            name: "ETF 1",
+            name: "ETF ",
             controller: controller.etfNameController,
             onPortfolioNameChanged: (value) {
               setState(() {

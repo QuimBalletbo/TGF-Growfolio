@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Model/data/portfolioReturn.dart';
 
 class CustomAssetList extends StatelessWidget {
-  final AssetReturn asset;
   final double totalAmount;
-  final int value;
+  final double amount;
+  final String name;
 
   CustomAssetList(
-      {required this.asset, required this.totalAmount, required this.value});
+      {required this.name, required this.totalAmount, required this.amount});
 
   @override
   Widget build(BuildContext context) {
-    String percentageText = value == 1
-        ? '${(asset.totalInvestment / totalAmount * 100).toStringAsFixed(2)}%'
-        : '${(asset.finalValue / totalAmount * 100).toStringAsFixed(2)}%';
-    String number = value == 1
-        ? '${asset.totalInvestment.toStringAsFixed(2)} €'
-        : '${asset.finalValue.toStringAsFixed(2)} €';
-
+    String percentageText =
+        '${(amount / totalAmount * 100).toStringAsFixed(2)}%';
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.all(8.0),
@@ -27,7 +21,7 @@ class CustomAssetList extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Text(
-              asset.name,
+              name,
               style: const TextStyle(fontSize: 16),
             ),
           ),
@@ -35,7 +29,7 @@ class CustomAssetList extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Text(
-              number,
+              '${amount.toStringAsFixed(2)} €',
               style: const TextStyle(fontSize: 16),
               textAlign: TextAlign.center,
             ),

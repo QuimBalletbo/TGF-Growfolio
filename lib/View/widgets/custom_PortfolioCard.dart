@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/app_export.dart';
 import 'package:flutter_application_1/Model/data/createPortfolio.dart';
-import 'package:flutter_application_1/Model/itemBloc.dart';
-import 'package:realm/realm.dart';
 import 'package:flutter_application_1/Model/listCreatePortfolio.dart';
 
-Widget customPortfolioCard(
-    CreatePortfolio createPortfolios, PortfolioBloc singlePortfolio) {
+Widget customPortfolioCard(CreatePortfolio createPortfolios,
+    PortfolioBloc singlePortfolio, VoidCallback updateUI) {
   return Dismissible(
-    key:
-        ValueKey(createPortfolios.name), // Unique key for each dismissible item
+    key: ValueKey(createPortfolios.id), // Unique key for each dismissible item
     background: Container(
       color: Colors.red,
     ),
@@ -20,9 +17,37 @@ Widget customPortfolioCard(
       padding: EdgeInsets.symmetric(horizontal: 15.h, vertical: 14.v),
       decoration: AppDecoration.outlinePrimary3
           .copyWith(borderRadius: BorderRadiusStyle.roundedBorder18),
-      child: Text(
-        "Portfolio Name: ${createPortfolios.name}, Portfolio duration: ${createPortfolios.duration}, Portfolio monetaryObjective: ${createPortfolios.monetaryObjective}, Portfolio frequencyInvesting: ${createPortfolios.frequencyInvesting}, Portfolio taxation: ${createPortfolios.taxation}, Portfolio brokerFees: ${createPortfolios.brokerFees}, Portfolio rebalancing: ${createPortfolios.rebalancing}, shortTerm: ${createPortfolios.taxRateShortTerm}, longTerm: ${createPortfolios.taxRateLongTerm}, shortToLongTransition: ${createPortfolios.shortToLongTransition}, Taxation dividendTax: ${createPortfolios.dividendTax}, Taxation fwt: ${createPortfolios.fwt} , Portfolio stockPurchaseFee: ${createPortfolios.stockPurchaseFee} , Portfolio stockPurchaseFlatFee: ${createPortfolios.stockPurchaseFlatFee} , Portfolio stockSaleFee: ${createPortfolios.stockSaleFee} , Portfolio stockSaleFlatFee: ${createPortfolios.stockSaleFlatFee} , Portfolio accountMantainanceFee: ${createPortfolios.accountMaintenanceFee} , Portfolio accountMantainanceFlatFee: ${createPortfolios.accountMaintenanceFlatFee}, Portfolio stockAllocationPercentage: ${createPortfolios.stockAllocationPercentage}, Portfolio equalWeightStocks: ${createPortfolios.equalWeightStocks}, Portfolio includeStocks: ${createPortfolios.includeStocks}",
-        style: CustomTextStyles.headlineSmallInterWhiteA700,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  right:
+                      8.0), // Add padding between bond name and bond allocation
+              child: Text(
+                createPortfolios.name, // Display bond name on the left side
+                maxLines: 4, // Allow multiline text
+                overflow: TextOverflow.ellipsis, // Handle overflow
+                style: CustomTextStyles.headlineSmallInterWhiteA700,
+              ),
+            ),
+          ),
+          const SizedBox(
+              width: 8), // Add space between bond allocation and cancel button
+          Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.cancel),
+                color: Colors.white, // Set button color to white
+                onPressed: () {
+                  singlePortfolio.deleteItem(createPortfolios);
+                  updateUI(); // Call updateUI to trigger UI update
+                },
+              ),
+            ],
+          ),
+        ],
       ),
     ),
   );

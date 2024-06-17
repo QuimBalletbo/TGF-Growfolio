@@ -46,7 +46,7 @@ class TextNumberInfo extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-          if (value != 3 && value != 4)
+          if (value != 3)
             Expanded(
               flex: 1,
               child: Text(

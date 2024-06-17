@@ -60,7 +60,7 @@ class _CreatePortfolioConfigurationDialogState
           children: [
             NameTitleText(
               title: "Portfolio’s Name",
-              name: "Plan 2",
+              name: "Plan ",
               controller: dialogController.portfolioNameController,
               onPortfolioNameChanged: (value) {
                 setState(() {
@@ -174,15 +174,6 @@ class _CreatePortfolioConfigurationDialogState
               onToggleChanged: (value) {
                 setState(() {
                   brokerFees = controller.getBrokerFees(value);
-                });
-              },
-            ),
-            SizedBox(height: 11.0),
-            ToggleButton(
-              text: "Portfolio rebalancing",
-              onToggleChanged: (value) {
-                setState(() {
-                  rebalancing = controller.getRebalancing(value);
                 });
               },
             ),

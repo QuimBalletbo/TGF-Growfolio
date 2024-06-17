@@ -13,7 +13,9 @@ class AuthService {
   late RealmResults<CreateETF> _createETFs;
   late RealmResults<CreateBond> _createBonds;
   late RealmResults<PortfolioReturn> _portfolioReturn;
+  late PortfolioReturn _singleportfolioReturn;
   late RealmResults<AssetReturn> _assetReturn;
+  late AssetReturn _singleassetReturn;
   late Profile _profile;
   late User _user;
   factory AuthService() {
@@ -32,7 +34,6 @@ class AuthService {
       PortfolioReturn.schema,
       AssetReturn.schema
     ]));
-    print("Fins aqui arribo 2 ");
     _realm.subscriptions.update((mutableSubscriptions) {
       mutableSubscriptions.add(_realm.all<Portfolio>());
       mutableSubscriptions.add(_realm.all<Profile>());
@@ -43,17 +44,15 @@ class AuthService {
       mutableSubscriptions.add(_realm.all<PortfolioReturn>());
       mutableSubscriptions.add(_realm.all<AssetReturn>());
     });
-    print("Fins aqui arribo 3 ");
     _portfolios = _realm.query<Portfolio>('userId == \$0', [user.id]);
     _createportfolio =
         _realm.query<CreatePortfolio>('userId == \$0', [user.id]).first;
     _createStocks = _realm.query<CreateStock>('userId == \$0', [user.id]);
     _createETFs = _realm.query<CreateETF>('userId == \$0', [user.id]);
     _createBonds = _realm.query<CreateBond>('userId == \$0', [user.id]);
-    print("Fins aqui arribo 4 ");
 
     _profile = _realm.query<Profile>('userId == \$0', [user.id]).first;
-    print("Fins aqui arribo 5");
+
     _portfolioReturn =
         _realm.query<PortfolioReturn>('userId == \$0', [user.id]);
     _assetReturn = _realm.query<AssetReturn>('userId == \$0', [user.id]);
@@ -82,6 +81,38 @@ class AuthService {
       mutableSubscriptions.add(_realm.all<AssetReturn>());
     });
     _portfolios = _realm.query<Portfolio>('userId == \$0', [user.id]);
+    _realm.write(() => _realm.add(
+          CreatePortfolio(
+              ObjectId(),
+              0,
+              0,
+              0,
+              false,
+              0,
+              0,
+              '',
+              '',
+              '',
+              0,
+              '',
+              0,
+              false,
+              false,
+              false,
+              0,
+              '',
+              false,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              false,
+              user.id),
+        ));
     _createportfolio =
         _realm.query<CreatePortfolio>('userId == \$0', [user.id]).first;
     _createStocks = _realm.query<CreateStock>('userId == \$0', [user.id]);
@@ -110,10 +141,16 @@ class AuthService {
     return _portfolios;
   }
 
-  RealmResults<PortfolioReturn> getPortfolioReturn() {
+  RealmResults<PortfolioReturn> getPortfoliosReturn() {
     _portfolioReturn =
         _realm.query<PortfolioReturn>('userId == \$0', [_user.id]);
     return _portfolioReturn;
+  }
+
+  PortfolioReturn getsinglePortfolioReturn(ObjectId idPortfolio) {
+    _singleportfolioReturn =
+        _realm.query<PortfolioReturn>('id == \$0', [idPortfolio]).first;
+    return _singleportfolioReturn;
   }
 
   RealmResults<AssetReturn> getAssetReturn() {
@@ -121,8 +158,14 @@ class AuthService {
     return _assetReturn;
   }
 
+  AssetReturn getsingleAssetReturn(ObjectId idAsset) {
+    _singleassetReturn =
+        _realm.query<AssetReturn>('id == \$0', [idAsset]).first;
+    return _singleassetReturn;
+  }
+
   CreatePortfolio getCreatePortfolio() {
-    _createportfolio = _createportfolio =
+    _createportfolio =
         _realm.query<CreatePortfolio>('userId == \$0', [_user.id]).first;
     return _createportfolio;
   }

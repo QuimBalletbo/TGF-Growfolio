@@ -6,7 +6,7 @@ import 'package:flutter_application_1/Model/data/portfolioReturn.dart';
 
 class CreatePortfolioValues {
   RealmResults<PortfolioReturn> allPortfolioReturn =
-      AuthService().getPortfolioReturn();
+      AuthService().getPortfoliosReturn();
   final user = AuthService().getUser();
   final Realm realm = AuthService().getRealm();
 

@@ -67,13 +67,12 @@ class CreateAccountController {
     try {
       EmailPasswordAuthProvider authProvider = EmailPasswordAuthProvider(_app);
       await authProvider.registerUser(email, password);
-
       // Registration successful, proceed with login and initialization
       user = await _app.logIn(Credentials.emailPassword(email, password));
+
       AuthService().initializefirstTime(user, name);
 
-      print(
-          "Successful logging in: User id: ${user.id} User id: ${user.profile}");
+      print("Successful logging in");
       Navigator.pushNamedAndRemoveUntil(
         context,
         AppRoutes.homeScreen,

@@ -35,10 +35,32 @@ Widget customPortfolioReturnCard(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Flexible(
-              child: Text(
-                "Name: ${portfolio.name} allocationScore: ${portfolio.allocationScore} amountInvested: ${portfolio.amountInvested}  avgReturn: ${portfolio.avgReturn} diversaificationScore: ${portfolio.diversaificationScore} duration: ${portfolio.duration}  durationScore: ${portfolio.durationScore} finalBondValue: ${portfolio.finalBondValue} finalETFValue: ${portfolio.finalETFValue} finalStockValue: ${portfolio.finalStockValue} finalportfolioValue: ${portfolio.finalportfolioValue}  name: ${portfolio.name} returnScore: ${portfolio.returnScore} score: ${portfolio.score}           ",
-                style: CustomTextStyles.headlineSmallInterWhiteA700,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    right:
+                        8.0), // Add padding between bond name and bond allocation
+                child: Text(
+                  portfolio.name, // Display bond name on the left side
+                  maxLines: 4, // Allow multiline text
+                  overflow: TextOverflow.ellipsis, // Handle overflow
+                  style: CustomTextStyles.headlineSmallInterWhiteA700,
+                ),
               ),
+            ),
+            const SizedBox(
+                width:
+                    8), // Add space between bond allocation and cancel button
+            Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.cancel),
+                  color: Colors.white, // Set button color to white
+                  onPressed: () {
+                    singlePortfolio.deleteItem(portfolio);
+                    updateUI(); // Call updateUI to trigger UI update
+                  },
+                ),
+              ],
             ),
           ],
         ),

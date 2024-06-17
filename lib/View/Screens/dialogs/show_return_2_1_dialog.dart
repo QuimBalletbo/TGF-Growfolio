@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/app_export.dart';
 import 'package:flutter_application_1/View/widgets/textNumbersInformation.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/show_return_1_controller.dart';
-import 'package:flutter_application_1/View/widgets/custom_AssetList_2.dart';
+import 'package:flutter_application_1/View/widgets/custom_AssetList_4.dart';
 
 // ignore_for_file: must_be_immutable
 class ShowReturnBreakDownDialog extends StatefulWidget {
@@ -56,28 +56,28 @@ class _ShowReturnBreakDownDialogState extends State<ShowReturnBreakDownDialog> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         // Render portfolios if available ETFPortfolio
-                        CustomAssetList2(
+                        CustomAssetList(
                           amount: amountInvestedStock,
                           name: "Total Stock Investment",
-                          isPercentage: false,
+                          totalAmount: totalAmountInvested,
                         ),
                         const Divider(
                           indent: 4.0,
                           endIndent: 4.0,
                         ),
-                        CustomAssetList2(
+                        CustomAssetList(
                           amount: amountInvestedETF,
                           name: "Total ETF Investment",
-                          isPercentage: false,
+                          totalAmount: totalAmountInvested,
                         ),
                         const Divider(
                           indent: 4.0,
                           endIndent: 4.0,
                         ),
-                        CustomAssetList2(
+                        CustomAssetList(
                           amount: amountInvestedBond,
                           name: "Total Bond Investment",
-                          isPercentage: false,
+                          totalAmount: totalAmountInvested,
                         ),
                       ]),
                 ])));

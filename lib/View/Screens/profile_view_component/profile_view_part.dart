@@ -323,6 +323,7 @@ class _ProfileOneScreenState extends State<ProfileOneScreen> {
                             customPortfolioReturnCard(
                                 portfolios, controller.singlePortfolio, () {
                               // Update the UI
+                              setState(() {});
                             }, context),
                             const SizedBox(height: 31),
                           ],

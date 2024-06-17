@@ -8,7 +8,7 @@ import 'dart:math';
 class CalculatePortfolioController {
   CreatePortfolio createPortfolio = AuthService().getCreatePortfolio();
   RealmResults<PortfolioReturn> allPortfolioReturn =
-      AuthService().getPortfolioReturn();
+      AuthService().getPortfoliosReturn();
   final user = AuthService().getUser();
   final Realm realm = AuthService().getRealm();
   ObjectId newportfolioID = ObjectId();
@@ -271,6 +271,7 @@ class CalculatePortfolioController {
                       (createPortfolio.etfAllocationPercentage / 100);
                 }
               }
+              etfValueChange = etfValueChange / 100;
               finalObjective =
                   (createPortfolio.monetaryObjective * etfValueChange) /
                       necesaryValue;
@@ -279,7 +280,7 @@ class CalculatePortfolioController {
                 finalValue: finalObjective,
               ));
             }
-            etfValueChange = etfValueChange / 100;
+
             // Update the current portfolio value
             portfolioValueETFs += etfValueChange;
             currentPortfolioValue += etfValueChange;
@@ -381,6 +382,7 @@ class CalculatePortfolioController {
                       (createPortfolio.bondAllocationPercentage / 100)));
                 }
               }
+              bondValueChange = bondValueChange / 100;
               finalObjective =
                   (createPortfolio.monetaryObjective * bondValueChange) /
                       necesaryValue;
@@ -389,7 +391,7 @@ class CalculatePortfolioController {
                 finalValue: finalObjective,
               ));
             }
-            bondValueChange = bondValueChange / 100;
+
             // Update the current portfolio value
             portfolioValueBonds += bondValueChange;
             currentPortfolioValue += bondValueChange;
@@ -607,5 +609,16 @@ class CalculatePortfolioController {
 
     // Return the score as an integer
     return score.round();
+  }
+
+  void deletePortfolioWithError() {
+    var portfolio = AuthService().getsinglePortfolioReturn(newportfolioID);
+
+    realm.write(() => realm.delete(portfolio));
+    for (int i = 0; i < singleAssetReturn.length; i++) {
+      var asset =
+          AuthService().getsingleAssetReturn(singleAssetReturn[i].assetID);
+      realm.write(() => realm.delete(asset));
+    }
   }
 }

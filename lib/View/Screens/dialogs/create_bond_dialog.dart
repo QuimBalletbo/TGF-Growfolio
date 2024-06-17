@@ -46,7 +46,7 @@ class _CreateBondDialogState extends State<CreateBondDialog> {
         children: [
           NameTitleText(
             title: "Bond Name",
-            name: "Bond 1",
+            name: "Bond ",
             controller: controller.bondNameController,
             onPortfolioNameChanged: (value) {
               setState(() {
