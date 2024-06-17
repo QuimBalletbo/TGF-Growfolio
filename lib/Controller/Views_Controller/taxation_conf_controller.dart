@@ -1,7 +1,5 @@
-import 'package:flutter_application_1/Model/listCreatePortfolio.dart';
 import 'package:realm/realm.dart';
 import 'package:flutter_application_1/Model/utils/auth_service.dart';
-import 'package:flutter_application_1/Model/data/createPortfolio.dart';
 
 class CreateTaxationConfigurationViewController {
   String taxation = '';
@@ -10,9 +8,15 @@ class CreateTaxationConfigurationViewController {
   int shortToLongTransition = 0;
   double dividendTax = 0;
   double fwt = 0;
+  bool brokerFees = false;
   var taxationPortfolio = AuthService().getCreatePortfolio();
   final user = AuthService().getUser();
   final Realm realm = AuthService().getRealm();
+
+  getBrokerFees() {
+    brokerFees = taxationPortfolio.brokerFees;
+    return brokerFees;
+  }
 
   setTaxation(String value) {
     taxation = value;

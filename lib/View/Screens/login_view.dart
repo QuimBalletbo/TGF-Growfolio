@@ -65,7 +65,7 @@ class IniciarSessiRegistrarSeScreen extends StatelessWidget {
                                             LogInDialog(
                                               app: app,
                                             ),
-                                            SizedBox(height: 67.v),
+                                            SizedBox(height: 117.v),
                                             RichText(
                                                 text: TextSpan(
                                                   children: [

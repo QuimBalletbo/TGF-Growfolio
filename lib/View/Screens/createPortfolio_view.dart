@@ -120,7 +120,13 @@ class _CreateBrokerFeesConfigurationOneScreenState
             taxation,
             brokerFees,
             rebalancing);
-        Navigator.pushNamed(context, AppRoutes.taxationScreen);
+        if (taxation) {
+          Navigator.pushNamed(context, AppRoutes.taxationScreen);
+        } else if (brokerFees) {
+          Navigator.pushNamed(context, AppRoutes.brokerFeesScreen);
+        } else {
+          Navigator.pushNamed(context, AppRoutes.stockConfigurationScreen);
+        }
       }
     });
   }

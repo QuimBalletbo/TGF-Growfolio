@@ -69,6 +69,11 @@ class CreatePortfolioViewController {
       bool taxation,
       bool brokerFees,
       bool rebalancing) {
+    portfolio = AuthService().getCreatePortfolio();
+    stocks = AuthService().getCreateStocks();
+    etfs = AuthService().getCreateETFs();
+    bonds = AuthService().getCreateBonds();
+
     realm.write(() => realm.delete<CreatePortfolio>(portfolio));
     realm.write(() => realm.deleteMany<CreateStock>(stocks));
     realm.write(() => realm.deleteMany<CreateETF>(etfs));

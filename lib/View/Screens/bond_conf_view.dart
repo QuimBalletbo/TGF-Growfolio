@@ -5,6 +5,7 @@ import 'package:flutter_application_1/View/widgets/custom_space_button.dart';
 import 'package:flutter_application_1/View/widgets/ArrowBackIosColumn.dart';
 import 'package:flutter_application_1/View/widgets/custom_image_button.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/bond_conf_controller.dart';
+import 'package:flutter_application_1/View/Screens/dialogs/max_portfolio_dialog.dart';
 
 class BondConfiguration extends StatefulWidget {
   BondConfiguration({Key? key}) : super(key: key);
@@ -150,7 +151,22 @@ class _BondConfigurationScreenState extends State<BondConfiguration> {
       errorBondConfiguration = widget.viewController.checkBondConfiguration();
     });
     if (!errorFieldEmpty && !errorBondConfiguration) {
-      Navigator.pushNamed(context, AppRoutes.createBondScreen);
+      widget.viewController.initializeNumBonds();
+      if (widget.viewController.numBond >= 5) {
+        showDialog(
+            context: context,
+            builder: (_) => const AlertDialog(
+                  content: PGinaDIniciAlumneThreeDialog(
+                      title: "Bond Limit Reached",
+                      text:
+                          "Maximum Bonds reached. Clear space by deleting an existing one."),
+                  backgroundColor: Colors.transparent,
+                  contentPadding: EdgeInsets.zero,
+                  insetPadding: EdgeInsets.only(left: 0),
+                ));
+      } else {
+        Navigator.pushNamed(context, AppRoutes.createBondScreen);
+      }
     }
   }
 

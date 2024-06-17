@@ -220,10 +220,13 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
                     .validateConfirmPassword(password, confirmPassword);
                 errorCheckBox = widget.controller.validateCheckbox(value);
 
-                widget.controller.createAccount(context, email, password, name);
-                errorCreatingAccount =
-                    widget.controller.validateCreatingAccount();
-                setState(() {});
+                widget.controller.createAccount(context, email, password, name,
+                    () {
+                  setState(() {
+                    errorCreatingAccount =
+                        widget.controller.validateCreatingAccount();
+                  });
+                });
 
                 //  createAccount(context);
               },

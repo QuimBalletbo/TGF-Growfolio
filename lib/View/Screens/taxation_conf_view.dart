@@ -4,7 +4,6 @@ import 'package:flutter_application_1/View/Screens/dialogs/taxation_conf_dialog.
 import 'package:flutter_application_1/View/widgets/custom_space_button.dart';
 import 'package:flutter_application_1/View/widgets/ArrowBackIosColumn.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/taxation_conf_controller.dart';
-import 'package:flutter_application_1/View/widgets/custom_PortfolioCard.dart';
 
 // ignore_for_file: must_be_immutable
 class TaxationConfigurationOneScreen extends StatefulWidget {
@@ -94,7 +93,12 @@ class _TaxationConfigurationOneScreenState
       errorFieldEmpty = widget.viewController.setTaxationPortfolio();
     });
     if (!errorFieldEmpty) {
-      Navigator.pushNamed(context, AppRoutes.brokerFeesScreen);
+      bool brokerFees = widget.viewController.getBrokerFees();
+      if (brokerFees) {
+        Navigator.pushNamed(context, AppRoutes.brokerFeesScreen);
+      } else {
+        Navigator.pushNamed(context, AppRoutes.stockConfigurationScreen);
+      }
     }
   }
 

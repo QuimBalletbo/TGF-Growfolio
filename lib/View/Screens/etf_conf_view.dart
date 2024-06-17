@@ -5,6 +5,7 @@ import 'package:flutter_application_1/View/widgets/custom_space_button.dart';
 import 'package:flutter_application_1/View/widgets/ArrowBackIosColumn.dart';
 import 'package:flutter_application_1/View/widgets/custom_image_button.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/etf_conf_controller.dart';
+import 'package:flutter_application_1/View/Screens/dialogs/max_portfolio_dialog.dart';
 
 class ETFConfiguration extends StatefulWidget {
   ETFConfiguration({Key? key}) : super(key: key);
@@ -159,7 +160,22 @@ class _ETFConfigurationScreenState extends State<ETFConfiguration> {
       errorETFConfiguration = widget.viewController.checkBondConfiguration();
     });
     if (!errorFieldEmpty && !errorETFConfiguration) {
-      Navigator.pushNamed(context, AppRoutes.createETFScreen);
+      widget.viewController.initializeNumETF();
+      if (widget.viewController.numETF >= 5) {
+        showDialog(
+            context: context,
+            builder: (_) => const AlertDialog(
+                  content: PGinaDIniciAlumneThreeDialog(
+                      title: "ETF Limit Reached",
+                      text:
+                          "Maximum ETFs reached. Clear space by deleting an existing one."),
+                  backgroundColor: Colors.transparent,
+                  contentPadding: EdgeInsets.zero,
+                  insetPadding: EdgeInsets.only(left: 0),
+                ));
+      } else {
+        Navigator.pushNamed(context, AppRoutes.createETFScreen);
+      }
     }
   }
 

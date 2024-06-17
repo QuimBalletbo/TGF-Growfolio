@@ -150,7 +150,10 @@ class _HomePageState extends State<HomePage> {
       showDialog(
           context: context,
           builder: (_) => const AlertDialog(
-                content: PGinaDIniciAlumneThreeDialog(),
+                content: PGinaDIniciAlumneThreeDialog(
+                    title: "Portfolio Limit Reached",
+                    text:
+                        "Maximum portfolios reached. Clear space by deleting an existing one."),
                 backgroundColor: Colors.transparent,
                 contentPadding: EdgeInsets.zero,
                 insetPadding: EdgeInsets.only(left: 0),

@@ -1,4 +1,3 @@
-import 'package:flutter_application_1/Model/listCreatePortfolio.dart';
 import 'package:realm/realm.dart';
 import 'package:flutter_application_1/Model/utils/auth_service.dart';
 import 'package:flutter_application_1/Model/data/createPortfolio.dart';
@@ -8,9 +7,14 @@ class CreateStockConfController {
   String equalWeightStocks = "";
   double stockAllocation = 0;
   CreatePortfolio taxationPortfolio = AuthService().getCreatePortfolio();
+  int numStocks = 0;
 
   final user = AuthService().getUser();
   final Realm realm = AuthService().getRealm();
+
+  void initializeNumStocks() {
+    numStocks = taxationPortfolio.stocks.length;
+  }
 
   setIncludeStocks(bool value) {
     includeStocks = value;

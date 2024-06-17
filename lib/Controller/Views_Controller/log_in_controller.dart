@@ -12,16 +12,17 @@ class LoginController {
   bool error = false;
   late User user;
 
-  Future<bool> initializeUserAndRealm(
-      BuildContext context, String email, String password) async {
+  bool validateLogIn() {
+    return error;
+  }
+
+  Future<bool> initializeUserAndRealm(BuildContext context, String email,
+      String password, VoidCallback callback) async {
     try {
       error = false;
       user = await _app.logIn(Credentials.emailPassword(email, password));
-      print("Fins aqui arribo ");
       AuthService().initialize(user);
-      print("Fins aqui arribo 6 ");
-      print(
-          "Successful logging in: User id: ${user.id} User id: ${user.profile}");
+      print("Successful logging in");
       Navigator.pushNamedAndRemoveUntil(
         context,
         AppRoutes.homeScreen,
@@ -29,6 +30,7 @@ class LoginController {
       );
     } catch (e) {
       error = true;
+      callback();
       print("Error $error Error logging in: $e");
     }
 

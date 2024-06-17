@@ -97,7 +97,6 @@ class _ProfileOneScreenState extends State<ProfileOneScreen> {
       margin: EdgeInsets.symmetric(horizontal: 15.h),
       decoration: AppDecoration.fillGray100,
       child: Container(
-        width: 384.h,
         padding: EdgeInsets.symmetric(
           horizontal: 27.h,
           vertical: 14.v,
@@ -113,21 +112,9 @@ class _ProfileOneScreenState extends State<ProfileOneScreen> {
           children: [
             Row(
               children: [
-                CustomImageView(
-                  imagePath: ImageConstant.imgImage19,
-                  height: 47.v,
-                  width: 45.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 21.h,
-                    top: 14.v,
-                    bottom: 12.v,
-                  ),
-                  child: Text(
-                    profile?.userName ?? "null",
-                    style: theme.textTheme.bodyLarge,
-                  ),
+                Text(
+                  profile?.userName ?? "null",
+                  style: theme.textTheme.bodyLarge,
                 ),
               ],
             ),
@@ -169,93 +156,28 @@ class _ProfileOneScreenState extends State<ProfileOneScreen> {
             style: CustomTextStyles.headlineSmallLight,
           ),
           SizedBox(height: 40.v),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: 145.h,
-                child: RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: "Preferred asset class:",
-                        style: CustomTextStyles.titleLargeff000000,
-                      ),
-                    ],
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: 32.h,
-                  top: 2.v,
-                  bottom: 22.v,
-                ),
-                child: Text(
-                  controller.preferedAsset,
-                  style: theme.textTheme.titleLarge,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 4.v),
-          Padding(
-            padding: EdgeInsets.only(right: 39.h),
-            child: _buildRiskiestPortfolioRow(
-              context,
-              riskiestPortfolioText: "Best performing portfolio:",
-              allStockPlanText: controller.bestPerformingPortfolio,
-            ),
+          portfolioReviewRow(
+            context,
+            riskiestPortfolioText: "Preferred asset class:",
+            allStockPlanText: controller.preferedAsset,
           ),
           SizedBox(height: 15.v),
-          Padding(
-            padding: EdgeInsets.only(right: 39.h),
-            child: _buildRiskiestPortfolioRow(
-              context,
-              riskiestPortfolioText: "Riskiest  portfolio:",
-              allStockPlanText: controller.riskiestPortfolio,
-            ),
+          portfolioReviewRow(
+            context,
+            riskiestPortfolioText: "Best performing portfolio:",
+            allStockPlanText: controller.bestPerformingPortfolio,
+          ),
+          SizedBox(height: 15.v),
+          portfolioReviewRow(
+            context,
+            riskiestPortfolioText: "Riskiest  portfolio:",
+            allStockPlanText: controller.riskiestPortfolio,
           ),
           SizedBox(height: 19.v),
-          Padding(
-            padding: EdgeInsets.only(right: 49.h),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 113.h,
-                  child: RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: "Overall best portfolio:",
-                          style: CustomTextStyles.titleLargeff000000,
-                        ),
-                      ],
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-                Container(
-                  width: 118.h,
-                  margin: EdgeInsets.only(
-                    left: 64.h,
-                    top: 3.v,
-                  ),
-                  child: RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: controller.bestPortfolio,
-                          style: CustomTextStyles.titleLargeff000000,
-                        ),
-                      ],
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ],
-            ),
+          portfolioReviewRow(
+            context,
+            riskiestPortfolioText: "Overall best portfolio:",
+            allStockPlanText: controller.bestPortfolio,
           ),
           SizedBox(height: 23.v),
         ],
@@ -339,42 +261,43 @@ class _ProfileOneScreenState extends State<ProfileOneScreen> {
   }
 
   /// Common widget
-  Widget _buildRiskiestPortfolioRow(
+  Widget portfolioReviewRow(
     BuildContext context, {
     required String riskiestPortfolioText,
     required String allStockPlanText,
   }) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 84.h,
-          child: RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: riskiestPortfolioText,
-                  style: CustomTextStyles.titleLargeff000000,
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 2.h),
+      padding: EdgeInsets.symmetric(horizontal: 2.h, vertical: 14.v),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  right:
+                      8.0), // Add padding between bond name and bond allocation
+              child: Text(
+                riskiestPortfolioText, // Display bond name on the left side
+                maxLines: 4, // Allow multiline text
+                overflow: TextOverflow.ellipsis, // Handle overflow
+                style: CustomTextStyles.titleLargeff000000,
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Row(
+            children: [
+              Text(
+                allStockPlanText,
+                style: theme.textTheme.titleLarge!.copyWith(
+                  color: theme.colorScheme.primary.withOpacity(1),
                 ),
-              ],
-            ),
-            textAlign: TextAlign.left,
+              ),
+            ],
           ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(
-            left: 93.h,
-            top: 4.v,
-            bottom: 23.v,
-          ),
-          child: Text(
-            allStockPlanText,
-            style: theme.textTheme.titleLarge!.copyWith(
-              color: theme.colorScheme.primary.withOpacity(1),
-            ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

@@ -8,11 +8,29 @@ class FinishConfViewController {
   int stockAllocation = 0;
   int bondAllocation = 0;
   int etfAllocation = 0;
+  bool includeStocks = false;
+  bool includeETF = false;
+  bool includeBonds = false;
 
   CreatePortfolio portfolio = AuthService().getCreatePortfolio();
 
   final user = AuthService().getUser();
   final Realm realm = AuthService().getRealm();
+
+  getIncludeStocks() {
+    includeStocks = portfolio.includeStocks;
+    return includeStocks;
+  }
+
+  getIncludeBonds() {
+    includeBonds = portfolio.includeBonds;
+    return includeBonds;
+  }
+
+  getIncludeETF() {
+    includeETF = portfolio.includeETF;
+    return includeETF;
+  }
 
   setErrorAllocation(bool value) {
     errorAllocation = value;

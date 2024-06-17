@@ -7,9 +7,14 @@ class CreateBondConfController {
   String equalWeightBonds = "";
   double bondAllocation = 0;
   CreatePortfolio portfolio = AuthService().getCreatePortfolio();
+  int numBond = 0;
 
   final user = AuthService().getUser();
   final Realm realm = AuthService().getRealm();
+
+  void initializeNumBonds() {
+    numBond = portfolio.bonds.length;
+  }
 
   setIncludeBonds(bool value) {
     includeBonds = value;

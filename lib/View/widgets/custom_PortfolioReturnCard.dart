@@ -26,7 +26,6 @@ Widget customPortfolioReturnCard(
         updateUI(); // Call updateUI to trigger UI update
       },
       child: Container(
-        width: 367.h,
         margin: EdgeInsets.symmetric(horizontal: 2.h),
         padding: EdgeInsets.symmetric(horizontal: 15.h, vertical: 14.v),
         decoration: AppDecoration.outlinePrimary3

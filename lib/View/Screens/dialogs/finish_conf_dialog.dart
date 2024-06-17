@@ -6,7 +6,7 @@ import 'package:flutter_application_1/Controller/Views_Controller/Dialog_Control
 import 'package:flutter_application_1/Controller/Views_Controller/finish_conf_controller.dart';
 
 class FinishConfDialog extends StatefulWidget {
-  final FinishConfViewController viewController;
+  FinishConfViewController viewController = FinishConfViewController();
   FinishConfDialog({
     Key? key,
     required this.viewController,
@@ -25,8 +25,15 @@ class _CreateFinishConfDialogState extends State<FinishConfDialog> {
     controller = FinishBondDialogController(
       viewController: widget.viewController,
     );
+
+    includeStocks = widget.viewController.getIncludeStocks();
+    includeETF = widget.viewController.getIncludeETF();
+    includeBonds = widget.viewController.getIncludeBonds();
   }
 
+  bool includeStocks = false;
+  bool includeETF = false;
+  bool includeBonds = false;
   @override
   Widget build(BuildContext context) {
     bool errorAllocation = controller.checkStockAllocation();
@@ -67,21 +74,47 @@ class _CreateFinishConfDialogState extends State<FinishConfDialog> {
           ),
 
           const SizedBox(height: 6.0),
-          customPortfolioSection(
-              'Stock distribution', controller.returnStockDistribution(), () {
-            Navigator.pushNamed(context, AppRoutes.stockConfigurationScreen);
-          }),
-          const SizedBox(height: 18.0),
-          customPortfolioSection(
-              'ETF distribution', controller.returnETFDistribution(), () {
-            Navigator.pushNamed(context, AppRoutes.etfConfigurationScreen);
-          }),
-          const SizedBox(height: 18.0),
-          customPortfolioSection(
-              'Bond distribution', controller.returnBondDistribution(), () {
-            Navigator.pushNamed(context, AppRoutes.bondConfigurationScreen);
-          }),
-          const SizedBox(height: 18.0),
+          Visibility(
+            visible: includeStocks,
+            child: Column(
+              children: [
+                customPortfolioSection(
+                    'Stock distribution', controller.returnStockDistribution(),
+                    () {
+                  Navigator.pushNamed(
+                      context, AppRoutes.stockConfigurationScreen);
+                }),
+                const SizedBox(height: 18.0),
+              ],
+            ),
+          ),
+          Visibility(
+            visible: includeETF,
+            child: Column(
+              children: [
+                customPortfolioSection(
+                    'ETF distribution', controller.returnETFDistribution(), () {
+                  Navigator.pushNamed(
+                      context, AppRoutes.etfConfigurationScreen);
+                }),
+                const SizedBox(height: 18.0),
+              ],
+            ),
+          ),
+          Visibility(
+            visible: includeBonds,
+            child: Column(
+              children: [
+                customPortfolioSection(
+                    'Bond distribution', controller.returnBondDistribution(),
+                    () {
+                  Navigator.pushNamed(
+                      context, AppRoutes.bondConfigurationScreen);
+                }),
+                const SizedBox(height: 18.0),
+              ],
+            ),
+          ),
           Text(
             "*Review your portfolio to ensure that the combined percentages of stocks, ETFs, and bonds equal 100%. ",
             maxLines: 8,

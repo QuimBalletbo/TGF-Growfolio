@@ -7,9 +7,14 @@ class CreateETFConfController {
   String equalWeightETFs = "";
   double etfAllocation = 0;
   CreatePortfolio portfolio = AuthService().getCreatePortfolio();
+  int numETF = 0;
 
   final user = AuthService().getUser();
   final Realm realm = AuthService().getRealm();
+
+  void initializeNumETF() {
+    numETF = portfolio.etfs.length;
+  }
 
   setIncludeETFs(bool value) {
     includeETFs = value;

@@ -5,6 +5,7 @@ import 'package:flutter_application_1/View/widgets/custom_space_button.dart';
 import 'package:flutter_application_1/View/widgets/ArrowBackIosColumn.dart';
 import 'package:flutter_application_1/View/widgets/custom_image_button.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/stock_conf_controller.dart';
+import 'package:flutter_application_1/View/Screens/dialogs/max_portfolio_dialog.dart';
 
 class StockConfiguration extends StatefulWidget {
   StockConfiguration({Key? key}) : super(key: key);
@@ -160,7 +161,22 @@ class _StockConfigurationScreenState extends State<StockConfiguration> {
       errorStockConfiguration = widget.viewController.checkStockConfiguration();
     });
     if (!errorFieldEmpty && !errorStockConfiguration) {
-      Navigator.pushNamed(context, AppRoutes.createStockScreen);
+      widget.viewController.initializeNumStocks();
+      if (widget.viewController.numStocks >= 5) {
+        showDialog(
+            context: context,
+            builder: (_) => const AlertDialog(
+                  content: PGinaDIniciAlumneThreeDialog(
+                      title: "Stock Limit Reached",
+                      text:
+                          "Maximum number of stocks reached. Clear space by deleting an existing one."),
+                  backgroundColor: Colors.transparent,
+                  contentPadding: EdgeInsets.zero,
+                  insetPadding: EdgeInsets.only(left: 0),
+                ));
+      } else {
+        Navigator.pushNamed(context, AppRoutes.createStockScreen);
+      }
     }
   }
 

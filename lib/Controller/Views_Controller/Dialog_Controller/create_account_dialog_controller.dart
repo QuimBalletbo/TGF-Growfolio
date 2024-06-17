@@ -50,8 +50,8 @@ class CreateAccountController {
 
   // Other validation methods
 
-  Future<void> createAccount(
-      BuildContext context, String email, String password, String name) async {
+  Future<void> createAccount(BuildContext context, String email,
+      String password, String name, VoidCallback callback) async {
     if (errorCheckBox == true ||
         emailError == true ||
         nameError == true ||
@@ -81,7 +81,7 @@ class CreateAccountController {
     } catch (e) {
       // Registration failed
       errorCreatingAccount = true;
-
+      callback();
       print("Error $errorCheckBox Error logging in: $e");
     }
   }

@@ -74,7 +74,7 @@ class _LogInDialogState extends State<LogInDialog> {
           SizedBox(height: 5.v),
           Align(
               alignment: Alignment.centerRight,
-              child: Text("Forget Password ?",
+              child: Text("Forgot Password ?",
                   style: CustomTextStyles.bodyMediumPrimary)),
           SizedBox(height: 23.v),
           CustomElevatedButton(
@@ -86,46 +86,14 @@ class _LogInDialogState extends State<LogInDialog> {
             ),
             onPressed: () async {
               error = await widget.controller
-                  .initializeUserAndRealm(context, email, password);
+                  .initializeUserAndRealm(context, email, password, () {
+                setState(() {
+                  error = widget.controller.validateLogIn();
+                });
+              });
             },
           ),
           SizedBox(height: 35.v),
-          Padding(
-              padding: EdgeInsets.only(left: 19.h, right: 11.h),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Padding(
-                        padding: EdgeInsets.only(top: 9.v, bottom: 6.v),
-                        child: SizedBox(
-                            width: 105.h,
-                            child: Divider(color: appTheme.gray500))),
-                    Padding(
-                        padding: EdgeInsets.only(left: 4.h),
-                        child: Text("Or sign up with",
-                            style: CustomTextStyles
-                                .bodySmallOutfitSecondaryContainer)),
-                    Padding(
-                        padding: EdgeInsets.only(top: 9.v, bottom: 6.v),
-                        child: SizedBox(
-                            width: 109.h,
-                            child:
-                                Divider(color: appTheme.gray500, indent: 4.h)))
-                  ])),
-          SizedBox(height: 33.v),
-          Container(
-              height: 48.v,
-              width: 75.h,
-              padding: EdgeInsets.symmetric(horizontal: 23.h, vertical: 9.v),
-              decoration: AppDecoration.outlineGray
-                  .copyWith(borderRadius: BorderRadiusStyle.roundedBorder8),
-              child: Image.asset(
-                ImageConstant.imgGoogleLogo,
-                height: 27.adaptSize,
-                width: 27.adaptSize,
-                alignment: Alignment.center,
-              ))
         ]));
   }
 
