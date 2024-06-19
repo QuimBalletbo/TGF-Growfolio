@@ -102,6 +102,9 @@ class _CreateStockConfigurationDialogState
             },
             initialSelection: equalWeightStocks,
           ),
+          const SizedBox(height: 6.0),
+          const Divider(indent: 4.0, endIndent: 4.0),
+          const SizedBox(height: 6.0),
           EnterTextEuros(
             text: "Stock Allocation (%)  of total portfolio",
             defaultText: "%",

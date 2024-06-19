@@ -9,13 +9,20 @@ import 'package:flutter_application_1/View/widgets/enter_text_euros.dart';
 
 class CreateETFdialog extends StatefulWidget {
   CreateETFdialog({Key? key}) : super(key: key);
-  CreateETFController controller = CreateETFController();
+  CreateETFController viewController = CreateETFController();
 
   @override
   _CreateStockDialogState createState() => _CreateStockDialogState();
 }
 
 class _CreateStockDialogState extends State<CreateETFdialog> {
+  @override
+  void initState() {
+    super.initState();
+
+    equalWeightETFs = widget.viewController.getEqualWeightETFs();
+  }
+
   StockController controller = StockController();
   String etfName = '';
   bool includeFWT = false;
@@ -30,6 +37,7 @@ class _CreateStockDialogState extends State<CreateETFdialog> {
   bool errorExpenseRatio = false;
   bool errorAvgReturn = false;
   bool errorAvgDividendYield = false;
+  bool equalWeightETFs = false;
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +58,9 @@ class _CreateStockDialogState extends State<CreateETFdialog> {
             controller: controller.etfNameController,
             onPortfolioNameChanged: (value) {
               setState(() {
-                errorStockName = widget.controller.validateStockName(value);
-                etfName =
-                    widget.controller.getStockNameValue(value, errorStockName);
+                errorStockName = widget.viewController.validateStockName(value);
+                etfName = widget.viewController
+                    .getStockNameValue(value, errorStockName);
               });
             },
           ),
@@ -84,9 +92,9 @@ class _CreateStockDialogState extends State<CreateETFdialog> {
             onTextChanged: (value) {
               setState(() {
                 errorExpenseRatio =
-                    widget.controller.checkDoubleValidity(value);
-                expenseRatio =
-                    widget.controller.getDoubleValue(value, errorExpenseRatio);
+                    widget.viewController.checkDoubleValidity(value);
+                expenseRatio = widget.viewController
+                    .getDoubleValue(value, errorExpenseRatio);
               });
             },
           ),
@@ -112,9 +120,10 @@ class _CreateStockDialogState extends State<CreateETFdialog> {
             controller: controller.avgReturn,
             onTextChanged: (value) {
               setState(() {
-                errorAvgReturn = widget.controller.checkDoubleValidity(value);
+                errorAvgReturn =
+                    widget.viewController.checkDoubleValidity(value);
                 avgReturn =
-                    widget.controller.getDoubleValue(value, errorAvgReturn);
+                    widget.viewController.getDoubleValue(value, errorAvgReturn);
               });
             },
           ),
@@ -141,8 +150,8 @@ class _CreateStockDialogState extends State<CreateETFdialog> {
             onTextChanged: (value) {
               setState(() {
                 errorAvgDividendYield =
-                    widget.controller.checkDoubleValidity(value);
-                avgDividendYield = widget.controller
+                    widget.viewController.checkDoubleValidity(value);
+                avgDividendYield = widget.viewController
                     .getDoubleValue(value, errorAvgDividendYield);
               });
             },
@@ -167,7 +176,7 @@ class _CreateStockDialogState extends State<CreateETFdialog> {
             text: "Include Foreign Withholding Tax",
             onToggleChanged: (value) {
               setState(() {
-                includeFWT = widget.controller.getIncludeFWT(value);
+                includeFWT = widget.viewController.getIncludeFWT(value);
               });
             },
           ),
@@ -186,18 +195,21 @@ class _CreateStockDialogState extends State<CreateETFdialog> {
             ),
           ),
           const SizedBox(height: 6.0),
-          EnterTextPercentage(
-            text: "ETF Allocation (%)  of total ETFs",
-            defaultText: "%",
-            controller: controller.enterTextController,
-            onTextChanged: (value) {
-              setState(() {
-                errorStockAllocation =
-                    widget.controller.checkIntegerValidity(value);
-                etfAllocation = widget.controller
-                    .getStockAllocation(value, errorStockAllocation);
-              });
-            },
+          Visibility(
+            visible: equalWeightETFs,
+            child: EnterTextPercentage(
+              text: "ETF Allocation (%)  of total ETFs",
+              defaultText: "%",
+              controller: controller.enterTextController,
+              onTextChanged: (value) {
+                setState(() {
+                  errorStockAllocation =
+                      widget.viewController.checkIntegerValidity(value);
+                  etfAllocation = widget.viewController
+                      .getStockAllocation(value, errorStockAllocation);
+                });
+              },
+            ),
           ),
           Align(
             alignment: Alignment.topLeft,
@@ -239,7 +251,7 @@ class _CreateStockDialogState extends State<CreateETFdialog> {
 
   onTapContinue(BuildContext context) {
     setState(() {
-      errorFieldEmpty = widget.controller.createETF(etfName, includeFWT,
+      errorFieldEmpty = widget.viewController.createETF(etfName, includeFWT,
           etfAllocation, expenseRatio, avgReturn, avgDividendYield);
       if (errorFieldEmpty == false) {
         Navigator.pushNamed(context, AppRoutes.etfConfigurationScreen);

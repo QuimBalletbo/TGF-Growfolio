@@ -14,6 +14,11 @@ class CreateStockController {
   ObjectId objectiD = ObjectId();
 
   late CreateStock stock;
+
+  bool getEqualWeightStocks() {
+    return !(stocksPortfolio.equalWeightStocks == 'Exclude');
+  }
+
   bool checkIntegerValidity(String value) {
     try {
       int intValue = int.parse(value);

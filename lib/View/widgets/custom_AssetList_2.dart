@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class CustomAssetList2 extends StatelessWidget {
   final double amount;
   final String name;
-  final bool isPercentage; // Add a boolean parameter
+  final bool isPercentage;
+  final bool isInt; // Add a boolean parameter
 
   CustomAssetList2({
     required this.amount,
     required this.name,
-    required this.isPercentage, // Initialize the boolean parameter
+    required this.isPercentage,
+    required this.isInt, // Initialize the boolean parameter
   });
 
   @override
@@ -32,7 +34,9 @@ class CustomAssetList2 extends StatelessWidget {
             child: Text(
               isPercentage
                   ? '${amount.toStringAsFixed(2)} %'
-                  : '${amount.toStringAsFixed(2)} €',
+                  : isInt
+                      ? '${amount.toStringAsFixed(0)} y'
+                      : '${amount.toStringAsFixed(2)} €',
               style: const TextStyle(fontSize: 16),
               textAlign: TextAlign.right,
             ),

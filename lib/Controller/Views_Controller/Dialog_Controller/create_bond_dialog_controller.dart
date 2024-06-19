@@ -10,6 +10,11 @@ class CreateBondController {
   ObjectId objectiD = ObjectId();
 
   late CreateBond bond;
+
+  bool getEqualWeightBonds() {
+    return !(bondsPortfolio.equalWeightBonds == 'Exclude');
+  }
+
   bool checkIntegerValidity(String value) {
     try {
       int intValue = int.parse(value);

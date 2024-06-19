@@ -4,6 +4,7 @@ import 'package:flutter_application_1/View/widgets/custom_portfolioSectionCard.d
 import 'package:flutter_application_1/View/widgets/customColorBar.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/Dialog_Controller/finish_conf_dialog_controller.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/finish_conf_controller.dart';
+import 'package:flutter_application_1/View/widgets/custom_space_button.dart';
 
 class FinishConfDialog extends StatefulWidget {
   FinishConfViewController viewController = FinishConfViewController();
@@ -76,45 +77,59 @@ class _CreateFinishConfDialogState extends State<FinishConfDialog> {
           const SizedBox(height: 6.0),
           Visibility(
             visible: includeStocks,
-            child: Column(
-              children: [
-                customPortfolioSection(
-                    'Stock distribution', controller.returnStockDistribution(),
-                    () {
-                  Navigator.pushNamed(
-                      context, AppRoutes.stockConfigurationScreen);
-                }),
-                const SizedBox(height: 18.0),
-              ],
+            child: customPortfolioSection(
+                'Stock distribution', controller.returnStockDistribution(), () {
+              Navigator.pushNamed(context, AppRoutes.stockConfigurationScreen);
+            }),
+          ),
+          Visibility(
+            visible: !includeStocks,
+            child: CustomSpaceButton(
+              text: "Change Stock Selection",
+              buttonStyle: CustomButtonStyles.outlinePrimaryTL19,
+              onTap: () {
+                Navigator.pushNamed(
+                    context, AppRoutes.stockConfigurationScreen);
+              },
             ),
           ),
+          const SizedBox(height: 18.0),
           Visibility(
             visible: includeETF,
-            child: Column(
-              children: [
-                customPortfolioSection(
-                    'ETF distribution', controller.returnETFDistribution(), () {
-                  Navigator.pushNamed(
-                      context, AppRoutes.etfConfigurationScreen);
-                }),
-                const SizedBox(height: 18.0),
-              ],
-            ),
+            child: customPortfolioSection(
+                'ETF distribution', controller.returnETFDistribution(), () {
+              Navigator.pushNamed(context, AppRoutes.etfConfigurationScreen);
+            }),
           ),
           Visibility(
-            visible: includeBonds,
-            child: Column(
-              children: [
-                customPortfolioSection(
-                    'Bond distribution', controller.returnBondDistribution(),
-                    () {
-                  Navigator.pushNamed(
-                      context, AppRoutes.bondConfigurationScreen);
-                }),
-                const SizedBox(height: 18.0),
-              ],
+            visible: !includeETF,
+            child: CustomSpaceButton(
+              text: "Change ETF Selection",
+              buttonStyle: CustomButtonStyles.outlinePrimaryTL19,
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.etfConfigurationScreen);
+              },
             ),
           ),
+          const SizedBox(height: 18.0),
+          Visibility(
+            visible: includeBonds,
+            child: customPortfolioSection(
+                'Bond distribution', controller.returnBondDistribution(), () {
+              Navigator.pushNamed(context, AppRoutes.bondConfigurationScreen);
+            }),
+          ),
+          Visibility(
+            visible: !includeBonds,
+            child: CustomSpaceButton(
+              text: "Change Bond Selection",
+              buttonStyle: CustomButtonStyles.outlinePrimaryTL19,
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.bondConfigurationScreen);
+              },
+            ),
+          ),
+          const SizedBox(height: 18.0),
           Text(
             "*Review your portfolio to ensure that the combined percentages of stocks, ETFs, and bonds equal 100%. ",
             maxLines: 8,

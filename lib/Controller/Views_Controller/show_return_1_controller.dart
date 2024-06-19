@@ -339,4 +339,8 @@ class ShowReturnView1Controller {
     }
     return hasBonds;
   }
+
+  int getDuration() {
+    return portfolio.duration;
+  }
 }

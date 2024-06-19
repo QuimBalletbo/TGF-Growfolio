@@ -102,7 +102,7 @@ class CustomTextFormField extends StatelessWidget {
           maxLines: maxLines ?? 1,
           decoration: decoration,
           validator: validator,
-          onEditingComplete: onEditingComplete,
+          onChanged: (value) => onEditingComplete?.call(),
         ),
       );
   InputDecoration get decoration => InputDecoration(

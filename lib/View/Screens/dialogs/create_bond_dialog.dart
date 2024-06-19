@@ -10,13 +10,20 @@ import 'package:flutter_application_1/View/widgets/rateDate.dart';
 
 class CreateBondDialog extends StatefulWidget {
   CreateBondDialog({Key? key}) : super(key: key);
-  CreateBondController controller = CreateBondController();
+  CreateBondController viewController = CreateBondController();
 
   @override
   _CreateBondDialogState createState() => _CreateBondDialogState();
 }
 
 class _CreateBondDialogState extends State<CreateBondDialog> {
+  @override
+  void initState() {
+    super.initState();
+
+    equalWeightBonds = widget.viewController.getEqualWeightBonds();
+  }
+
   BondController controller = BondController();
   String bondName = '';
   bool includeFWT = false;
@@ -30,6 +37,7 @@ class _CreateBondDialogState extends State<CreateBondDialog> {
   bool errorFieldEmpty = false;
   bool errorFaceValue = false;
   bool errorCouponRate = false;
+  bool equalWeightBonds = false;
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +58,9 @@ class _CreateBondDialogState extends State<CreateBondDialog> {
             controller: controller.bondNameController,
             onPortfolioNameChanged: (value) {
               setState(() {
-                errorBondName = widget.controller.validateBondName(value);
-                bondName =
-                    widget.controller.getBondNameValue(value, errorBondName);
+                errorBondName = widget.viewController.validateBondName(value);
+                bondName = widget.viewController
+                    .getBondNameValue(value, errorBondName);
               });
             },
           ),
@@ -84,9 +92,9 @@ class _CreateBondDialogState extends State<CreateBondDialog> {
             onTextChanged: (value) {
               setState(() {
                 errorFaceValue =
-                    widget.controller.checkFaceValueValidity(value);
+                    widget.viewController.checkFaceValueValidity(value);
                 faceValue =
-                    widget.controller.getDoubleValue(value, errorFaceValue);
+                    widget.viewController.getDoubleValue(value, errorFaceValue);
               });
             },
           ),
@@ -112,9 +120,10 @@ class _CreateBondDialogState extends State<CreateBondDialog> {
             controller: controller.couponRate,
             onTextChanged: (value) {
               setState(() {
-                errorCouponRate = widget.controller.checkDoubleValidity(value);
-                couponRate =
-                    widget.controller.getDoubleValue(value, errorCouponRate);
+                errorCouponRate =
+                    widget.viewController.checkDoubleValidity(value);
+                couponRate = widget.viewController
+                    .getDoubleValue(value, errorCouponRate);
               });
             },
           ),
@@ -145,7 +154,7 @@ class _CreateBondDialogState extends State<CreateBondDialog> {
                   onNumberChanged: (value) {
                     setState(() {
                       maturityDate =
-                          widget.controller.getDoubleValue(value, false);
+                          widget.viewController.getDoubleValue(value, false);
                     });
                   },
                 ),
@@ -159,7 +168,7 @@ class _CreateBondDialogState extends State<CreateBondDialog> {
             text: "Include Foreign Withholding Tax",
             onToggleChanged: (value) {
               setState(() {
-                includeFWT = widget.controller.getIncludeFWT(value);
+                includeFWT = widget.viewController.getIncludeFWT(value);
               });
             },
           ),
@@ -178,18 +187,21 @@ class _CreateBondDialogState extends State<CreateBondDialog> {
             ),
           ),
           const SizedBox(height: 6.0),
-          EnterTextPercentage(
-            text: "Bond Allocation (%) of total Bonds",
-            defaultText: "%",
-            controller: controller.enterTextController,
-            onTextChanged: (value) {
-              setState(() {
-                errorBondAllocation =
-                    widget.controller.checkIntegerValidity(value);
-                bondAllocation = widget.controller
-                    .getBondAllocation(value, errorBondAllocation);
-              });
-            },
+          Visibility(
+            visible: equalWeightBonds,
+            child: EnterTextPercentage(
+              text: "Bond Allocation (%) of total Bonds",
+              defaultText: "%",
+              controller: controller.enterTextController,
+              onTextChanged: (value) {
+                setState(() {
+                  errorBondAllocation =
+                      widget.viewController.checkIntegerValidity(value);
+                  bondAllocation = widget.viewController
+                      .getBondAllocation(value, errorBondAllocation);
+                });
+              },
+            ),
           ),
           Align(
             alignment: Alignment.topLeft,
@@ -231,7 +243,7 @@ class _CreateBondDialogState extends State<CreateBondDialog> {
 
   onTapContinue(BuildContext context) {
     setState(() {
-      errorFieldEmpty = widget.controller.createBond(bondName, includeFWT,
+      errorFieldEmpty = widget.viewController.createBond(bondName, includeFWT,
           bondAllocation, faceValue, couponRate, maturityDate);
       if (errorFieldEmpty == false) {
         Navigator.pushNamed(context, AppRoutes.bondConfigurationScreen);

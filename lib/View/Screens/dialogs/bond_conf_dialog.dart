@@ -101,6 +101,9 @@ class _CreateBondConfigurationDialogState
             },
             initialSelection: equalWeightBonds,
           ),
+          const SizedBox(height: 6.0),
+          const Divider(indent: 4.0, endIndent: 4.0),
+          const SizedBox(height: 6.0),
           EnterTextEuros(
             text: "Bond Allocation (%)  of total portfolio",
             defaultText: "%",

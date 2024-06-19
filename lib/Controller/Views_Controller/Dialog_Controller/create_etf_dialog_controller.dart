@@ -10,6 +10,11 @@ class CreateETFController {
   ObjectId objectiD = ObjectId();
 
   late CreateETF etf;
+
+  bool getEqualWeightETFs() {
+    return !(etfsPortfolio.equalWeightETFs == 'Exclude');
+  }
+
   bool checkIntegerValidity(String value) {
     try {
       int intValue = int.parse(value);

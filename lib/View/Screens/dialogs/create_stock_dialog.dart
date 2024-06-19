@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/app_export.dart';
 import 'package:flutter_application_1/View/widgets/enter_text_%.dart';
 import 'package:flutter_application_1/View/widgets/custom_toggle_button.dart';
-import 'package:flutter_application_1/View/widgets/name_title_text.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/Dialog_Controller/create_stock_dialog_controller.dart';
 import 'package:flutter_application_1/View/widgets/custom_space_button.dart';
 import 'package:flutter_application_1/View/widgets/searchBar.dart';
@@ -12,13 +11,20 @@ import 'package:flutter_application_1/View/widgets/stock_name_card.dart';
 
 class CreateStockDialog extends StatefulWidget {
   CreateStockDialog({Key? key}) : super(key: key);
-  CreateStockController controller = CreateStockController();
+  CreateStockController viewController = CreateStockController();
 
   @override
   _CreateStockDialogState createState() => _CreateStockDialogState();
 }
 
 class _CreateStockDialogState extends State<CreateStockDialog> {
+  @override
+  void initState() {
+    super.initState();
+
+    equalWeightStocks = widget.viewController.getEqualWeightStocks();
+  }
+
   StockController controller = StockController();
   String stockName = '';
   bool includeFWT = false;
@@ -31,6 +37,7 @@ class _CreateStockDialogState extends State<CreateStockDialog> {
   bool errorStockAllocation = false;
   bool errorStockInfo = false;
   bool errorFieldEmpty = false;
+  bool equalWeightStocks = false;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -74,7 +81,13 @@ class _CreateStockDialogState extends State<CreateStockDialog> {
           const SizedBox(height: 6.0),
           Visibility(
             visible: stockChoosen && !errorStockInfo,
-            child: customSymbolContainer(stockSearch.name),
+            child: CustomSymbolContainer(
+                symbol: stockSearch.name,
+                updateUI: (() {
+                  setState(() {
+                    stockChoosen = false;
+                  });
+                })),
           ),
           Visibility(
             visible: !stockChoosen || errorStockInfo,
@@ -83,7 +96,7 @@ class _CreateStockDialogState extends State<CreateStockDialog> {
               onEditionCompleate: (value) async {
                 // Perform the asynchronous operation
                 ticketSearchList =
-                    await widget.controller.fetchDataTicketSearch(value);
+                    await widget.viewController.fetchDataTicketSearch(value);
 
                 // Update the state with the search results
                 setState(() {});
@@ -106,10 +119,10 @@ class _CreateStockDialogState extends State<CreateStockDialog> {
                               onPressed: (ticketSearch) async {
                                 stockSearch = ticketSearch;
                                 stockChoosen = true;
-                                stockInfo = await widget.controller
+                                stockInfo = await widget.viewController
                                     .fetchStockInfo(stockSearch.symbol);
-                                errorStockInfo =
-                                    widget.controller.validateStock(stockInfo);
+                                errorStockInfo = widget.viewController
+                                    .validateStock(stockInfo);
 
                                 print(
                                     "dy: ${stockInfo.avgDividend}, avgR: ${stockInfo.avgReturn}");
@@ -148,7 +161,7 @@ class _CreateStockDialogState extends State<CreateStockDialog> {
             text: "Include Foreign Withholding Tax",
             onToggleChanged: (value) {
               setState(() {
-                includeFWT = widget.controller.getIncludeFWT(
+                includeFWT = widget.viewController.getIncludeFWT(
                     value); // Update the portfolio name in the state
               });
             },
@@ -168,18 +181,21 @@ class _CreateStockDialogState extends State<CreateStockDialog> {
             ),
           ),
           const SizedBox(height: 6.0),
-          EnterTextPercentage(
-            text: "Stock Allocation (%)  of total Stocks",
-            defaultText: "%",
-            controller: controller.enterTextController,
-            onTextChanged: (value) {
-              setState(() {
-                errorStockAllocation =
-                    widget.controller.checkIntegerValidity(value);
-                stockAllocation = widget.controller
-                    .getStockAllocation(value, errorStockAllocation);
-              });
-            },
+          Visibility(
+            visible: equalWeightStocks,
+            child: EnterTextPercentage(
+              text: "Stock Allocation (%)  of total Stocks",
+              defaultText: "%",
+              controller: controller.enterTextController,
+              onTextChanged: (value) {
+                setState(() {
+                  errorStockAllocation =
+                      widget.viewController.checkIntegerValidity(value);
+                  stockAllocation = widget.viewController
+                      .getStockAllocation(value, errorStockAllocation);
+                });
+              },
+            ),
           ),
           Align(
             alignment: Alignment.topLeft,
@@ -221,9 +237,11 @@ class _CreateStockDialogState extends State<CreateStockDialog> {
 
   onTapContinue(BuildContext context) {
     setState(() {
-      errorFieldEmpty = widget.controller.validateStockName(stockSearch);
-      if (errorFieldEmpty == false && errorStockAllocation == false) {
-        errorFieldEmpty = widget.controller.createStock(
+      errorFieldEmpty = widget.viewController.validateStockName(stockSearch);
+      if (errorFieldEmpty == false &&
+          errorStockAllocation == false &&
+          stockChoosen == true) {
+        errorFieldEmpty = widget.viewController.createStock(
             stockSearch.name,
             includeFWT,
             stockAllocation,

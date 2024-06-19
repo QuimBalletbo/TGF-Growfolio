@@ -61,6 +61,7 @@ class _ShowReturn3DialogState extends State<ShowReturn3Dialog> {
                           amount: finalStockValue,
                           name: "Stock Value",
                           isPercentage: false,
+                          isInt: false,
                         ),
                         const Divider(
                           indent: 4.0,
@@ -70,6 +71,7 @@ class _ShowReturn3DialogState extends State<ShowReturn3Dialog> {
                           amount: finalETFValue,
                           name: "ETF Value",
                           isPercentage: false,
+                          isInt: false,
                         ),
                         const Divider(
                           indent: 4.0,
@@ -79,6 +81,7 @@ class _ShowReturn3DialogState extends State<ShowReturn3Dialog> {
                           amount: finalBondValue,
                           name: "Bond Value",
                           isPercentage: false,
+                          isInt: false,
                         ),
                         const Divider(
                           indent: 4.0,
@@ -88,6 +91,7 @@ class _ShowReturn3DialogState extends State<ShowReturn3Dialog> {
                           amount: avgReturn * 100,
                           name: "avg Anual Return",
                           isPercentage: true,
+                          isInt: false,
                         ),
                       ]),
                 ])));

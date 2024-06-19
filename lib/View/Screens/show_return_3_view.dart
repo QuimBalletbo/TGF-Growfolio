@@ -42,6 +42,7 @@ class _ShowReturnView1State extends State<ShowReturnView3> {
                 ArrowBackIosColumn(
                   text: 'Portfolio Distribution',
                   title: portfolioName,
+                  position: 3,
                 ), // Placing the app bar here
                 SizedBox(height: 22.v),
                 Container(

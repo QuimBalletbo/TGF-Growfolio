@@ -3,6 +3,7 @@ import 'package:flutter_application_1/Model/app_export.dart';
 import 'package:flutter_application_1/View/widgets/textNumbersInformation.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/show_return_1_controller.dart';
 import 'package:flutter_application_1/View/widgets/custom_AssetList_4.dart';
+import 'package:flutter_application_1/View/widgets/custom_AssetList_2.dart';
 
 // ignore_for_file: must_be_immutable
 class ShowReturnBreakDownDialog extends StatefulWidget {
@@ -22,12 +23,14 @@ class _ShowReturnBreakDownDialogState extends State<ShowReturnBreakDownDialog> {
     amountInvestedStock = widget.controller.getAmountInvestedStock();
     amountInvestedETF = widget.controller.getAmountInvestedETF();
     amountInvestedBond = widget.controller.getAmountInvestedBond();
+    duration = widget.controller.getDuration();
   }
 
   double totalAmountInvested = 0;
   double amountInvestedStock = 0;
   double amountInvestedETF = 0;
   double amountInvestedBond = 0;
+  int duration = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +81,16 @@ class _ShowReturnBreakDownDialogState extends State<ShowReturnBreakDownDialog> {
                           amount: amountInvestedBond,
                           name: "Total Bond Investment",
                           totalAmount: totalAmountInvested,
+                        ),
+                        const Divider(
+                          indent: 4.0,
+                          endIndent: 4.0,
+                        ),
+                        CustomAssetList2(
+                          amount: duration.toDouble(),
+                          name: "Duration",
+                          isPercentage: false,
+                          isInt: true,
                         ),
                       ]),
                 ])));
