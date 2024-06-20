@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:realm/realm.dart';
 import 'package:flutter_application_1/Model/utils/auth_service.dart';
 
@@ -9,6 +10,7 @@ class CreateTaxationConfigurationViewController {
   double dividendTax = 0;
   double fwt = 0;
   bool brokerFees = false;
+  ValueNotifier<bool> errorFieldEmpty = ValueNotifier<bool>(false);
   var taxationPortfolio = AuthService().getCreatePortfolio();
   final user = AuthService().getUser();
   final Realm realm = AuthService().getRealm();
@@ -16,6 +18,10 @@ class CreateTaxationConfigurationViewController {
   getBrokerFees() {
     brokerFees = taxationPortfolio.brokerFees;
     return brokerFees;
+  }
+
+  setErrorFieldEmpty() {
+    errorFieldEmpty.value = false;
   }
 
   setTaxation(String value) {
@@ -42,7 +48,7 @@ class CreateTaxationConfigurationViewController {
     fwt = value;
   }
 
-  bool setTaxationPortfolio() {
+  void setTaxationPortfolio() {
     if (taxation == 'Include' && shortToLongTransition > 0) {
       realm.write(() {
         taxationPortfolio.taxRateShortTerm = taxaRateShortTerm;
@@ -51,9 +57,8 @@ class CreateTaxationConfigurationViewController {
         taxationPortfolio.dividendTax = dividendTax;
         taxationPortfolio.fwt = fwt;
       });
-      return false;
-    }
-    if (taxation == 'Exclude') {
+      errorFieldEmpty.value = false;
+    } else if (taxation == 'Exclude') {
       realm.write(() {
         taxationPortfolio.taxRateShortTerm = 0.23;
         taxationPortfolio.taxRateLongTerm = 0.23;
@@ -61,9 +66,9 @@ class CreateTaxationConfigurationViewController {
         taxationPortfolio.dividendTax = 0.21;
         taxationPortfolio.fwt = 0.10;
       });
-      return false;
+      errorFieldEmpty.value = false;
+    } else {
+      errorFieldEmpty.value = true;
     }
-
-    return true;
   }
 }

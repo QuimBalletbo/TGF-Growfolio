@@ -20,10 +20,18 @@ class PGinaDIniciAlumneBottomsheet extends StatelessWidget {
               SizedBox(width: 52.h, child: Divider(color: appTheme.gray600)),
               SizedBox(height: 48.v),
               CustomCardButton(
-                text: "Settings",
-                imagePath: ImageConstant.imgSearch,
+                text: "User guide",
+                imagePath: ImageConstant.imgproperties,
                 onTap: () {
-                  onTapImgImage(context);
+                  onTapImgImage7(context);
+                },
+              ),
+              SizedBox(height: 23.v),
+              CustomCardButton(
+                text: "FAQs",
+                imagePath: ImageConstant.imgFaqs,
+                onTap: () {
+                  onTapImgImage7(context);
                 },
               ),
               SizedBox(height: 23.v),
@@ -52,14 +60,6 @@ class PGinaDIniciAlumneBottomsheet extends StatelessWidget {
               ),
               SizedBox(height: 23.v),
               CustomCardButton(
-                text: "Password & Security",
-                imagePath: ImageConstant.imgInterfaceLockPrimary,
-                onTap: () {
-                  onTapImgImage7(context);
-                },
-              ),
-              SizedBox(height: 23.v),
-              CustomCardButton(
                 text: "Create an Account",
                 imagePath: ImageConstant.createanAccount,
                 onTap: () {
@@ -74,13 +74,16 @@ class PGinaDIniciAlumneBottomsheet extends StatelessWidget {
                   onTapImgImage2(context);
                 },
               ),
+              SizedBox(height: 23.v),
+              CustomCardButton(
+                text: "Conditions of use",
+                imagePath: ImageConstant.imgConditions,
+                onTap: () {
+                  onTapImgImage8(context);
+                },
+              ),
               SizedBox(height: 17.v)
             ])));
-  }
-
-  /// Navigates to the configuraciOneScreen when the action is triggered.
-  onTapImgImage(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.configuraciOneScreen);
   }
 
   /// Displays a dialog with the [LogOutDialog] content.
@@ -121,6 +124,10 @@ class PGinaDIniciAlumneBottomsheet extends StatelessWidget {
   }
 
   onTapImgImage7(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.passwordSecurityScreen);
+    //Navigator.pushNamed(context, AppRoutes.passwordSecurityScreen);
+  }
+
+  onTapImgImage8(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.conditionsUseScreen);
   }
 }

@@ -66,11 +66,11 @@ class ConditionsUseScreen extends StatelessWidget {
                 constraints: BoxConstraints(
                     maxHeight: MediaQuery.of(context).size.height *
                         0.7), // Set maximum height as needed
-                child: AlertDialog(
+                child: const AlertDialog(
                   content: ConditionsUseDialog(),
                   backgroundColor: Colors.transparent,
                   contentPadding: EdgeInsets.zero,
-                  insetPadding: const EdgeInsets.only(left: 0),
+                  insetPadding: EdgeInsets.only(left: 0),
                 ),
               ),
             ),

@@ -23,31 +23,18 @@ class CustomRadioButton extends StatelessWidget {
         );
 
   final BoxDecoration? decoration;
-
   final Alignment? alignment;
-
   final bool? isRightCheck;
-
   final double? iconSize;
-
   String? value;
-
   final String? groupValue;
-
   final Function(String) onChange;
-
   final String? text;
-
   final double? width;
-
   final EdgeInsetsGeometry? padding;
-
   final TextStyle? textStyle;
-
   final TextAlign? textAlignment;
-
   final Gradient? gradient;
-
   final Color? backgroundColor;
 
   @override
@@ -62,6 +49,7 @@ class CustomRadioButton extends StatelessWidget {
 
   bool get isGradient => gradient != null;
   BoxDecoration get gradientDecoration => BoxDecoration(gradient: gradient);
+
   Widget get buildRadioButtonWidget => InkWell(
         onTap: () {
           onChange(value!);
@@ -75,15 +63,17 @@ class CustomRadioButton extends StatelessWidget {
               : leftSideRadioButton,
         ),
       );
+
   Widget get leftSideRadioButton => Row(
         children: [
           Padding(
-            child: radioButtonWidget,
             padding: EdgeInsets.only(right: 8),
+            child: radioButtonWidget,
           ),
           textWidget,
         ],
       );
+
   Widget get rightSideRadioButton => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -94,17 +84,16 @@ class CustomRadioButton extends StatelessWidget {
           ),
         ],
       );
+
   Widget get textWidget => Text(
         text ?? "",
         textAlign: textAlignment ?? TextAlign.center,
-        style: textStyle ?? theme.textTheme.bodySmall,
+        style: textStyle ?? theme.textTheme.bodyLarge,
       );
 
-  Widget get radioButtonWidget => SizedBox(
-        height: iconSize ?? 12.h,
-        width: iconSize ?? 12.h,
+  Widget get radioButtonWidget => Transform.scale(
+        scale: 1.5, // Adjust the scale factor to make the circle larger
         child: Radio<String>(
-          visualDensity: const VisualDensity(vertical: -4, horizontal: -4),
           value: value ?? "",
           groupValue: groupValue,
           onChanged: (value) {
@@ -113,6 +102,7 @@ class CustomRadioButton extends StatelessWidget {
           activeColor: Colors.black, // Set the color when selected
         ),
       );
+
   BoxDecoration get radioButtonDecoration =>
       BoxDecoration(color: backgroundColor);
 }

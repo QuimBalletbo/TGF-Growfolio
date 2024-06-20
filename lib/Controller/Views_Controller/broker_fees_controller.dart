@@ -1,4 +1,4 @@
-import 'package:flutter_application_1/Model/listCreatePortfolio.dart';
+import 'package:flutter/material.dart';
 import 'package:realm/realm.dart';
 import 'package:flutter_application_1/Model/utils/auth_service.dart';
 import 'package:flutter_application_1/Model/data/createPortfolio.dart';
@@ -12,11 +12,16 @@ class CreateBrokerFeesController {
   double accountMantainanceFee = 0;
   double accountMantainanceFlatFee = 0;
   CreatePortfolio taxationPortfolio = AuthService().getCreatePortfolio();
+  ValueNotifier<bool> errorFieldEmpty = ValueNotifier<bool>(false);
   final user = AuthService().getUser();
   final Realm realm = AuthService().getRealm();
 
   setSelection(String value) {
     selection = value;
+  }
+
+  setErrorFieldEmpty() {
+    errorFieldEmpty.value = false;
   }
 
   setStockPurchaseFee(double value) {
@@ -43,7 +48,7 @@ class CreateBrokerFeesController {
     accountMantainanceFlatFee = value;
   }
 
-  bool setBrokerFeesPortfolio() {
+  void setBrokerFeesPortfolio() {
     if (selection == 'Include') {
       realm.write(() {
         taxationPortfolio.stockPurchaseFee = stockPurchaseFee;
@@ -53,9 +58,8 @@ class CreateBrokerFeesController {
         taxationPortfolio.accountMaintenanceFee = accountMantainanceFee;
         taxationPortfolio.accountMaintenanceFlatFee = accountMantainanceFlatFee;
       });
-      return false;
-    }
-    if (selection == 'Exclude') {
+      errorFieldEmpty.value = false;
+    } else if (selection == 'Exclude') {
       realm.write(() {
         taxationPortfolio.stockPurchaseFee = 0.003;
         taxationPortfolio.stockPurchaseFlatFee = 0;
@@ -64,9 +68,9 @@ class CreateBrokerFeesController {
         taxationPortfolio.accountMaintenanceFee = 0;
         taxationPortfolio.accountMaintenanceFlatFee = 0;
       });
-      return false;
+      errorFieldEmpty.value = false;
+    } else {
+      errorFieldEmpty.value = true;
     }
-
-    return true;
   }
 }

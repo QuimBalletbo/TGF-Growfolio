@@ -4,7 +4,6 @@ import 'package:flutter_application_1/View/Screens/dialogs/broker_fees_dialog.da
 import 'package:flutter_application_1/View/widgets/custom_space_button.dart';
 import 'package:flutter_application_1/View/widgets/ArrowBackIosColumn.dart';
 import 'package:flutter_application_1/Controller/Views_Controller/broker_fees_controller.dart';
-import 'package:flutter_application_1/View/widgets/custom_PortfolioCard.dart';
 
 class brokerFeesConfiguration extends StatefulWidget {
   brokerFeesConfiguration({Key? key}) : super(key: key);
@@ -17,8 +16,6 @@ class brokerFeesConfiguration extends StatefulWidget {
 
 class _TaxationConfigurationOneScreenState
     extends State<brokerFeesConfiguration> {
-  bool errorFieldEmpty = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,16 +41,25 @@ class _TaxationConfigurationOneScreenState
                   child: BrokerFeesConfigurationDialog(
                       viewController: widget.viewController),
                 ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Visibility(
-                    visible: errorFieldEmpty,
-                    child: Text(
-                      " Invalid format. one or more fields are empty. Please fill in all fields and try again ",
-                      style: errorFieldEmpty
-                          ? CustomTextStyles.bodyMediumPrimary
-                              .copyWith(color: Colors.red)
-                          : CustomTextStyles.bodyMediumPrimary,
+                Padding(
+                  padding:
+                      const EdgeInsets.all(6.0), // Adjust the padding as needed
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: ValueListenableBuilder<bool>(
+                      valueListenable: widget.viewController.errorFieldEmpty,
+                      builder: (context, errorFieldEmpty, child) {
+                        return Visibility(
+                          visible: errorFieldEmpty,
+                          child: Text(
+                            "Invalid format. One or more fields are empty. Please fill in all fields and try again",
+                            style: errorFieldEmpty
+                                ? CustomTextStyles.bodyMediumPrimary
+                                    .copyWith(color: Colors.red)
+                                : CustomTextStyles.bodyMediumPrimary,
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -85,9 +91,10 @@ class _TaxationConfigurationOneScreenState
 
   onTapContinue(BuildContext context) {
     setState(() {
-      errorFieldEmpty = widget.viewController.setBrokerFeesPortfolio();
+      widget.viewController.setBrokerFeesPortfolio();
     });
-    if (!errorFieldEmpty) {
+
+    if (!widget.viewController.errorFieldEmpty.value) {
       Navigator.pushNamed(context, AppRoutes.stockConfigurationScreen);
     }
   }

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/app_export.dart';
 import 'package:flutter_application_1/View/widgets/custom_elevated_button.dart';
-import 'package:flutter_application_1/View/Screens/home_view_component/home_view_bottom_part.dart';
-import 'package:flutter_application_1/Model/utils/auth_service.dart';
-import 'package:flutter_application_1/Controller/Views_Controller/log_out_controller.dart';
+import 'package:flutter_application_1/Controller/Views_Controller/Dialog_Controller/log_out__dialog_controller.dart';
 
 class LogOutDialog extends StatelessWidget {
   LogOutDialog({Key? key}) : super(key: key);

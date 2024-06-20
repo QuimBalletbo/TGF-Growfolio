@@ -52,16 +52,20 @@ class _CreateBrokerFeesConfigurationOneScreenState
                   child: CreatePortfolioConfigurationDialog(
                       viewController: widget.viewController),
                 ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Visibility(
-                    visible: errorFieldEmpty,
-                    child: Text(
-                      "Invalid format. one or more fields are empty. Please fill in all fields and try again",
-                      style: errorFieldEmpty
-                          ? CustomTextStyles.bodyMediumPrimary
-                              .copyWith(color: Colors.red)
-                          : CustomTextStyles.bodyMediumPrimary,
+                Padding(
+                  padding:
+                      const EdgeInsets.all(6.0), // Adjust the padding as needed
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Visibility(
+                      visible: errorFieldEmpty,
+                      child: Text(
+                        "Invalid format. One or more fields are empty. Please fill in all fields and try again",
+                        style: errorFieldEmpty
+                            ? CustomTextStyles.bodyMediumPrimary
+                                .copyWith(color: Colors.red)
+                            : CustomTextStyles.bodyMediumPrimary,
+                      ),
                     ),
                   ),
                 ),

@@ -89,6 +89,12 @@ class ImageConstant {
 
   static String imgSettings = '$imagePath/img_settings.svg';
 
+  static String imgConditions = '$imagePath/img_conditions.svg';
+
+  static String imgFaqs = '$imagePath/img_faqs.svg';
+
+  static String imgproperties = '$imagePath/img_properties.svg';
+
   // profile One images
   static String imgProfBig = '$imagePath/img_profile_Icon_Big.svg';
 

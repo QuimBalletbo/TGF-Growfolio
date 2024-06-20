@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Model/app_export.dart';
-import 'package:flutter_application_1/View/widgets/custom_elevated_button.dart';
-import 'package:flutter_application_1/View/widgets/custom_text_form_field.dart';
 import 'package:flutter_application_1/View/Screens/dialogs/delete_my_account_dialog.dart';
+import 'package:realm/realm.dart';
 
 // ignore_for_file: must_be_immutable
 class DeleteAccountScreen extends StatelessWidget {
-  DeleteAccountScreen({Key? key}) : super(key: key);
+  DeleteAccountScreen({Key? key, required this.app}) : super(key: key);
+
+  final App app;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -29,9 +30,7 @@ class DeleteAccountScreen extends StatelessWidget {
           ),
           // Content
           SingleChildScrollView(
-            padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 14.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -55,25 +54,13 @@ class DeleteAccountScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 32.v),
-                // Form Content
-              ],
-            ),
-          ),
-          // AlertDialog
-          Center(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(width: 15),
-                Expanded(
-                  child: AlertDialog(
-                    content: DeleteMyAccountDialog(),
-                    backgroundColor: Colors.transparent,
-                    contentPadding: EdgeInsets.zero,
-                    insetPadding: const EdgeInsets.only(left: 0),
-                  ),
+                Container(
+                  constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height * 0.59),
+                  child: DeleteMyAccountDialog(app: app),
                 ),
-                const SizedBox(width: 15),
+
+                // Form Content
               ],
             ),
           ),

@@ -43,16 +43,20 @@ class _FinishConfViewControllerState extends State<FinishConf> {
                   child:
                       FinishConfDialog(viewController: widget.viewController),
                 ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Visibility(
-                    visible: errorDistribution,
-                    child: Text(
-                      "Incomplete Allocation. Ensure selected assets (stocks, ETFs, or bonds) total 100%.",
-                      style: errorDistribution
-                          ? CustomTextStyles.bodyMediumPrimary
-                              .copyWith(color: Colors.red)
-                          : CustomTextStyles.bodyMediumPrimary,
+                Padding(
+                  padding:
+                      const EdgeInsets.all(6.0), // Adjust the padding as needed
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Visibility(
+                      visible: errorDistribution,
+                      child: Text(
+                        "Incomplete Allocation. Ensure selected assets (stocks, ETFs, or bonds) total 100%.",
+                        style: errorDistribution
+                            ? CustomTextStyles.bodyMediumPrimary
+                                .copyWith(color: Colors.red)
+                            : CustomTextStyles.bodyMediumPrimary,
+                      ),
                     ),
                   ),
                 ),

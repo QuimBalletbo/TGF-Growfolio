@@ -30,7 +30,7 @@ class ToggleButton extends StatelessWidget {
                 text,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: CustomTextStyles.bodySmallRegular11,
+                style: theme.textTheme.bodyLarge,
               ),
             ),
           ),

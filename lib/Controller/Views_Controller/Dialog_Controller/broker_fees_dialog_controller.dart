@@ -23,6 +23,7 @@ class CreateBrokerFeesConfiguration {
 
   String getSelection(String value) {
     viewController.setSelection(value);
+    viewController.setErrorFieldEmpty();
     return value;
   }
 

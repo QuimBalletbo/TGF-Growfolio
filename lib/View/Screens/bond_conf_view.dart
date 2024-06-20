@@ -55,45 +55,56 @@ class _BondConfigurationScreenState extends State<BondConfiguration> {
                   child: BondConfigurationDialog(
                       viewController: widget.viewController),
                 ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Visibility(
-                    visible: errorFieldEmpty,
-                    child: Text(
-                      "Invalid format. one or more fields are empty. Please fill in all fields and try again",
-                      style: errorFieldEmpty
-                          ? CustomTextStyles.bodyMediumPrimary
-                              .copyWith(color: Colors.red)
-                          : CustomTextStyles.bodyMediumPrimary,
+                Padding(
+                  padding:
+                      const EdgeInsets.all(6.0), // Adjust the padding as needed
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Visibility(
+                      visible: errorFieldEmpty,
+                      child: Text(
+                        "Invalid format. one or more fields are empty. Please fill in all fields and try again",
+                        style: errorFieldEmpty
+                            ? CustomTextStyles.bodyMediumPrimary
+                                .copyWith(color: Colors.red)
+                            : CustomTextStyles.bodyMediumPrimary,
+                      ),
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Visibility(
-                    visible: errorBondConfiguration,
-                    child: Text(
-                      "Bond Configuration Error: Unable to Create Bond if Bonds Aren't Included in Your Portfolio.",
-                      style: errorBondConfiguration
-                          ? CustomTextStyles.bodyMediumPrimary
-                              .copyWith(color: Colors.red)
-                          : CustomTextStyles.bodyMediumPrimary,
+                Padding(
+                  padding:
+                      const EdgeInsets.all(6.0), // Adjust the padding as needed
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Visibility(
+                      visible: errorBondConfiguration,
+                      child: Text(
+                        "Bond Configuration Error: Unable to Create Bond if Bonds Aren't Included in Your Portfolio.",
+                        style: errorBondConfiguration
+                            ? CustomTextStyles.bodyMediumPrimary
+                                .copyWith(color: Colors.red)
+                            : CustomTextStyles.bodyMediumPrimary,
+                      ),
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Visibility(
-                    visible: errorBondDistribution,
-                    child: Text(
-                      "Error: Bond Distribution Issue Total allocation must be 100% ",
-                      style: errorBondDistribution
-                          ? CustomTextStyles.bodyMediumPrimary
-                              .copyWith(color: Colors.red)
-                          : CustomTextStyles.bodyMediumPrimary,
-                    ),
-                  ),
-                ),
+                Padding(
+                    padding: const EdgeInsets.all(
+                        6.0), // Adjust the padding as needed
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Visibility(
+                        visible: errorBondDistribution,
+                        child: Text(
+                          "Error: Bond Distribution Issue Total allocation must be 100% ",
+                          style: errorBondDistribution
+                              ? CustomTextStyles.bodyMediumPrimary
+                                  .copyWith(color: Colors.red)
+                              : CustomTextStyles.bodyMediumPrimary,
+                        ),
+                      ),
+                    )),
 
                 SizedBox(height: 22.v),
                 CustomImageButton(

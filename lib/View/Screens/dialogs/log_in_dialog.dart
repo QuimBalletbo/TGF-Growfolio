@@ -23,7 +23,6 @@ class _LogInDialogState extends State<LogInDialog> {
   String email = '';
   String password = '';
   bool error = false;
-  late User user;
 
   @override
   Widget build(BuildContext context) {

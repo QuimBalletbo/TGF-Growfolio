@@ -7,7 +7,6 @@ import 'package:flutter_application_1/View/Screens/profile_view.dart';
 import 'package:flutter_application_1/View/Screens/modify_name_view.dart';
 import 'package:flutter_application_1/View/Screens/log_out_view.dart';
 import 'package:flutter_application_1/View/Screens/change_log_in_view.dart';
-import 'package:flutter_application_1/View/Screens/password_security_view.dart';
 import 'package:flutter_application_1/View/Screens/conditions_use_view.dart';
 import 'package:flutter_application_1/View/Screens/createPortfolio_view.dart';
 import 'package:flutter_application_1/View/Screens/taxation_conf_view.dart';
@@ -68,12 +67,11 @@ class AppRoutes {
           IniciarSessiRegistrarSeScreen(app: app),
       homeScreen: (context) => HomeScreen(),
       profileContainerScreen: (context) => ProfileContainerScreen(),
-      deleteAccountScreen: (context) => DeleteAccountScreen(),
+      deleteAccountScreen: (context) => DeleteAccountScreen(app: app),
       createAccountScreen: (context) => CreateAnAccountScreen(app: app),
       modifyNameScreen: (context) => ModifyNameScreen(),
       logOutScreen: (context) => LogOutScreen(),
       logInScreen: (context) => LogInScreen(app: app),
-      passwordSecurityScreen: (context) => PasswordScreen(),
       conditionsUseScreen: (context) => ConditionsUseScreen(),
       cretatePortfolioScreen: (context) =>
           CreateBrokerFeesConfigurationOneScreen(),

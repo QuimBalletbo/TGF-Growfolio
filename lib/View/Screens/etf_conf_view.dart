@@ -54,42 +54,54 @@ class _ETFConfigurationScreenState extends State<ETFConfiguration> {
                   child: ETFConfigurationDialog(
                       viewController: widget.viewController),
                 ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Visibility(
-                    visible: errorFieldEmpty,
-                    child: Text(
-                      "Invalid format. one or more fields are empty. Please fill in all fields and try again",
-                      style: errorFieldEmpty
-                          ? CustomTextStyles.bodyMediumPrimary
-                              .copyWith(color: Colors.red)
-                          : CustomTextStyles.bodyMediumPrimary,
+                Padding(
+                  padding:
+                      const EdgeInsets.all(6.0), // Adjust the padding as needed
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Visibility(
+                      visible: errorFieldEmpty,
+                      child: Text(
+                        "Invalid format. one or more fields are empty. Please fill in all fields and try again",
+                        style: errorFieldEmpty
+                            ? CustomTextStyles.bodyMediumPrimary
+                                .copyWith(color: Colors.red)
+                            : CustomTextStyles.bodyMediumPrimary,
+                      ),
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Visibility(
-                    visible: errorETFConfiguration,
-                    child: Text(
-                      "ETF Configuration Error: Unable to Create ETF if ETFs Aren't Included in Your Portfolio.",
-                      style: errorETFConfiguration
-                          ? CustomTextStyles.bodyMediumPrimary
-                              .copyWith(color: Colors.red)
-                          : CustomTextStyles.bodyMediumPrimary,
+                Padding(
+                  padding:
+                      const EdgeInsets.all(6.0), // Adjust the padding as needed
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Visibility(
+                      visible: errorETFConfiguration,
+                      child: Text(
+                        "ETF Configuration Error: Unable to Create ETF if ETFs Aren't Included in Your Portfolio.",
+                        style: errorETFConfiguration
+                            ? CustomTextStyles.bodyMediumPrimary
+                                .copyWith(color: Colors.red)
+                            : CustomTextStyles.bodyMediumPrimary,
+                      ),
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Visibility(
-                    visible: errorETFDistribution,
-                    child: Text(
-                      "Error: ETF Distribution Issue Total allocation must be 100% ",
-                      style: errorETFDistribution
-                          ? CustomTextStyles.bodyMediumPrimary
-                              .copyWith(color: Colors.red)
-                          : CustomTextStyles.bodyMediumPrimary,
+                Padding(
+                  padding:
+                      const EdgeInsets.all(6.0), // Adjust the padding as needed
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Visibility(
+                      visible: errorETFDistribution,
+                      child: Text(
+                        "Error: ETF Distribution Issue Total allocation must be 100% ",
+                        style: errorETFDistribution
+                            ? CustomTextStyles.bodyMediumPrimary
+                                .copyWith(color: Colors.red)
+                            : CustomTextStyles.bodyMediumPrimary,
+                      ),
                     ),
                   ),
                 ),

@@ -10,6 +10,9 @@ class CreateTaxationConfiguration {
 
   String getTaxation(String value) {
     viewController.setTaxation(value);
+    if (value == 'Exclude') {
+      viewController.setErrorFieldEmpty();
+    }
     return value;
   }
 
@@ -33,6 +36,7 @@ class CreateTaxationConfiguration {
 
   int getShortToLongTransition(String value) {
     viewController.setShortToLongTransition(int.parse(value));
+    viewController.setErrorFieldEmpty();
     return int.parse(value);
   }
 
