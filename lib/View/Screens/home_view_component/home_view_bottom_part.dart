@@ -23,7 +23,7 @@ class PGinaDIniciAlumneBottomsheet extends StatelessWidget {
                 text: "User guide",
                 imagePath: ImageConstant.imgproperties,
                 onTap: () {
-                  onTapImgImage7(context);
+                  onTapImgImage9(context);
                 },
               ),
               SizedBox(height: 23.v),
@@ -124,10 +124,14 @@ class PGinaDIniciAlumneBottomsheet extends StatelessWidget {
   }
 
   onTapImgImage7(BuildContext context) {
-    //Navigator.pushNamed(context, AppRoutes.passwordSecurityScreen);
+    Navigator.pushNamed(context, AppRoutes.faqsView);
   }
 
   onTapImgImage8(BuildContext context) {
     Navigator.pushNamed(context, AppRoutes.conditionsUseScreen);
+  }
+
+  onTapImgImage9(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.userGuideView);
   }
 }

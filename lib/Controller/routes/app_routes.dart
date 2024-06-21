@@ -24,7 +24,8 @@ import 'package:flutter_application_1/View/Screens/show_return_1_view.dart';
 import 'package:flutter_application_1/View/Screens/show_return_2_view.dart';
 import 'package:flutter_application_1/View/Screens/show_return_3_view.dart';
 import 'package:flutter_application_1/View/Screens/show_return_4_view.dart';
-
+import 'package:flutter_application_1/View/Screens/faqs_view.dart';
+import 'package:flutter_application_1/View/Screens/user_guide_view.dart';
 import 'package:realm/realm.dart';
 
 class AppRoutes {
@@ -60,6 +61,8 @@ class AppRoutes {
   static const String showReturnView2 = '/showReturnView2';
   static const String showReturnView3 = '/showReturnView3';
   static const String showReturnView4 = '/showReturnView4';
+  static const String faqsView = '/faqsView';
+  static const String userGuideView = '/userGuideView';
 
   static Map<String, WidgetBuilder> routes(App app) {
     return {
@@ -90,6 +93,8 @@ class AppRoutes {
       showReturnView2: (context) => ShowReturnView2(),
       showReturnView3: (context) => ShowReturnView3(),
       showReturnView4: (context) => ShowReturnView4(),
+      faqsView: (context) => FaqsView(),
+      userGuideView: (context) => UserGuideView(),
     };
   }
 }

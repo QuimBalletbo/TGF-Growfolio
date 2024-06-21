@@ -49,7 +49,7 @@ class _LogInDialogState extends State<LogInDialog> {
             controller: passwordController,
             hintText: "Enter password",
             hintStyle: theme.textTheme.bodyMedium!,
-            textInputType: TextInputType.visiblePassword,
+            textInputType: TextInputType.emailAddress,
             onEditingComplete: () {
               setState(() {
                 password = passwordController.text;

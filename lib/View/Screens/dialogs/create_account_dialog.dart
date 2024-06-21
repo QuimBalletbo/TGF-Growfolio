@@ -98,7 +98,7 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
               controller: controller.passwordController,
               hintText: "Enter password",
               hintStyle: theme.textTheme.bodyMedium!,
-              textInputType: TextInputType.visiblePassword,
+              textInputType: TextInputType.emailAddress,
               onEditingComplete: () {
                 setState(() {
                   password = controller.passwordController.text;
@@ -124,7 +124,7 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
               hintText: "confirm password",
               hintStyle: theme.textTheme.bodyMedium!,
               textInputAction: TextInputAction.done,
-              textInputType: TextInputType.visiblePassword,
+              textInputType: TextInputType.emailAddress,
               onEditingComplete: () {
                 setState(() {
                   confirmPassword = controller.confirmpasswordController.text;
