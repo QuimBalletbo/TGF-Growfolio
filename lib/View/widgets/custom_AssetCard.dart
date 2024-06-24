@@ -14,9 +14,12 @@ class CustomAssetList extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            asset.name,
-            style: const TextStyle(fontSize: 16),
+          Expanded(
+            flex: 2,
+            child: Text(
+              asset.name,
+              style: const TextStyle(fontSize: 16),
+            ),
           ),
           const Spacer(), // Pushes the next widget to the end of the row
           Align(

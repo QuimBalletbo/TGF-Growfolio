@@ -55,8 +55,13 @@ class ArrowBackIosColumn extends StatelessWidget {
                   ),
                   Visibility(
                     visible: !page1,
-                    child:
-                        const Icon(Icons.circle, color: Colors.grey, size: 8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        onTapReturnView1(context);
+                      },
+                      child: const Icon(Icons.circle,
+                          color: Colors.grey, size: 8.0),
+                    ),
                   ),
                   const SizedBox(width: 4.0),
                   Visibility(
@@ -66,8 +71,13 @@ class ArrowBackIosColumn extends StatelessWidget {
                   ),
                   Visibility(
                     visible: !page2,
-                    child:
-                        const Icon(Icons.circle, color: Colors.grey, size: 8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        onTapReturnView2(context);
+                      },
+                      child: const Icon(Icons.circle,
+                          color: Colors.grey, size: 8.0),
+                    ),
                   ),
                   const SizedBox(width: 4.0),
                   Visibility(
@@ -77,8 +87,13 @@ class ArrowBackIosColumn extends StatelessWidget {
                   ),
                   Visibility(
                     visible: !page3,
-                    child:
-                        const Icon(Icons.circle, color: Colors.grey, size: 8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        onTapReturnView3(context);
+                      },
+                      child: const Icon(Icons.circle,
+                          color: Colors.grey, size: 8.0),
+                    ),
                   ),
                   const SizedBox(width: 4.0),
                   Visibility(
@@ -88,8 +103,13 @@ class ArrowBackIosColumn extends StatelessWidget {
                   ),
                   Visibility(
                     visible: !page4,
-                    child:
-                        const Icon(Icons.circle, color: Colors.grey, size: 8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        onTapReturnView4(context);
+                      },
+                      child: const Icon(Icons.circle,
+                          color: Colors.grey, size: 8.0),
+                    ),
                   ),
                 ],
               ),
@@ -168,5 +188,21 @@ class ArrowBackIosColumn extends StatelessWidget {
 
   onTapGoBack(BuildContext context) {
     Navigator.pop(context);
+  }
+
+  onTapReturnView1(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.showReturnView1);
+  }
+
+  onTapReturnView2(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.showReturnView2);
+  }
+
+  onTapReturnView3(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.showReturnView3);
+  }
+
+  onTapReturnView4(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.showReturnView4);
   }
 }

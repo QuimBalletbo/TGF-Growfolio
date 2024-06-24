@@ -222,11 +222,13 @@ class CreateStockController {
         }
       } else {
         // If the request was not successful, throw an exception
-        throw Exception('Failed to load data: ${response.statusCode}');
+        print('Failed to load data: ${response.statusCode}');
+        return StockInfo(avgDividend: 0, avgReturn: 0);
       }
     } catch (e) {
       // Handle any errors that occur during the process
-      throw Exception('Failed to load data: $e');
+      print('Failed to load data: $e');
+      return StockInfo(avgDividend: 0, avgReturn: 0);
     }
   }
 }

@@ -70,11 +70,6 @@ class _LogInDialogState extends State<LogInDialog> {
               ),
             ),
           ),
-          SizedBox(height: 5.v),
-          Align(
-              alignment: Alignment.centerRight,
-              child: Text("Forgot Password ?",
-                  style: CustomTextStyles.bodyMediumPrimary)),
           SizedBox(height: 23.v),
           CustomElevatedButton(
             text: "Login",

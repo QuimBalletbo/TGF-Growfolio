@@ -19,6 +19,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   HomeViewController controller = HomeViewController();
   int numPortfolio = 0;
+
   @override
   void initState() {
     super.initState();
@@ -32,83 +33,86 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: appTheme.gray100,
         resizeToAvoidBottomInset: false,
         appBar: _buildAppBar(context),
-        body: SingleChildScrollView(
-          // Wrap with SingleChildScrollView
-          child: Container(
-            width: double.maxFinite,
-            padding: EdgeInsets.symmetric(vertical: 0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(height: 16),
-                Padding(
-                  padding: EdgeInsets.only(left: 34),
-                  child: Text(
-                    "My current Portfolios",
-                    style: CustomTextStyles.headlineSmallMontserratLight,
-                  ),
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Container(
+                width: double.maxFinite,
+                padding: EdgeInsets.symmetric(vertical: 0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(height: 16),
+                    Padding(
+                      padding: EdgeInsets.only(left: 34),
+                      child: Text(
+                        "My current Portfolios",
+                        style: CustomTextStyles.headlineSmallMontserratLight,
+                      ),
+                    ),
+                    SizedBox(height: 23),
+                  ],
                 ),
-                SizedBox(height: 23),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 21, vertical: 24),
-                  decoration: AppDecoration.outlinePrimary.copyWith(
-                    borderRadius: BorderRadiusStyle.customBorderTL18,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: controller.allPortfolioReturn.isEmpty
-                        ? [
-                            // Display message when there are no portfolios
-                            Container(
-                                margin: EdgeInsets.only(right: 42.h),
-                                alignment: Alignment.centerRight,
-                                child: Text("There are currently no Portfolios",
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style:
-                                        CustomTextStyles.titleLargeMontserrat)),
-                            const SizedBox(height: 31),
-                            CustomImageButton(
-                              text: "Create new Portfolio",
-                              imageConstant: ImageConstant.imgPlus,
-                              onTap: () => onTapCreateNewPortfolio(context),
-                            ),
-
-                            SizedBox(height: 22.v),
-                          ]
-                        : [
-                            // Render portfolios if available BondPortfolio
-                            ...controller.allPortfolioReturn.map(
-                              (portfolios) => Column(
-                                children: [
-                                  customPortfolioReturnCard(
-                                      portfolios, controller.singlePortfolio,
-                                      () {
-                                    // Update the UI
-                                    setState(() {});
-                                  }, context),
-                                  const SizedBox(height: 31),
-                                ],
-                              ),
-                            ),
-
-                            CustomImageButton(
-                              text: "Create new Portfolio",
-                              imageConstant: ImageConstant.imgPlus,
-                              onTap: () {
-                                onTapCreateNewPortfolio(context);
-                              },
-                            ),
-
-                            SizedBox(height: 22.v),
-                          ],
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
+            Align(
+              alignment: Alignment.bottomCenter, // Align to the bottom center
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 21, vertical: 24),
+                decoration: AppDecoration.outlinePrimary.copyWith(
+                  borderRadius: BorderRadiusStyle.customBorderTL18,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
+                  children: controller.allPortfolioReturn.isEmpty
+                      ? [
+                          // Display message when there are no portfolios
+                          Container(
+                              margin: EdgeInsets.only(right: 42.h),
+                              alignment: Alignment.centerRight,
+                              child: Text("There are currently no Portfolios",
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style:
+                                      CustomTextStyles.titleLargeMontserrat)),
+                          const SizedBox(height: 31),
+                          CustomImageButton(
+                            text: "Create new Portfolio",
+                            imageConstant: ImageConstant.imgPlus,
+                            onTap: () => onTapCreateNewPortfolio(context),
+                          ),
+                          SizedBox(height: 22.v),
+                        ]
+                      : [
+                          // Render portfolios if available BondPortfolio
+                          ...controller.allPortfolioReturn.map(
+                            (portfolios) => Column(
+                              children: [
+                                customPortfolioReturnCard(
+                                    portfolios, controller.singlePortfolio, () {
+                                  // Update the UI
+                                  setState(() {});
+                                }, context),
+                                const SizedBox(height: 31),
+                              ],
+                            ),
+                          ),
+                          CustomImageButton(
+                            text: "Create new Portfolio",
+                            imageConstant: ImageConstant.imgPlus,
+                            onTap: () {
+                              onTapCreateNewPortfolio(context);
+                            },
+                          ),
+                          SizedBox(height: 22.v),
+                        ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
