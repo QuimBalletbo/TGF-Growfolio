@@ -45,15 +45,11 @@ class _ShowReturnView1State extends State<ShowReturnView4> {
                   position: 4,
                 ), // Placing the app bar here
                 SizedBox(height: 22.v),
-                Container(
-                  child: ShowReturnGraphicDialog(),
-                ),
+                ShowReturnGraphicDialog(),
+
                 SizedBox(height: 22.v),
-                Container(
-                  constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height * 0.4),
-                  child: ShowReturn4Dialog(),
-                ),
+                ShowReturn4Dialog(),
+
                 SizedBox(height: 22.v),
                 CustomSpaceButton(
                   text: "Return to Home",

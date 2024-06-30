@@ -77,9 +77,9 @@ class _ShowReturnGraphicDialogState extends State<ShowReturnGraphicDialog> {
   Widget build(BuildContext context) {
     // Data for the donut chart
     List<ChartData> chartData = [
-      ChartData('Stocks', stocks, const Color(0xFF3D2FE7)),
-      ChartData('ETFs', etfs, const Color(0xFF2BD9FE)),
-      ChartData('Bonds', bonds, const Color(0xFF2BFE7F)),
+      if (stocks > 0) ChartData('Stocks', stocks, const Color(0xFF3D2FE7)),
+      if (etfs > 0) ChartData('ETFs', etfs, const Color(0xFF2BD9FE)),
+      if (bonds > 0) ChartData('Bonds', bonds, const Color(0xFF2BFE7F)),
     ];
 
     return SingleChildScrollView(

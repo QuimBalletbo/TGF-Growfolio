@@ -124,7 +124,7 @@ class CreateBondController {
   bool checkDoubleValidity(String value) {
     try {
       double doubleValue = double.parse(value);
-      if (doubleValue >= 1 && doubleValue <= 100) {
+      if (doubleValue >= 0.1 && doubleValue <= 100) {
         return false;
       } else {
         return true;

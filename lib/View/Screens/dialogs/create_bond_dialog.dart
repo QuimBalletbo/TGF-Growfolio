@@ -132,7 +132,7 @@ class _CreateBondDialogState extends State<CreateBondDialog> {
             child: Visibility(
               visible: errorCouponRate,
               child: Text(
-                "Invalid format. Please enter a valid number between 1 and 100.",
+                "Invalid format. Please enter a valid number between 0.1 and 100.",
                 style: errorCouponRate
                     ? CustomTextStyles.bodyMediumPrimary
                         .copyWith(color: Colors.red)

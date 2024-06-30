@@ -46,23 +46,13 @@ class _ShowReturnView1State extends State<ShowReturnView1> {
                   position: 1,
                 ), // Placing the app bar here
                 SizedBox(height: 22.v),
-                Container(
-                  constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height * 0.4),
-                  child: ShowReturn1Dialog(),
-                ),
+                ShowReturn1Dialog(),
                 SizedBox(height: 22.v),
-                Container(
-                  constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height * 0.4),
-                  child: ShowReturn2Dialog(),
-                ),
+                ShowReturn2Dialog(),
+
                 SizedBox(height: 22.v),
-                Container(
-                  constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height * 0.4),
-                  child: ShowReturn3Dialog(),
-                ),
+                ShowReturn3Dialog(),
+
                 SizedBox(height: 22.v),
                 CustomSpaceButton(
                   text: "Next",

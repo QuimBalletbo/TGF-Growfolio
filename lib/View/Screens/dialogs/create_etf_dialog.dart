@@ -103,7 +103,7 @@ class _CreateStockDialogState extends State<CreateETFdialog> {
             child: Visibility(
               visible: errorExpenseRatio,
               child: Text(
-                "Invalid format. Please enter a valid number between 1 and 100.",
+                "Invalid format. Please enter a valid number between 0 and 100.",
                 style: errorExpenseRatio
                     ? CustomTextStyles.bodyMediumPrimary
                         .copyWith(color: Colors.red)
@@ -132,7 +132,7 @@ class _CreateStockDialogState extends State<CreateETFdialog> {
             child: Visibility(
               visible: errorAvgReturn,
               child: Text(
-                "Invalid format. Please enter a valid number between 1 and 100.",
+                "Invalid format. Please enter a valid number between 0 and 100.",
                 style: errorAvgReturn
                     ? CustomTextStyles.bodyMediumPrimary
                         .copyWith(color: Colors.red)
@@ -161,7 +161,7 @@ class _CreateStockDialogState extends State<CreateETFdialog> {
             child: Visibility(
               visible: errorAvgDividendYield,
               child: Text(
-                "Invalid format. Please enter a valid number between 1 and 100.",
+                "Invalid format. Please enter a valid number between 0 and 100.",
                 style: errorAvgDividendYield
                     ? CustomTextStyles.bodyMediumPrimary
                         .copyWith(color: Colors.red)
